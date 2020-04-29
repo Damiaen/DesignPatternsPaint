@@ -1,16 +1,11 @@
 package com.designpatterns.paint.base.UserInterface;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
-import com.designpatterns.paint.base.Models.Shapes.Ellipse;
-import com.designpatterns.paint.base.Models.Shapes.Rectangle;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class UserInterface extends JFrame{
@@ -19,13 +14,13 @@ public class UserInterface extends JFrame{
     private JButton selectShapes;
     private JPanel content_panel;
     private JPanel shape_add_panel;
-    private JTextField new_shape_x;
-    private JTextField new_shape_y;
-    private JTextField new_shape_z;
+    private JTextField new_shape_height;
+    private JTextField new_shape_width;
     private JComboBox<String> new_shape_combobox;
     private JPanel draw_panel;
     private JRadioButton addRadioButton;
     private JRadioButton editRadioButton;
+
 
     private DrawPanel drawPanel = new DrawPanel();
 
@@ -57,7 +52,11 @@ public class UserInterface extends JFrame{
         if (addRadioButton.isSelected() && !editRadioButton.isSelected()) {
             addShapeToPanel(e.getX(), e.getY());
         } else if (editRadioButton.isSelected() && !addRadioButton.isSelected()) {
-            drawPanel.updateShape(e.getX(), e.getY());
+            if (new_shape_width.getText().length() != 0 && new_shape_height.getText().length() != 0 && validateFields()) {
+                drawPanel.updateShape(e.getX(), e.getY(), Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText()));
+            } else {
+                System.out.println("Error setting size of shape");
+            }
         } else if (editRadioButton.isSelected() && addRadioButton.isSelected()) {
             System.out.println("Fix dat dit niet kan");
         }
@@ -84,8 +83,26 @@ public class UserInterface extends JFrame{
      * Shapes are as follows: 1 - Circle, 2 - Rectangle, 3 - Square, 4 - Triangle
      */
     private void addShapeToPanel(Integer mousePosX, Integer mousePosY) {
-        System.out.println("Adding new shape: selected shape: '" + new_shape_combobox.getSelectedItem() + "' with values: x:" + new_shape_x.getText() + " y:" + new_shape_y.getText() + " z:" + new_shape_z.getText());
-        drawPanel.addShape(Objects.requireNonNull(new_shape_combobox.getSelectedItem()).toString(), mousePosX, mousePosY, 100, 100);
+        System.out.println("Adding new shape: selected shape: '" + new_shape_combobox.getSelectedItem() + "' with values: x:" + new_shape_width.getText() + " y:" + new_shape_height.getText());
+
+        if (new_shape_width.getText().length() != 0 && new_shape_height.getText().length() != 0 && validateFields()) {
+            drawPanel.addShape(Objects.requireNonNull(new_shape_combobox.getSelectedItem()).toString(), mousePosX, mousePosY, Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText()));
+        } else {
+            System.out.println("Error setting size of shape");
+        }
+    }
+
+    /**
+     * TODO: Spaghetti oplossing om even de fields te validaten, fix dit later even
+     */
+    private boolean validateFields() {
+        try {
+            Integer.parseInt(new_shape_width.getText());
+            Integer.parseInt(new_shape_height.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     /**

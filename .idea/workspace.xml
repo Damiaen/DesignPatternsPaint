@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7cc753d7-4a45-4a87-9269-95be660bc8da" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/CircleWithHandles.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/DrawPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/DrawPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Interfaces/IShapes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Interfaces/IShapes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Ellipse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Ellipse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Rectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/UserInterface/UserInterface.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/UserInterface/UserInterface.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/UserInterface/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/UserInterface/UserInterface.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -105,7 +103,7 @@
       <workItem from="1588067104481" duration="33000" />
       <workItem from="1588067181124" duration="1149000" />
       <workItem from="1588068695073" duration="89000" />
-      <workItem from="1588151350830" duration="13605000" />
+      <workItem from="1588151350830" duration="14411000" />
     </task>
     <task id="LOCAL-00001" summary="Add shapes">
       <created>1588161936505</created>
@@ -114,7 +112,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588161936505</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="hardcoded resizing">
+      <created>1588165499624</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1588165499624</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -122,7 +127,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add shapes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add shapes" />
+    <MESSAGE value="hardcoded resizing" />
+    <option name="LAST_COMMIT_MESSAGE" value="hardcoded resizing" />
   </component>
   <component name="WindowStateProjectService">
     <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1588162877015">
@@ -133,29 +139,29 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="808" y="409" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588068742112" />
-    <state x="548" y="114" key="CommitChangelistDialog2" timestamp="1588161935961">
+    <state x="548" y="114" key="CommitChangelistDialog2" timestamp="1588165499013">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="548" y="114" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588161935961" />
-    <state width="1877" height="286" key="GridCell.Tab.0.bottom" timestamp="1588165459239">
+    <state x="548" y="114" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588165499013" />
+    <state width="1877" height="286" key="GridCell.Tab.0.bottom" timestamp="1588166248293">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="286" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588165459239" />
-    <state width="1877" height="286" key="GridCell.Tab.0.center" timestamp="1588165459239">
+    <state width="1877" height="286" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588166248293" />
+    <state width="1877" height="286" key="GridCell.Tab.0.center" timestamp="1588166248293">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="286" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588165459239" />
-    <state width="1877" height="286" key="GridCell.Tab.0.left" timestamp="1588165459239">
+    <state width="1877" height="286" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588166248293" />
+    <state width="1877" height="286" key="GridCell.Tab.0.left" timestamp="1588166248293">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="286" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588165459239" />
-    <state width="1877" height="286" key="GridCell.Tab.0.right" timestamp="1588165459239">
+    <state width="1877" height="286" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588166248293" />
+    <state width="1877" height="286" key="GridCell.Tab.0.right" timestamp="1588166248293">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="286" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588165459239" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588161939031">
+    <state width="1877" height="286" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588166248293" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588165500503">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588161939031" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588165500503" />
   </component>
 </project>

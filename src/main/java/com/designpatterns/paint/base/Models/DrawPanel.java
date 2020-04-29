@@ -45,17 +45,21 @@ public class DrawPanel extends JPanel {
         repaint();
     }
 
-    public void updateShape(Integer mousePosX, Integer mousePosY) {
+    public void updateShape(int mousePosX, int mousePosY, int width, int height) {
         for (Object s : shapes) {
             if (s instanceof Ellipse) {
                 if (((Ellipse) s).checkPosition(mousePosX, mousePosY)) {
                     System.out.println("updating selected shape");
-                    ((Ellipse) s).setSize(200, 200);
+                    ((Ellipse) s).setSize(width, height);
                     repaint();
                 }
             }
             if (s instanceof com.designpatterns.paint.base.Models.Shapes.Rectangle) {
-                System.out.println(((Rectangle) s).checkPosition(mousePosX, mousePosY));
+                if (((Rectangle) s).checkPosition(mousePosX, mousePosY)) {
+                    System.out.println("updating selected shape");
+                    ((Rectangle) s).setSize(width, height);
+                    repaint();
+                }
             }
         }
     }

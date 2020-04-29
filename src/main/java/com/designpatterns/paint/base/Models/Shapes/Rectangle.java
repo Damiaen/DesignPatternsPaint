@@ -21,6 +21,11 @@ public class Rectangle implements IShapes {
         return new Integer[]{x, y};
     }
 
+    public void setSize(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
     public boolean checkPosition(int x, int y) {
         return rectangle.contains(x, y);
     }
