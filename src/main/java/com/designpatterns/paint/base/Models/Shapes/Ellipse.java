@@ -17,17 +17,18 @@ public class Ellipse implements IShapes {
         this.height = height;
     }
 
-    public Integer[] position() {
-        return new Integer[]{x, y};
+    public void setSize(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     public boolean checkPosition(int x, int y) {
         return circle.contains(x, y);
-    }
-
-    public void setSize(int width, int height) {
-        this.width = width;
-        this.height = height;
     }
 
     public void draw(Graphics g) {
@@ -36,5 +37,13 @@ public class Ellipse implements IShapes {
 
         g2d.setColor(Color.GREEN);
         g2d.fill(circle);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

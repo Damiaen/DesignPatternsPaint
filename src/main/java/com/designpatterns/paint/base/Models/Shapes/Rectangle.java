@@ -17,25 +17,34 @@ public class Rectangle implements IShapes {
         this.height = height;
     }
 
-    public Integer[] position() {
-        return new Integer[]{x, y};
-    }
-
     public void setSize(int width, int height) {
         this.width = width;
         this.height = height;
     }
 
-    public boolean checkPosition(int x, int y) {
-        return rectangle.contains(x, y);
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public boolean checkPosition(int cursorX, int cursorY) {
+        return rectangle.contains(cursorX, cursorY);
     }
 
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        Rectangle2D.Double rectangle = new Rectangle2D.Double(x, y, width, height);
+        rectangle = new Rectangle2D.Double(x, y, width, height);
 
         g2d.setColor(Color.RED);
         g2d.fill(rectangle);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
 }

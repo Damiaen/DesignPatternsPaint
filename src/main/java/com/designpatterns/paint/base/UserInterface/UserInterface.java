@@ -21,7 +21,6 @@ public class UserInterface extends JFrame{
     private JRadioButton addRadioButton;
     private JRadioButton editRadioButton;
 
-
     private DrawPanel drawPanel = new DrawPanel();
 
     /**
