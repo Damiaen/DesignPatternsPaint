@@ -38,6 +38,15 @@ public class UserInterface extends JFrame{
                 mousePressedAction(e);
             }
         });
+
+        drawPanel.addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if (editRadioButton.isSelected() && !addRadioButton.isSelected()) {
+                    drawPanel.moveShape(e);
+                }
+            }
+        });
     }
 
     /**
@@ -45,12 +54,13 @@ public class UserInterface extends JFrame{
      * TODO: make it so user cant press button multiple times, or break stuff
      */
     private void mousePressedAction(MouseEvent e) {
-        System.out.println(e.getX() + " " + e.getY());
+        // System.out.println(e.getX() + " " + e.getY());
 
         // Add if statement to check if we need to add a new shape here
         if (addRadioButton.isSelected() && !editRadioButton.isSelected()) {
             addShapeToPanel(e.getX(), e.getY());
         } else if (editRadioButton.isSelected() && !addRadioButton.isSelected()) {
+            drawPanel.clickedShape(e);
             if (new_shape_width.getText().length() != 0 && new_shape_height.getText().length() != 0 && validateFields()) {
                 drawPanel.updateShape(e.getX(), e.getY(), Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText()));
             } else {

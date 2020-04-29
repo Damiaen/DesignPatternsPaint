@@ -22,8 +22,8 @@ public class DrawPanel extends JPanel {
     public DrawPanel() {
         // set a preferred size for the custom panel.
         setPreferredSize(new Dimension(940,420));
-        addMouseListener(new MouseListener());
-        addMouseMotionListener(new MouseMotionListener());
+//        addMouseListener(new MouseListener());
+//        addMouseMotionListener(new MouseMotionListener());
     }
 
     /**
@@ -77,68 +77,128 @@ public class DrawPanel extends JPanel {
         }
     }
 
-    class MouseListener extends MouseAdapter {
-        public void mousePressed(MouseEvent e) {
-            for (Object s : shapes) {
-                if (s instanceof Ellipse) {
-                    if (((Ellipse) s).checkPosition(e.getX(), e.getY())) {
-                        repaint();
-                        cursorSelectedX = e.getX();
-                        cursorSelectedY = e.getY();
-                    }
+    public void clickedShape(MouseEvent e) {
+        for (Object s : shapes) {
+            if (s instanceof Ellipse) {
+                if (((Ellipse) s).checkPosition(e.getX(), e.getY())) {
+                    repaint();
+                    cursorSelectedX = e.getX();
+                    cursorSelectedY = e.getY();
                 }
-                if (s instanceof Rectangle) {
-                    if (((Rectangle) s).checkPosition(e.getX(), e.getY())) {
-                        repaint();
-                        cursorSelectedX = e.getX();
-                        cursorSelectedY = e.getY();
-                    }
+            }
+            if (s instanceof Rectangle) {
+                if (((Rectangle) s).checkPosition(e.getX(), e.getY())) {
+                    repaint();
+                    cursorSelectedX = e.getX();
+                    cursorSelectedY = e.getY();
                 }
             }
         }
     }
 
-    class MouseMotionListener extends MouseMotionAdapter {
-        public void mouseDragged(MouseEvent e) {
-            for (Object s : shapes) {
-                if (s instanceof Ellipse) {
-                    if (((Ellipse) s).checkPosition(e.getX(), e.getY())) {
-                        int cursorPosX = e.getX();
-                        int cursorPosY = e.getY();
+    public void moveShape(MouseEvent e) {
+        for (Object s : shapes) {
+            if (s instanceof Ellipse) {
+                if (((Ellipse) s).checkPosition(e.getX(), e.getY())) {
+                    int cursorPosX = e.getX();
+                    int cursorPosY = e.getY();
 
-                        int originalX = ((Ellipse) s).getX();
-                        int originalY = ((Ellipse) s).getY();
+                    int originalX = ((Ellipse) s).getX();
+                    int originalY = ((Ellipse) s).getY();
 
-                        int newPosX = originalX + cursorPosX - cursorSelectedX;
-                        int newPosY = originalY + cursorPosY - cursorSelectedY;
+                    int newPosX = originalX + cursorPosX - cursorSelectedX;
+                    int newPosY = originalY + cursorPosY - cursorSelectedY;
 
-                        ((Ellipse) s).setPosition(newPosX, newPosY);
+                    ((Ellipse) s).setPosition(newPosX, newPosY);
 
-                        cursorSelectedX = cursorPosX;
-                        cursorSelectedY = cursorPosY;
-                        repaint();
-                    }
+                    cursorSelectedX = cursorPosX;
+                    cursorSelectedY = cursorPosY;
+                    repaint();
                 }
-                if (s instanceof com.designpatterns.paint.base.Models.Shapes.Rectangle) {
-                    if (((Rectangle) s).checkPosition(e.getX(), e.getY())) {
-                        int cursorPosX = e.getX();
-                        int cursorPosY = e.getY();
+            }
+            if (s instanceof com.designpatterns.paint.base.Models.Shapes.Rectangle) {
+                if (((Rectangle) s).checkPosition(e.getX(), e.getY())) {
+                    int cursorPosX = e.getX();
+                    int cursorPosY = e.getY();
 
-                        int originalX = ((Rectangle) s).getX();
-                        int originalY = ((Rectangle) s).getY();
+                    int originalX = ((Rectangle) s).getX();
+                    int originalY = ((Rectangle) s).getY();
 
-                        int newPosX = originalX + cursorPosX - cursorSelectedX;
-                        int newPosY = originalY + cursorPosY - cursorSelectedY;
+                    int newPosX = originalX + cursorPosX - cursorSelectedX;
+                    int newPosY = originalY + cursorPosY - cursorSelectedY;
 
-                        ((Rectangle) s).setPosition(newPosX, newPosY);
+                    ((Rectangle) s).setPosition(newPosX, newPosY);
 
-                        cursorSelectedX = cursorPosX;
-                        cursorSelectedY = cursorPosY;
-                        repaint();
-                    }
+                    cursorSelectedX = cursorPosX;
+                    cursorSelectedY = cursorPosY;
+                    repaint();
                 }
             }
         }
     }
+
+//    class MouseListener extends MouseAdapter {
+//        public void mousePressed(MouseEvent e) {
+//            for (Object s : shapes) {
+//                if (s instanceof Ellipse) {
+//                    if (((Ellipse) s).checkPosition(e.getX(), e.getY())) {
+//                        repaint();
+//                        cursorSelectedX = e.getX();
+//                        cursorSelectedY = e.getY();
+//                    }
+//                }
+//                if (s instanceof Rectangle) {
+//                    if (((Rectangle) s).checkPosition(e.getX(), e.getY())) {
+//                        repaint();
+//                        cursorSelectedX = e.getX();
+//                        cursorSelectedY = e.getY();
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    class MouseMotionListener extends MouseMotionAdapter {
+//        public void mouseDragged(MouseEvent e) {
+//            for (Object s : shapes) {
+//                if (s instanceof Ellipse) {
+//                    if (((Ellipse) s).checkPosition(e.getX(), e.getY())) {
+//                        int cursorPosX = e.getX();
+//                        int cursorPosY = e.getY();
+//
+//                        int originalX = ((Ellipse) s).getX();
+//                        int originalY = ((Ellipse) s).getY();
+//
+//                        int newPosX = originalX + cursorPosX - cursorSelectedX;
+//                        int newPosY = originalY + cursorPosY - cursorSelectedY;
+//
+//                        ((Ellipse) s).setPosition(newPosX, newPosY);
+//
+//                        cursorSelectedX = cursorPosX;
+//                        cursorSelectedY = cursorPosY;
+//                        repaint();
+//                    }
+//                }
+//                if (s instanceof com.designpatterns.paint.base.Models.Shapes.Rectangle) {
+//                    if (((Rectangle) s).checkPosition(e.getX(), e.getY())) {
+//                        int cursorPosX = e.getX();
+//                        int cursorPosY = e.getY();
+//
+//                        int originalX = ((Rectangle) s).getX();
+//                        int originalY = ((Rectangle) s).getY();
+//
+//                        int newPosX = originalX + cursorPosX - cursorSelectedX;
+//                        int newPosY = originalY + cursorPosY - cursorSelectedY;
+//
+//                        ((Rectangle) s).setPosition(newPosX, newPosY);
+//
+//                        cursorSelectedX = cursorPosX;
+//                        cursorSelectedY = cursorPosY;
+//                        repaint();
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 }
