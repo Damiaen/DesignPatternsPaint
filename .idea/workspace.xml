@@ -2,16 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7cc753d7-4a45-4a87-9269-95be660bc8da" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/DrawPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Ellipse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/CircleWithHandles.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Circle.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Rectangle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Square.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Triangle.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/UserInterface/UserInterface.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/UserInterface/UserInterface.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/DrawPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/DrawPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Interfaces/IShapes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Interfaces/IShapes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Ellipse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Ellipse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Rectangle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/UserInterface/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/UserInterface/UserInterface.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,6 +49,19 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.Main">
+    <configuration name="CircleWithHandles" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.designpatterns.paint.base.CircleWithHandles" />
+      <module name="DesignPatternsPaint" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.designpatterns.paint.base.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="JavaPaintUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="JavaPaintUI" />
       <module name="DesignPatternsPaint" />
@@ -76,6 +85,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.CircleWithHandles" />
         <item itemvalue="Application.JavaPaintUI" />
       </list>
     </recent_temporary>
@@ -95,41 +105,57 @@
       <workItem from="1588067104481" duration="33000" />
       <workItem from="1588067181124" duration="1149000" />
       <workItem from="1588068695073" duration="89000" />
-      <workItem from="1588151350830" duration="10076000" />
+      <workItem from="1588151350830" duration="13605000" />
     </task>
+    <task id="LOCAL-00001" summary="Add shapes">
+      <created>1588161936505</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1588161936505</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add shapes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add shapes" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1588155109298">
+    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1588162877015">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588155109298" />
+    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588162877015" />
     <state x="808" y="409" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1588068742112">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="808" y="409" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588068742112" />
-    <state x="548" y="114" key="CommitChangelistDialog2" timestamp="1588161306499">
+    <state x="548" y="114" key="CommitChangelistDialog2" timestamp="1588161935961">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="548" y="114" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588161306499" />
-    <state width="1877" height="286" key="GridCell.Tab.0.bottom" timestamp="1588161862711">
+    <state x="548" y="114" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588161935961" />
+    <state width="1877" height="286" key="GridCell.Tab.0.bottom" timestamp="1588165459239">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="286" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588161862711" />
-    <state width="1877" height="286" key="GridCell.Tab.0.center" timestamp="1588161862711">
+    <state width="1877" height="286" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588165459239" />
+    <state width="1877" height="286" key="GridCell.Tab.0.center" timestamp="1588165459239">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="286" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588161862711" />
-    <state width="1877" height="286" key="GridCell.Tab.0.left" timestamp="1588161862711">
+    <state width="1877" height="286" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588165459239" />
+    <state width="1877" height="286" key="GridCell.Tab.0.left" timestamp="1588165459239">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="286" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588161862711" />
-    <state width="1877" height="286" key="GridCell.Tab.0.right" timestamp="1588161862711">
+    <state width="1877" height="286" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588165459239" />
+    <state width="1877" height="286" key="GridCell.Tab.0.right" timestamp="1588165459239">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="286" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588161862711" />
+    <state width="1877" height="286" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588165459239" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588161939031">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588161939031" />
   </component>
 </project>

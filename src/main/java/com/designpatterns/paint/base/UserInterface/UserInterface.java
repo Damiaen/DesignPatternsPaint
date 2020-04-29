@@ -1,6 +1,8 @@
 package com.designpatterns.paint.base.UserInterface;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
+import com.designpatterns.paint.base.Models.Shapes.Ellipse;
+import com.designpatterns.paint.base.Models.Shapes.Rectangle;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class UserInterface extends JFrame{
@@ -35,7 +38,7 @@ public class UserInterface extends JFrame{
         // Create required elements for the JFrame
         createInterfaceElements();
 
-        draw_panel.addMouseListener(new MouseAdapter() {
+        drawPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 mousePressedAction(e);
@@ -54,7 +57,7 @@ public class UserInterface extends JFrame{
         if (addRadioButton.isSelected() && !editRadioButton.isSelected()) {
             addShapeToPanel(e.getX(), e.getY());
         } else if (editRadioButton.isSelected() && !addRadioButton.isSelected()) {
-            getSelectedShape(e.getX(), e.getY());
+            drawPanel.updateShape(e.getX(), e.getY());
         } else if (editRadioButton.isSelected() && addRadioButton.isSelected()) {
             System.out.println("Fix dat dit niet kan");
         }
@@ -83,15 +86,6 @@ public class UserInterface extends JFrame{
     private void addShapeToPanel(Integer mousePosX, Integer mousePosY) {
         System.out.println("Adding new shape: selected shape: '" + new_shape_combobox.getSelectedItem() + "' with values: x:" + new_shape_x.getText() + " y:" + new_shape_y.getText() + " z:" + new_shape_z.getText());
         drawPanel.addShape(Objects.requireNonNull(new_shape_combobox.getSelectedItem()).toString(), mousePosX, mousePosY, 100, 100);
-    }
-
-    /**
-     * Get selected shape based on cursor position
-     * TODO: fix dit
-     */
-    private void getSelectedShape(Integer mousePosX, Integer mousePosY) {
-        System.out.println("Checking if user has selected shape");
-
     }
 
     /**

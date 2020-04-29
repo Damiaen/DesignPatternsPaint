@@ -1,12 +1,16 @@
 package com.designpatterns.paint.base.Models.Interfaces;
 
 public interface IShapes {
-    Number x = null;
-    Number y = null;
-    Number size_x = null;
-    Number size_y = null;
+    Integer x = 0;
+    Integer y = 0;
+    Integer size_x = 0;
+    Integer size_y = 0;
 
     default String Draw() {
         return "test";
+    }
+
+    default Integer[] position() {
+        return new Integer[]{x, y};
     }
 }

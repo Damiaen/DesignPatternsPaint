@@ -26,6 +26,10 @@ public class DrawPanel extends JPanel {
         // Implement stuff
     }
 
+    public List<Object> getShapes() {
+        return shapes;
+    }
+
     /**
      * Check what we need to draw and repaint the panel
      */
@@ -39,6 +43,21 @@ public class DrawPanel extends JPanel {
                 break;
         }
         repaint();
+    }
+
+    public void updateShape(Integer mousePosX, Integer mousePosY) {
+        for (Object s : shapes) {
+            if (s instanceof Ellipse) {
+                if (((Ellipse) s).checkPosition(mousePosX, mousePosY)) {
+                    System.out.println("updating selected shape");
+                    ((Ellipse) s).setSize(200, 200);
+                    repaint();
+                }
+            }
+            if (s instanceof com.designpatterns.paint.base.Models.Shapes.Rectangle) {
+                System.out.println(((Rectangle) s).checkPosition(mousePosX, mousePosY));
+            }
+        }
     }
 
     /**
