@@ -29,6 +29,10 @@ public class UserInterface extends JFrame{
     private JButton redoButton;
     private JButton saveDrawingButton;
     private JRadioButton removeRadioButton;
+    private JPanel shape_merge_panel;
+    private JList mergeShapeList;
+    private JButton mergeLayersButton;
+    private JButton updateShapeButton;
 
     private DrawPanel drawPanel = new DrawPanel();
 
