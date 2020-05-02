@@ -4,13 +4,15 @@ import com.designpatterns.paint.base.Models.DrawPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
 public class UserInterface extends JFrame{
     private JPanel rootPanel;
-    private JPanel menu_panel;
+    private JPanel right_menu_panel;
     private JButton selectShapes;
     private JPanel content_panel;
     private JPanel shape_add_panel;
@@ -20,6 +22,13 @@ public class UserInterface extends JFrame{
     private JPanel draw_panel;
     private JRadioButton addRadioButton;
     private JRadioButton editRadioButton;
+    private JPanel top_menu_panel;
+    private JRadioButton mergeRadioButton;
+    private JButton clearDrawingButton;
+    private JButton undoButton;
+    private JButton redoButton;
+    private JButton saveDrawingButton;
+    private JRadioButton removeRadioButton;
 
     private DrawPanel drawPanel = new DrawPanel();
 
@@ -42,32 +51,42 @@ public class UserInterface extends JFrame{
         drawPanel.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                if (editRadioButton.isSelected() && !addRadioButton.isSelected()) {
-                    drawPanel.moveShape(e);
-                }
+                if (editRadioButton.isSelected()) { drawPanel.moveShape(e); }
+            }
+        });
+        clearDrawingButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                drawPanel.clearShapes();
             }
         });
     }
 
     /**
-     * Do stuff based on selected options from menu bar
-     * TODO: make it so user cant press button multiple times, or break stuff
+     * Do stuff based on selected options from menu bar.
+     * Java Swing radioButtonGroups makes it so the user can only select 1 button, so we dont need to check/validate it further.
      */
     private void mousePressedAction(MouseEvent e) {
         // System.out.println(e.getX() + " " + e.getY());
 
-        // Add if statement to check if we need to add a new shape here
-        if (addRadioButton.isSelected() && !editRadioButton.isSelected()) {
+        // Add if statement to check if we need to add a new shape here,
+        if (addRadioButton.isSelected()) {
+            //Add selected shape to panel, based on xy coords from mouse
             addShapeToPanel(e.getX(), e.getY());
-        } else if (editRadioButton.isSelected() && !addRadioButton.isSelected()) {
-            drawPanel.clickedShape(e);
-            if (new_shape_width.getText().length() != 0 && new_shape_height.getText().length() != 0 && validateFields()) {
+        } else if (editRadioButton.isSelected()) {
+            // Check if the values from the size inputs are valid and update selected shape
+            if (validateFields()) {
+                drawPanel.clickedShape(e);
                 drawPanel.updateShape(e.getX(), e.getY(), Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText()));
             } else {
                 System.out.println("Error setting size of shape");
             }
-        } else if (editRadioButton.isSelected() && addRadioButton.isSelected()) {
-            System.out.println("Fix dat dit niet kan");
+        } else if (mergeRadioButton.isSelected()) {
+            // 1: voeg toe aan lijst met shapes die we gaan mergen, 2: laat zien in de ui wat we willen mergen, 3: merge knop die het bij elkaar gooit
+            combineShapes();
+        }
+        else if (removeRadioButton.isSelected()) {
+            drawPanel.removeShape(e.getX(), e.getY());
         }
     }
 
@@ -88,16 +107,14 @@ public class UserInterface extends JFrame{
     }
 
     /**
-     * Get selected combobox values and check if xyz has been filled, if true continue and add the shape to the JPanel
-     * Shapes are as follows: 1 - Circle, 2 - Rectangle, 3 - Square, 4 - Triangle
+     * Get selected combobox values and check if xy has been filled, if true continue and add the shape to the JPanel
+     * Shapes are as follows: 1 - Circle, 2 - Rectangle
      */
     private void addShapeToPanel(Integer mousePosX, Integer mousePosY) {
         System.out.println("Adding new shape: selected shape: '" + new_shape_combobox.getSelectedItem() + "' with values: x:" + new_shape_width.getText() + " y:" + new_shape_height.getText());
 
-        if (new_shape_width.getText().length() != 0 && new_shape_height.getText().length() != 0 && validateFields()) {
+        if (validateFields()) {
             drawPanel.addShape(Objects.requireNonNull(new_shape_combobox.getSelectedItem()).toString(), mousePosX, mousePosY, Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText()));
-        } else {
-            System.out.println("Error setting size of shape");
         }
     }
 
@@ -106,10 +123,14 @@ public class UserInterface extends JFrame{
      */
     private boolean validateFields() {
         try {
-            Integer.parseInt(new_shape_width.getText());
-            Integer.parseInt(new_shape_height.getText());
-            return true;
+            if (new_shape_width.getText().length() != 0 && new_shape_height.getText().length() != 0) {
+                Integer.parseInt(new_shape_width.getText());
+                Integer.parseInt(new_shape_height.getText());
+                return true;
+            }
+            return false;
         } catch (NumberFormatException e) {
+            System.out.println("Input validator returned false, check if the input is correct");
             return false;
         }
     }
@@ -119,7 +140,7 @@ public class UserInterface extends JFrame{
      * TODO: implement
      */
     private void combineShapes() {
-
+        System.out.println("Not implemented");
     }
 
 }

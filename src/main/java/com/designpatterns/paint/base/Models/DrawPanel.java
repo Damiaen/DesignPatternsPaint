@@ -22,6 +22,7 @@ public class DrawPanel extends JPanel {
     public DrawPanel() {
         // set a preferred size for the custom panel.
         setPreferredSize(new Dimension(940,420));
+        setBackground(new Color(255, 255, 255));
 //        addMouseListener(new MouseListener());
 //        addMouseMotionListener(new MouseMotionListener());
     }
@@ -41,23 +42,52 @@ public class DrawPanel extends JPanel {
         repaint();
     }
 
+    /**
+     * Update selected shape
+     * TODO: Laat ellipse en rectangle overerven van Shape, zodat we alleen instanceofshape hoeven aan te roepen, en daar op de size instellen.
+     */
     public void updateShape(int mousePosX, int mousePosY, int width, int height) {
+        Object selectedShape = getShapeByCoordinates(mousePosX, mousePosY);
+        if (selectedShape instanceof Ellipse) {
+                ((Ellipse) selectedShape).setSize(width, height);
+                repaint();
+        }
+        if (selectedShape instanceof Rectangle) {
+            ((Rectangle) selectedShape).setSize(width, height);
+            repaint();
+        }
+    }
+
+    /**
+     * Remove selected shape
+     */
+    public void removeShape(int mousePosX, int mousePosY) {
+        shapes.remove(getShapeByCoordinates(mousePosX, mousePosY));
+        repaint();
+    }
+
+    private Object getShapeByCoordinates(int mousePosX, int mousePosY) {
         for (Object s : shapes) {
             if (s instanceof Ellipse) {
                 if (((Ellipse) s).checkPosition(mousePosX, mousePosY)) {
-                    System.out.println("updating selected shape");
-                    ((Ellipse) s).setSize(width, height);
-                    repaint();
+                    return s;
                 }
             }
             if (s instanceof Rectangle) {
                 if (((Rectangle) s).checkPosition(mousePosX, mousePosY)) {
-                    System.out.println("updating selected shape");
-                    ((Rectangle) s).setSize(width, height);
-                    repaint();
+                    return s;
                 }
             }
         }
+        return null;
+    }
+
+    /**
+     * Remove all the shapes from the ui by resetting the object list and then repainting
+     */
+    public void clearShapes() {
+        shapes = new ArrayList<>();
+        repaint();
     }
 
     /**
