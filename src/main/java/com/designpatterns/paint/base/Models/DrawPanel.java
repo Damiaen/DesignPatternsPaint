@@ -90,8 +90,8 @@ public class DrawPanel extends JPanel {
         System.out.println("Selected shape indexes: " + selectedShapes);
     }
 
-    /*
-    remove the last added shape from shapes and add to history
+    /**
+     * remove the last added shape from shapes and add to history
      */
     public void undo ()
     {
@@ -99,16 +99,16 @@ public class DrawPanel extends JPanel {
             System.out.println("shapes list empty");
             return;
         }
-        shapesHistory.add(shapes.size() - 1);
+        shapesHistory.add(shapes.get(shapes.size() - 1));
         if (shapesHistory.size() > maxHistorySize) {
             shapesHistory.remove(0);
         }
         shapes.remove(shapes.size() - 1);
         repaint();
     }
-    /*
-        get the last item from shapes history and add back to shapes
-        TODO shape isn't drawn after redo
+
+    /**
+     *  get the last item from shapes history and add back to shapes
     */
     public void redo ()
     {
@@ -118,6 +118,7 @@ public class DrawPanel extends JPanel {
         }
         shapes.add(shapesHistory.get(shapesHistory.size() - 1));
         shapesHistory.remove(shapesHistory.size() -1);
+
         repaint();
     }
 
