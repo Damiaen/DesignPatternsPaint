@@ -16,6 +16,8 @@ public class DrawPanel extends JPanel {
 
     // Temp for testing, store shapes here so we can call on them later
     private List<Object> shapes = new ArrayList<>();
+    private List<Object> shapesHistory = new ArrayList<>();
+    private int maxHistorySize = 10;
 
     int cursorSelectedX, cursorSelectedY;
 
@@ -63,6 +65,37 @@ public class DrawPanel extends JPanel {
      */
     public void removeShape(int mousePosX, int mousePosY) {
         shapes.remove(getShapeByCoordinates(mousePosX, mousePosY));
+        repaint();
+    }
+
+    /*
+    remove the last added shape from shapes and add to history
+     */
+    public void undo ()
+    {
+        if (shapes.size() == 0){
+            System.out.println("shapes list empty");
+            return;
+        }
+        shapesHistory.add(shapes.size() - 1);
+        if (shapesHistory.size() > maxHistorySize) {
+            shapesHistory.remove(0);
+        }
+        shapes.remove(shapes.size() - 1);
+        repaint();
+    }
+    /*
+        get the last item from shapes history and add back to shapes
+        TODO shape isn't drawn after redo
+    */
+    public void redo ()
+    {
+        if (shapesHistory.size() == 0){
+            System.out.println("No history");
+            return;
+        }
+        shapes.add(shapesHistory.get(shapesHistory.size() - 1));
+        shapesHistory.remove(shapesHistory.size() -1);
         repaint();
     }
 

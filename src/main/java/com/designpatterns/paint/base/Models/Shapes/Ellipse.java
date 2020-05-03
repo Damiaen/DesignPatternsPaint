@@ -6,9 +6,9 @@ import java.awt.geom.Ellipse2D;
 
 public class Ellipse implements IShapes {
 
-    int x, y, width, height;
+    private int x, y, width, height;
 
-    Ellipse2D.Double circle;
+    private Ellipse2D.Double circle;
 
     public Ellipse(int x, int y, int width, int height) {
         this.x = x;

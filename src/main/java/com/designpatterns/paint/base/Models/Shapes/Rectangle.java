@@ -6,9 +6,9 @@ import java.awt.geom.Rectangle2D;
 
 public class Rectangle implements IShapes {
 
-    int x, y, width, height;
+    private int x, y, width, height;
 
-    Rectangle2D.Double rectangle;
+    private Rectangle2D.Double rectangle;
 
     public Rectangle(int x, int y, int width, int height) {
         this.x = x;

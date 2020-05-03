@@ -2,15 +2,22 @@ package com.designpatterns.paint.base.UserInterface;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
-public class UserInterface extends JFrame{
+public class UserInterface extends JFrame {
     private JPanel rootPanel;
     private JPanel right_menu_panel;
     private JButton selectShapes;
@@ -51,17 +58,28 @@ public class UserInterface extends JFrame{
                 mousePressedAction(e);
             }
         });
-
+        undoButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                drawPanel.undo();
+            }
+        });
+        redoButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                drawPanel.redo();
+            }
+        });
+        clearDrawingButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                drawPanel.clearShapes();
+            }
+        });
         drawPanel.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
                 if (editRadioButton.isSelected()) { drawPanel.moveShape(e); }
-            }
-        });
-        clearDrawingButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                drawPanel.clearShapes();
             }
         });
     }
@@ -77,19 +95,27 @@ public class UserInterface extends JFrame{
         if (addRadioButton.isSelected()) {
             //Add selected shape to panel, based on xy coords from mouse
             addShapeToPanel(e.getX(), e.getY());
-        } else if (editRadioButton.isSelected()) {
+        }
+        else if (editRadioButton.isSelected())
+        {
             // Check if the values from the size inputs are valid and update selected shape
-            if (validateFields()) {
+            if (validateFields())
+            {
                 drawPanel.clickedShape(e);
                 drawPanel.updateShape(e.getX(), e.getY(), Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText()));
-            } else {
+            }
+            else
+            {
                 System.out.println("Error setting size of shape");
             }
-        } else if (mergeRadioButton.isSelected()) {
+        }
+        else if (mergeRadioButton.isSelected())
+        {
             // 1: voeg toe aan lijst met shapes die we gaan mergen, 2: laat zien in de ui wat we willen mergen, 3: merge knop die het bij elkaar gooit
             combineShapes();
         }
-        else if (removeRadioButton.isSelected()) {
+        else if (removeRadioButton.isSelected())
+        {
             drawPanel.removeShape(e.getX(), e.getY());
         }
     }
