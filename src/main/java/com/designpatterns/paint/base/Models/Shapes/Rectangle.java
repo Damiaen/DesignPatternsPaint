@@ -6,7 +6,7 @@ import java.awt.geom.Rectangle2D;
 
 public class Rectangle extends Figure {
 
-    Rectangle2D.Double rectangle;
+    private Rectangle2D.Double rectangle;
 
     public Rectangle(int x, int y, int width, int height) {
         super(x, y, width, height);

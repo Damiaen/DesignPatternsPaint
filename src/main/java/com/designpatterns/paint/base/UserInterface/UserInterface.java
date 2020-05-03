@@ -2,8 +2,15 @@ package com.designpatterns.paint.base.UserInterface;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -11,7 +18,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Objects;
 
-public class UserInterface extends JFrame{
+public class UserInterface extends JFrame {
     private JPanel rootPanel;
     private JPanel right_menu_panel;
     private JButton selectShapes;
@@ -61,7 +68,24 @@ public class UserInterface extends JFrame{
                 mousePressedAction(e);
             }
         });
-
+        undoButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                drawPanel.undo();
+            }
+        });
+        redoButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                drawPanel.redo();
+            }
+        });
+        clearDrawingButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                drawPanel.clearShapes();
+            }
+        });
         drawPanel.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
