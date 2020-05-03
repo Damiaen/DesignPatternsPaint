@@ -1,30 +1,31 @@
-package com.designpatterns.paint.base.Models;
+package com.designpatterns.paint.base.Models.UserInterface;
 
-import com.designpatterns.paint.base.CircleWithHandles;
 import com.designpatterns.paint.base.Models.Shapes.Ellipse;
+import com.designpatterns.paint.base.Models.Shapes.Figure.Figure;
 import com.designpatterns.paint.base.Models.Shapes.Rectangle;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DrawPanel extends JPanel {
 
-    // Temp for testing, store shapes here so we can call on them later
+    // Store shapes here, so we can call on them later
     private List<Object> shapes = new ArrayList<>();
+
+    // Store selectedShape indexes here, so we can select multiple and loop through selected
+    private List<Integer> selectedShapes = new ArrayList<>();
 
     int cursorSelectedX, cursorSelectedY;
 
+    /**
+     * Initiate and set up panel
+     */
     public DrawPanel() {
-        // set a preferred size for the custom panel.
         setPreferredSize(new Dimension(940,420));
         setBackground(new Color(255, 255, 255));
-//        addMouseListener(new MouseListener());
-//        addMouseMotionListener(new MouseMotionListener());
     }
 
     /**
@@ -43,27 +44,56 @@ public class DrawPanel extends JPanel {
     }
 
     /**
-     * Update selected shape
-     * TODO: Laat ellipse en rectangle overerven van Shape, zodat we alleen instanceofshape hoeven aan te roepen, en daar op de size instellen.
+     * Check if the user has selected a shape, if not reset the selectedShapes List
      */
-    public void updateShape(int mousePosX, int mousePosY, int width, int height) {
-        Object selectedShape = getShapeByCoordinates(mousePosX, mousePosY);
-        if (selectedShape instanceof Ellipse) {
-                ((Ellipse) selectedShape).setSize(width, height);
-                repaint();
-        }
-        if (selectedShape instanceof Rectangle) {
-            ((Rectangle) selectedShape).setSize(width, height);
-            repaint();
+    public void checkSelectShape(int mousePosX, int mousePosY) {
+        if (!checkIfClickedShape(mousePosX, mousePosY)) {
+            selectedShapes = new ArrayList<Integer>();
         }
     }
 
     /**
-     * Remove selected shape
+     * Update all shapes based on values in selected shapes array
+     */
+    public void updateShapes(int newWidth, int newHeight) {
+        for (Integer selectedShapesIndex : selectedShapes) {
+            if (shapes.get(selectedShapesIndex) instanceof Figure) {
+                ((Figure) shapes.get(selectedShapesIndex)).setSize(newWidth, newHeight);
+                repaint();
+            }
+        }
+    }
+
+    /**
+     * Remove selected shape and remove it from the selected list
      */
     public void removeShape(int mousePosX, int mousePosY) {
-        shapes.remove(getShapeByCoordinates(mousePosX, mousePosY));
+        Object shape = getShapeByCoordinates(mousePosX, mousePosY);
+        selectedShapes.remove(shapes.indexOf(shape));
+        shapes.remove(shape);
         repaint();
+    }
+
+    /**
+     * add shape to the selected shape index, check for duplicates here.
+     */
+    public void setSelectedShapes(int selectedShapeIndex) {
+        if (!selectedShapes.contains(selectedShapeIndex)) {
+            selectedShapes.add(selectedShapeIndex);
+        }
+        System.out.println("Selected shape indexes: " + selectedShapes);
+    }
+
+    /**
+     * get the selected shapes, so we can display these
+     */
+    public List<String> getSelectedShapes() {
+        List<String> selectedShapesNames = new ArrayList<>();
+
+        for (Integer i : selectedShapes) {
+            selectedShapesNames.add("Index of selected shape:" + i);
+        }
+        return selectedShapesNames;
     }
 
     private Object getShapeByCoordinates(int mousePosX, int mousePosY) {
@@ -87,6 +117,7 @@ public class DrawPanel extends JPanel {
      */
     public void clearShapes() {
         shapes = new ArrayList<>();
+        selectedShapes = new ArrayList<>();
         repaint();
     }
 
@@ -107,23 +138,31 @@ public class DrawPanel extends JPanel {
         }
     }
 
-    public void clickedShape(MouseEvent e) {
+    /**
+     * Check if user clicked on a shape, returns bool
+     */
+    public boolean checkIfClickedShape(int mousePosX, int mousePosY) {
         for (Object s : shapes) {
             if (s instanceof Ellipse) {
-                if (((Ellipse) s).checkPosition(e.getX(), e.getY())) {
+                if (((Ellipse) s).checkPosition(mousePosX, mousePosY)) {
+                    setSelectedShapes(shapes.indexOf(s));
                     repaint();
-                    cursorSelectedX = e.getX();
-                    cursorSelectedY = e.getY();
+                    cursorSelectedX = mousePosX;
+                    cursorSelectedY = mousePosY;
+                    return true;
                 }
             }
             if (s instanceof Rectangle) {
-                if (((Rectangle) s).checkPosition(e.getX(), e.getY())) {
+                if (((Rectangle) s).checkPosition(mousePosX, mousePosY)) {
+                    setSelectedShapes(shapes.indexOf(s));
                     repaint();
-                    cursorSelectedX = e.getX();
-                    cursorSelectedY = e.getY();
+                    cursorSelectedX = mousePosX;
+                    cursorSelectedY = mousePosY;
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     public void moveShape(MouseEvent e) {

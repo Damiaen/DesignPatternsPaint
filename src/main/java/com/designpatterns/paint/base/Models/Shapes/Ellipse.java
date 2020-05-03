@@ -1,30 +1,16 @@
 package com.designpatterns.paint.base.Models.Shapes;
-import com.designpatterns.paint.base.Models.Interfaces.IShapes;
+
+import com.designpatterns.paint.base.Models.Shapes.Figure.Figure;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
-public class Ellipse implements IShapes {
-
-    int x, y, width, height;
+public class Ellipse extends Figure {
 
     Ellipse2D.Double circle;
 
     public Ellipse(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-    }
-
-    public void setSize(int width, int height) {
-        this.width = width;
-        this.height = height;
-    }
-
-    public void setPosition(int x, int y) {
-        this.x = x;
-        this.y = y;
+        super(x, y, width, height);
     }
 
     public boolean checkPosition(int x, int y) {
@@ -33,17 +19,9 @@ public class Ellipse implements IShapes {
 
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        circle = new Ellipse2D.Double(x, y, width, height);
+        circle = new Ellipse2D.Double(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 
         g2d.setColor(Color.GREEN);
         g2d.fill(circle);
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 }

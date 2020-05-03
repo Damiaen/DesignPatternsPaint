@@ -1,6 +1,6 @@
 package com.designpatterns.paint.base.UserInterface;
 
-import com.designpatterns.paint.base.Models.DrawPanel;
+import com.designpatterns.paint.base.Models.UserInterface.DrawPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,11 +30,13 @@ public class UserInterface extends JFrame{
     private JButton saveDrawingButton;
     private JRadioButton removeRadioButton;
     private JPanel shape_merge_panel;
-    private JList mergeShapeList;
+    private JList<String> mergeShapeList;
     private JButton mergeLayersButton;
     private JButton updateShapeButton;
 
     private DrawPanel drawPanel = new DrawPanel();
+    private DefaultListModel<String> listModel = new DefaultListModel<>();
+
 
     /**
      * Main JFrame IU, everything in the view is stored here
@@ -62,6 +64,14 @@ public class UserInterface extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 drawPanel.clearShapes();
+                listModel.removeAllElements();
+                listModel.addAll(drawPanel.getSelectedShapes());
+            }
+        });
+        updateShapeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                drawPanel.updateShapes(Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText()));
             }
         });
     }
@@ -80,10 +90,9 @@ public class UserInterface extends JFrame{
         } else if (editRadioButton.isSelected()) {
             // Check if the values from the size inputs are valid and update selected shape
             if (validateFields()) {
-                drawPanel.clickedShape(e);
-                drawPanel.updateShape(e.getX(), e.getY(), Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText()));
-            } else {
-                System.out.println("Error setting size of shape");
+                drawPanel.checkSelectShape(e.getX(), e.getY());
+                listModel.removeAllElements();
+                listModel.addAll(drawPanel.getSelectedShapes());
             }
         } else if (mergeRadioButton.isSelected()) {
             // 1: voeg toe aan lijst met shapes die we gaan mergen, 2: laat zien in de ui wat we willen mergen, 3: merge knop die het bij elkaar gooit
@@ -108,6 +117,8 @@ public class UserInterface extends JFrame{
         // Add the DrawPanel to the draw_panel so we can draw shit
         draw_panel.setLayout(new BorderLayout());
         draw_panel.add(drawPanel);
+        // Setting up listModel so we can see the selected shapes
+        mergeShapeList.setModel(listModel);
     }
 
     /**
