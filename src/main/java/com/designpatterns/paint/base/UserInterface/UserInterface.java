@@ -1,6 +1,6 @@
 package com.designpatterns.paint.base.UserInterface;
 
-import com.designpatterns.paint.base.Models.UserInterface.DrawPanel;
+import com.designpatterns.paint.base.Models.DrawPanel;
 
 import javax.swing.*;
 import java.awt.*;

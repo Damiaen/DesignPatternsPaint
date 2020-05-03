@@ -1,4 +1,4 @@
-package com.designpatterns.paint.base.Models.UserInterface;
+package com.designpatterns.paint.base.Models;
 
 import com.designpatterns.paint.base.Models.Shapes.Ellipse;
 import com.designpatterns.paint.base.Models.Shapes.Figure.Figure;
