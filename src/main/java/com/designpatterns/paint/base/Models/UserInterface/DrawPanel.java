@@ -24,7 +24,7 @@ public class DrawPanel extends JPanel {
      * Initiate and set up panel
      */
     public DrawPanel() {
-        setPreferredSize(new Dimension(940,420));
+        setPreferredSize(new Dimension(940, 420));
         setBackground(new Color(255, 255, 255));
     }
 
@@ -65,13 +65,17 @@ public class DrawPanel extends JPanel {
     }
 
     /**
-     * Remove selected shape and remove it from the selected list
+     * Remove selected shape and check if it was selected, if so remove it from the selected list
      */
     public void removeShape(int mousePosX, int mousePosY) {
         Object shape = getShapeByCoordinates(mousePosX, mousePosY);
-        selectedShapes.remove(shapes.indexOf(shape));
-        shapes.remove(shape);
-        repaint();
+        if (shape != null) {
+            if (!selectedShapes.isEmpty() && selectedShapes.contains(shapes.indexOf(shape))) {
+                selectedShapes.remove(shapes.indexOf(shape));
+            }
+            shapes.remove(shape);
+            repaint();
+        }
     }
 
     /**
@@ -91,11 +95,14 @@ public class DrawPanel extends JPanel {
         List<String> selectedShapesNames = new ArrayList<>();
 
         for (Integer i : selectedShapes) {
-            selectedShapesNames.add("Index of selected shape:" + i);
+            selectedShapesNames.add("Index of selected shape: " + i);
         }
         return selectedShapesNames;
     }
 
+    /**
+     * Get which shape is on which coordinate
+     */
     private Object getShapeByCoordinates(int mousePosX, int mousePosY) {
         for (Object s : shapes) {
             if (s instanceof Ellipse) {
@@ -115,27 +122,17 @@ public class DrawPanel extends JPanel {
     /**
      * Remove all the shapes from the ui by resetting the object list and then repainting
      */
+    public void clearSelectedShapes() {
+        selectedShapes = new ArrayList<>();
+    }
+
+    /**
+     * Remove all the shapes from the ui by resetting the object list and then repainting
+     */
     public void clearShapes() {
         shapes = new ArrayList<>();
         selectedShapes = new ArrayList<>();
         repaint();
-    }
-
-    /**
-     * Override the paintComponent method so we can use our own code to draw shit
-     */
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        for (Object s : shapes) {
-            if (s instanceof Ellipse) {
-                ((Ellipse) s).draw(g);
-            }
-            if (s instanceof Rectangle) {
-                ((Rectangle) s).draw(g);
-            }
-        }
     }
 
     /**
@@ -165,109 +162,49 @@ public class DrawPanel extends JPanel {
         return false;
     }
 
+    /**
+     * Check which shape has been selected and move it
+     */
     public void moveShape(MouseEvent e) {
         for (Object s : shapes) {
             if (s instanceof Ellipse) {
                 if (((Ellipse) s).checkPosition(e.getX(), e.getY())) {
-                    int cursorPosX = e.getX();
-                    int cursorPosY = e.getY();
-
-                    int originalX = ((Ellipse) s).getX();
-                    int originalY = ((Ellipse) s).getY();
-
-                    int newPosX = originalX + cursorPosX - cursorSelectedX;
-                    int newPosY = originalY + cursorPosY - cursorSelectedY;
-
-                    ((Ellipse) s).setPosition(newPosX, newPosY);
-
-                    cursorSelectedX = cursorPosX;
-                    cursorSelectedY = cursorPosY;
-                    repaint();
+                    ((Ellipse) s).setPosition(
+                            (((Ellipse) s).getX() + e.getX() - cursorSelectedX),
+                            (((Ellipse) s).getY() + e.getY() - cursorSelectedY)
+                    );
                 }
             }
-            if (s instanceof com.designpatterns.paint.base.Models.Shapes.Rectangle) {
+            if (s instanceof Rectangle) {
                 if (((Rectangle) s).checkPosition(e.getX(), e.getY())) {
-                    int cursorPosX = e.getX();
-                    int cursorPosY = e.getY();
-
-                    int originalX = ((Rectangle) s).getX();
-                    int originalY = ((Rectangle) s).getY();
-
-                    int newPosX = originalX + cursorPosX - cursorSelectedX;
-                    int newPosY = originalY + cursorPosY - cursorSelectedY;
-
-                    ((Rectangle) s).setPosition(newPosX, newPosY);
-
-                    cursorSelectedX = cursorPosX;
-                    cursorSelectedY = cursorPosY;
-                    repaint();
+                    ((Rectangle) s).setPosition(
+                            (((Rectangle) s).getX() + e.getX() - cursorSelectedX),
+                            (((Rectangle) s).getY() + e.getY() - cursorSelectedY)
+                    );
                 }
             }
         }
+
+        cursorSelectedX = e.getX();
+        cursorSelectedY = e.getY();
+        repaint();
     }
 
-//    class MouseListener extends MouseAdapter {
-//        public void mousePressed(MouseEvent e) {
-//            for (Object s : shapes) {
-//                if (s instanceof Ellipse) {
-//                    if (((Ellipse) s).checkPosition(e.getX(), e.getY())) {
-//                        repaint();
-//                        cursorSelectedX = e.getX();
-//                        cursorSelectedY = e.getY();
-//                    }
-//                }
-//                if (s instanceof Rectangle) {
-//                    if (((Rectangle) s).checkPosition(e.getX(), e.getY())) {
-//                        repaint();
-//                        cursorSelectedX = e.getX();
-//                        cursorSelectedY = e.getY();
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
-//    class MouseMotionListener extends MouseMotionAdapter {
-//        public void mouseDragged(MouseEvent e) {
-//            for (Object s : shapes) {
-//                if (s instanceof Ellipse) {
-//                    if (((Ellipse) s).checkPosition(e.getX(), e.getY())) {
-//                        int cursorPosX = e.getX();
-//                        int cursorPosY = e.getY();
-//
-//                        int originalX = ((Ellipse) s).getX();
-//                        int originalY = ((Ellipse) s).getY();
-//
-//                        int newPosX = originalX + cursorPosX - cursorSelectedX;
-//                        int newPosY = originalY + cursorPosY - cursorSelectedY;
-//
-//                        ((Ellipse) s).setPosition(newPosX, newPosY);
-//
-//                        cursorSelectedX = cursorPosX;
-//                        cursorSelectedY = cursorPosY;
-//                        repaint();
-//                    }
-//                }
-//                if (s instanceof com.designpatterns.paint.base.Models.Shapes.Rectangle) {
-//                    if (((Rectangle) s).checkPosition(e.getX(), e.getY())) {
-//                        int cursorPosX = e.getX();
-//                        int cursorPosY = e.getY();
-//
-//                        int originalX = ((Rectangle) s).getX();
-//                        int originalY = ((Rectangle) s).getY();
-//
-//                        int newPosX = originalX + cursorPosX - cursorSelectedX;
-//                        int newPosY = originalY + cursorPosY - cursorSelectedY;
-//
-//                        ((Rectangle) s).setPosition(newPosX, newPosY);
-//
-//                        cursorSelectedX = cursorPosX;
-//                        cursorSelectedY = cursorPosY;
-//                        repaint();
-//                    }
-//                }
-//            }
-//        }
-//    }
+    /**
+     * Override the paintComponent method so we can use our own code to draw shit
+     */
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        for (Object s : shapes) {
+            if (s instanceof Ellipse) {
+                ((Ellipse) s).draw(g);
+            }
+            if (s instanceof Rectangle) {
+                ((Rectangle) s).draw(g);
+            }
+        }
+    }
 
 }
