@@ -75,6 +75,7 @@ public class DrawPanel extends JPanel {
             if (!selectedShapes.isEmpty() && selectedShapes.contains(shapes.indexOf(shape))) {
                 selectedShapes.remove(shapes.indexOf(shape));
             }
+            shapesHistory.add(shape);
             shapes.remove(shape);
             repaint();
         }
