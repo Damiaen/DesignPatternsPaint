@@ -1,30 +1,15 @@
 package com.designpatterns.paint.base.Models.Shapes;
-import com.designpatterns.paint.base.Models.Interfaces.IShapes;
+import com.designpatterns.paint.base.Models.Shapes.Figure.Figure;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-public class Rectangle implements IShapes {
-
-    private int x, y, width, height;
+public class Rectangle extends Figure {
 
     private Rectangle2D.Double rectangle;
 
     public Rectangle(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-    }
-
-    public void setSize(int width, int height) {
-        this.width = width;
-        this.height = height;
-    }
-
-    public void setPosition(int x, int y) {
-        this.x = x;
-        this.y = y;
+        super(x, y, width, height);
     }
 
     public boolean checkPosition(int cursorX, int cursorY) {
@@ -33,18 +18,10 @@ public class Rectangle implements IShapes {
 
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        rectangle = new Rectangle2D.Double(x, y, width, height);
+        rectangle = new Rectangle2D.Double(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 
         g2d.setColor(Color.RED);
         g2d.fill(rectangle);
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 
 }
