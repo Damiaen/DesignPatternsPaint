@@ -85,33 +85,17 @@ public class UserInterface extends JFrame {
                 if (editRadioButton.isSelected()) { drawPanel.moveShape(e); }
             }
         });
-        clearDrawingButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                drawPanel.clearShapes();
-                updateSelectedList();
-            }
+        clearDrawingButton.addActionListener(actionEvent -> {
+            drawPanel.clearShapes();
+            updateSelectedList();
         });
-        updateShapeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                drawPanel.updateShapes(Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText()));
-            }
-        });
-        mergeLayersButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                combineShapes();
-            }
-        });
+        updateShapeButton.addActionListener(actionEvent -> drawPanel.updateShapes(Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText())));
+        mergeLayersButton.addActionListener(actionEvent -> combineShapes());
 
         // When the user switches mode we need to reset certain settings to prevent random shit from happening
-        ActionListener listener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                drawPanel.clearSelectedShapes();
-                updateSelectedList();
-            }
+        ActionListener listener = actionEvent -> {
+            drawPanel.clearSelectedShapes();
+            updateSelectedList();
         };
         addRadioButton.addActionListener(listener);
         editRadioButton.addActionListener(listener);

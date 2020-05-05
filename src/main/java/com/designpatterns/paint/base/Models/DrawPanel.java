@@ -1,5 +1,8 @@
 package com.designpatterns.paint.base.Models;
 
+import com.designpatterns.paint.base.Models.Actions.Action;
+import com.designpatterns.paint.base.Models.Actions.ActionHistory;
+import com.designpatterns.paint.base.Models.Actions.ActionType;
 import com.designpatterns.paint.base.Models.Shapes.Ellipse;
 import com.designpatterns.paint.base.Models.Shapes.Figure.Figure;
 import com.designpatterns.paint.base.Models.Shapes.Rectangle;
@@ -12,9 +15,10 @@ import java.util.List;
 
 public class DrawPanel extends JPanel {
 
+    ActionHistory actionHistory = ActionHistory.getInstance();
+
     // Store shapes here, so we can call on them later
     private List<Object> shapes = new ArrayList<>();
-    private List<Object> shapesHistory = new ArrayList<>();
     private int maxHistorySize = 10;
 
     // Store selectedShape indexes here, so we can select multiple and loop through selected
@@ -34,15 +38,19 @@ public class DrawPanel extends JPanel {
      * Check what we need to draw and repaint the panel
      */
     public void addShape(String shapeName, int mousePosX, int mousePosY, int width, int height) {
+        Object shape;
         switch (shapeName) {
             case "Ellipse":
-                shapes.add(new Ellipse(mousePosX, mousePosY, width, height));
+                shape = shapes.add(new Ellipse(mousePosX, mousePosY, width, height));
+                ActionHistory.getInstance().addAction(new Action(ActionType.ADD,shape));
                 break;
             case "Rectangle":
-                shapes.add(new Rectangle(mousePosX, mousePosY, width, height));
+                shape = shapes.add(new Rectangle(mousePosX, mousePosY, width, height));
+                ActionHistory.getInstance().addAction(new Action(ActionType.ADD,shape));
                 break;
         }
         repaint();
+        System.out.println(actionHistory.getIndex());
     }
 
     /**
@@ -75,8 +83,6 @@ public class DrawPanel extends JPanel {
             if (!selectedShapes.isEmpty() && selectedShapes.contains(shapes.indexOf(shape))) {
                 selectedShapes.remove(shapes.indexOf(shape));
             }
-            shapesHistory.add(shape);
-            shapes.remove(shape);
             repaint();
         }
     }
@@ -92,35 +98,52 @@ public class DrawPanel extends JPanel {
     }
 
     /**
-     * remove the last added shape from shapes and add to history
+     * undo the last action
      */
     public void undo ()
     {
-        if (shapes.size() == 0){
-            System.out.println("shapes list empty");
-            return;
+        List<Action> history = actionHistory.getHistory();
+        if (history.size() == 0 || actionHistory.getIndex() == -1) return;
+        Action action = actionHistory.getLastAction();
+        if (action == null) return;
+        switch (action.getType()){
+            case ADD:
+                if (shapes.size() > 0) shapes.remove(shapes.size() - 1);
+                break;
+            case REMOVE:
+                Object object = action.getObject();
+                if (object != null) shapes.add(object);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + action.getType());
         }
-        shapesHistory.add(shapes.get(shapes.size() - 1));
-        if (shapesHistory.size() > maxHistorySize) {
-            shapesHistory.remove(0);
-        }
-        shapes.remove(shapes.size() - 1);
         repaint();
+        ActionHistory.getInstance().undo();
+        System.out.println(actionHistory.getIndex());
     }
 
     /**
-     *  get the last item from shapes history and add back to shapes
+     *  redo the action that is undone
     */
     public void redo ()
     {
-        if (shapesHistory.size() == 0){
-            System.out.println("No history");
-            return;
+        List<Action> history = actionHistory.getHistory();
+        if (actionHistory.getIndex() == history.size() -1) return;
+        ActionHistory.getInstance().redo();
+        Action action = actionHistory.getLastAction();
+        switch (action.getType()){
+            case ADD:
+                System.out.println(action.getObject());
+                shapes.add(action.getObject());
+                break;
+            case REMOVE:
+                if (shapes.size() > 0) shapes.remove(action.getObject());
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + action.getType());
         }
-        shapes.add(shapesHistory.get(shapesHistory.size() - 1));
-        shapesHistory.remove(shapesHistory.size() -1);
-
         repaint();
+        System.out.println(actionHistory.getIndex());
     }
 
     /**
