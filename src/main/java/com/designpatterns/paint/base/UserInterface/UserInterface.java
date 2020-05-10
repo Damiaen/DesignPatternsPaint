@@ -49,6 +49,12 @@ public class UserInterface extends JFrame {
 
         // Setup all the listeners that we require
         setupListeners();
+        saveDrawingButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                drawPanel.saveDrawing();
+            }
+        });
     }
 
     /**
@@ -188,7 +194,9 @@ public class UserInterface extends JFrame {
      */
     private void updateSelectedList() {
         listModel.removeAllElements();
-        listModel.addAll(drawPanel.getSelectedShapes());
+        for (String selectedShape : drawPanel.getSelectedShapes()) {
+            listModel.addElement(selectedShape);
+        }
     }
 
     /**
