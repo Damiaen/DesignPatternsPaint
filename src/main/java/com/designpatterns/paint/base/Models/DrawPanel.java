@@ -171,6 +171,14 @@ public class DrawPanel extends JPanel {
     }
 
     /**
+     * Save the drawings data to json
+     */
+    public void saveDrawing() {
+        SaveDrawing save = new SaveDrawing();
+        save.save(shapes);
+    }
+
+    /**
      * Check if user clicked on a shape, returns bool
      */
     public boolean checkIfClickedShape(int mousePosX, int mousePosY) {
