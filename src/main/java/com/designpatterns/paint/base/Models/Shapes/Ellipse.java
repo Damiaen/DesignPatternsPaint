@@ -1,22 +1,25 @@
 package com.designpatterns.paint.base.Models.Shapes;
 
-import com.designpatterns.paint.base.Models.Shapes.Figure.Figure;
+import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
+import com.designpatterns.paint.base.Models.Shapes.Figure.ShapeType;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
-public class Ellipse extends Figure {
+public class Ellipse extends Shape {
 
     private Ellipse2D.Double circle;
 
     public Ellipse(int x, int y, int width, int height) {
-        super(x, y, width, height);
+        super(ShapeType.Ellipse, x, y, width, height);
     }
 
+    @Override
     public boolean checkPosition(int x, int y) {
         return circle.contains(x, y);
     }
 
+    @Override
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         circle = new Ellipse2D.Double(this.getX(), this.getY(), this.getWidth(), this.getHeight());

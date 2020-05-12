@@ -1,10 +1,15 @@
 package com.designpatterns.paint.base.UserInterface;
 
+import com.designpatterns.paint.base.Models.Actions.AddShape;
+import com.designpatterns.paint.base.Models.Actions.Invoker;
+import com.designpatterns.paint.base.Models.Actions.MoveShape;
+import com.designpatterns.paint.base.Models.Actions.Vector2;
 import com.designpatterns.paint.base.Models.DrawPanel;
+import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
+import com.designpatterns.paint.base.Models.Shapes.Figure.ShapeType;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -35,13 +40,13 @@ public class UserInterface extends JFrame {
     private JButton mergeLayersButton;
     private JButton updateShapeButton;
 
-    private DrawPanel drawPanel = new DrawPanel();
-    private DefaultListModel<String> listModel = new DefaultListModel<>();
+    private final DrawPanel drawPanel = new DrawPanel();
+    private final DefaultListModel<String> listModel = new DefaultListModel<>();
 
     /**
      * Main JFrame IU, everything in the view is stored here
      */
-    private JFrame userInterfaceFrame = new JFrame("Design Patterns Paint");
+    private final JFrame userInterfaceFrame = new JFrame("Design Patterns Paint");
 
     public UserInterface(){
         // Create required elements for the JFrame
@@ -64,13 +69,13 @@ public class UserInterface extends JFrame {
         undoButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                drawPanel.undo();
+                drawPanel.invoker.undo();
             }
         });
         redoButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                drawPanel.redo();
+                drawPanel.invoker.redo();
             }
         });
         clearDrawingButton.addMouseListener(new MouseAdapter() {
@@ -79,12 +84,40 @@ public class UserInterface extends JFrame {
                 drawPanel.clearShapes();
             }
         });
-        drawPanel.addMouseMotionListener(new MouseAdapter() {
+        drawPanel.addMouseListener(new MouseAdapter() {
+        MoveShape moveShape;
             @Override
-            public void mouseDragged(MouseEvent e) {
-                if (editRadioButton.isSelected()) { drawPanel.moveShape(e); }
+            public void mousePressed(MouseEvent e)
+            {
+                if (editRadioButton.isSelected())
+                {
+                    moveShape = new MoveShape(new Vector2(e.getX(),e.getY()),drawPanel.getShapeByCoordinates(e.getX(),e.getY()),drawPanel);
+                    System.out.println("pressed");
+                }
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (editRadioButton.isSelected())
+                {
+                    moveShape.setNewPos(new Vector2(e.getX(),e.getY()));
+                    drawPanel.invoker.execute(moveShape);
+                    moveShape = null;
+                    System.out.println("release");
+                    repaint();
+                }
             }
         });
+        drawPanel.addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e)
+            {
+                if (editRadioButton.isSelected())
+                {
+                    drawPanel.moveShape(e.getX(),e.getY());
+                }
+            }
+        });
+
         clearDrawingButton.addActionListener(actionEvent -> {
             drawPanel.clearShapes();
             updateSelectedList();
@@ -116,7 +149,7 @@ public class UserInterface extends JFrame {
                 drawPanel.checkSelectShape(e.getX(), e.getY());
             }
         } else if (removeRadioButton.isSelected()) {
-            drawPanel.removeShape(e.getX(), e.getY());
+            drawPanel.removeSelectedShape(e.getX(), e.getY());
         }
         updateSelectedList();
     }
@@ -146,7 +179,8 @@ public class UserInterface extends JFrame {
         System.out.println("Adding new shape: selected shape: '" + new_shape_combobox.getSelectedItem() + "' with values: x:" + new_shape_width.getText() + " y:" + new_shape_height.getText());
 
         if (validateFields()) {
-            drawPanel.addShape(Objects.requireNonNull(new_shape_combobox.getSelectedItem()).toString(), mousePosX, mousePosY, Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText()));
+            Shape shape = new Shape(ShapeType.valueOf(Objects.requireNonNull(new_shape_combobox.getSelectedItem()).toString()), mousePosX, mousePosY, Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText()));
+            drawPanel.invoker.execute(new AddShape(shape,drawPanel));
         }
     }
 
@@ -187,6 +221,5 @@ public class UserInterface extends JFrame {
             System.out.println("Shapes array empty, no shapes selected!");
         }
     }
-
 }
 

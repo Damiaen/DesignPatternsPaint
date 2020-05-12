@@ -1,10 +1,14 @@
 package com.designpatterns.paint.base.Models.Shapes.Figure;
 
-public class Figure {
+import java.awt.*;
+
+public class Shape {
 
     private int x, y, width, height;
+    private ShapeType type;
 
-    public Figure(int x, int y, int width, int height) {
+    public Shape(ShapeType type, int x, int y, int width, int height) {
+        this.type = type;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -36,4 +40,13 @@ public class Figure {
     public int getHeight() {
         return height;
     }
+
+    public ShapeType getType() { return type; }
+
+    public boolean checkPosition(int x, int y) {
+        return false;
+    }
+
+    public void draw(Graphics g) {}
+
 }

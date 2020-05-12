@@ -1,9 +1,7 @@
 package com.designpatterns.paint.base.Models.Actions;
 
-public class Action
+public class CombineShapes
 {
 
-    void action() {
 
-    }
 }
