@@ -1,12 +1,10 @@
 package com.designpatterns.paint.base.UserInterface;
 
-import com.designpatterns.paint.base.Models.Actions.AddShape;
-import com.designpatterns.paint.base.Models.Actions.Invoker;
-import com.designpatterns.paint.base.Models.Actions.MoveShape;
-import com.designpatterns.paint.base.Models.Actions.Vector2;
+import com.designpatterns.paint.base.Models.Actions.*;
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Figure.ShapeType;
+import com.designpatterns.paint.base.Models.Vector2;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
@@ -81,7 +79,7 @@ public class UserInterface extends JFrame {
         clearDrawingButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                drawPanel.clearShapes();
+                if (drawPanel.getShapes().size() != 0) drawPanel.invoker.execute(new ClearDrawing(drawPanel));
             }
         });
         drawPanel.addMouseListener(new MouseAdapter() {

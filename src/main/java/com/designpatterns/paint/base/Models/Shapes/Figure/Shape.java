@@ -5,7 +5,7 @@ import java.awt.*;
 public class Shape {
 
     private int x, y, width, height;
-    private ShapeType type;
+    private final ShapeType type;
 
     public Shape(ShapeType type, int x, int y, int width, int height) {
         this.type = type;
@@ -15,33 +15,33 @@ public class Shape {
         this.height = height;
     }
 
-    public void setSize(int width, int height) {
+    public final void setSize(int width, int height) {
         this.width = width;
         this.height = height;
     }
 
-    public void setPosition(int x, int y) {
+    public final void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public int getX() {
+    public final int getX() {
         return x;
     }
 
-    public int getY() {
+    public final int getY() {
         return y;
     }
 
-    public int getWidth() {
+    public final int getWidth() {
         return width;
     }
 
-    public int getHeight() {
+    public final int getHeight() {
         return height;
     }
 
-    public ShapeType getType() { return type; }
+    public final ShapeType getType() { return type; }
 
     public boolean checkPosition(int x, int y) {
         return false;

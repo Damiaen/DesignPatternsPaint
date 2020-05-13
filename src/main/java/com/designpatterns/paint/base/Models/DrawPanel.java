@@ -169,9 +169,8 @@ public class DrawPanel extends JPanel {
     /**
      * Check which shape has been selected and move it
      */
-    public Vector2 moveShape(int mouseX, int mouseY) {
+    public void moveShape(int mouseX, int mouseY) {
         Shape s = getShapeByCoordinates(mouseX, mouseY);
-        if (s == null) return null;
         s.setPosition(
                 (s.getX() + mouseX) - cursorSelectedX,
                 (s.getY() + mouseY) - cursorSelectedY
@@ -180,13 +179,16 @@ public class DrawPanel extends JPanel {
         cursorSelectedY = mouseY;
         repaint();
 
-        return new Vector2(mouseX,mouseY);
     }
 
     public void moveShapeBack(Shape shape, int x,int y)
     {
         shape.setPosition(x,y);
         repaint();
+    }
+
+    public List<Shape> getShapes(){
+        return new ArrayList<>(shapes);
     }
 
 

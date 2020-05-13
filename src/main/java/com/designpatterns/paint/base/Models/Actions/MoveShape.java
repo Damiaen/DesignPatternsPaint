@@ -2,8 +2,7 @@ package com.designpatterns.paint.base.Models.Actions;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
-
-import java.awt.event.MouseEvent;
+import com.designpatterns.paint.base.Models.Vector2;
 
 public class MoveShape implements Command
 {

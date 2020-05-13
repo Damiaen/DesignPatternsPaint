@@ -1,4 +1,4 @@
-package com.designpatterns.paint.base.Models.Actions;
+package com.designpatterns.paint.base.Models;
 
 public class Vector2
 {
