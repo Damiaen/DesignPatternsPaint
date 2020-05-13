@@ -1,6 +1,7 @@
 package com.designpatterns.paint.base.Models;
 
 import com.designpatterns.paint.base.Models.Shapes.Ellipse;
+import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Rectangle;
 import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
@@ -36,8 +37,9 @@ public class SaveFile {
      * Save drawing data to json
      * TODO: Kunnen nu alleen vanuit de object array shapes laden en saven, dit moet aangepast worden naar groups
      * TODO: toevoegen van ornaments hiero
+     * @param shapes
      */
-    public void save(List<Object> shapes) {
+    public void save(List<Shape> shapes) {
         JSONArray shapesList = new JSONArray();
 
         // loop through all shapes

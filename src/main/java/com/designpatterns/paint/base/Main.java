@@ -1,6 +1,7 @@
 package com.designpatterns.paint.base;
 
 import com.designpatterns.paint.base.UserInterface.UserInterface;
+
 import javax.swing.*;
 
 public class Main {

@@ -1,13 +1,16 @@
 package com.designpatterns.paint.base.UserInterface;
 
-import com.designpatterns.paint.base.Models.Actions.*;
+import com.designpatterns.paint.base.Models.Actions.AddShape;
+import com.designpatterns.paint.base.Models.Actions.ClearDrawing;
+import com.designpatterns.paint.base.Models.Actions.MoveShape;
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Figure.ShapeType;
 import com.designpatterns.paint.base.Models.Vector2;
 
 import javax.swing.*;
-import java.awt.BorderLayout;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

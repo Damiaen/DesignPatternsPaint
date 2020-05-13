@@ -1,6 +1,7 @@
 package com.designpatterns.paint.base.Models;
 
 import com.designpatterns.paint.base.Models.Shapes.Ellipse;
+import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Rectangle;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -36,8 +37,9 @@ public class LoadFile {
 
     /**
      * Select a file to load and start to read the data.
+     * @return
      */
-    public List<Object> load() {
+    public List<Shape> load() {
         // Open file selection screen
         String saveFileName = selectFile();
 
@@ -77,9 +79,9 @@ public class LoadFile {
      * Parse raw JSON to correct classes.
      * TODO: Change this so we can load more shit
      */
-    private List<Object> parseSaveFile(JSONArray rawJSON) {
+    private List<Shape> parseSaveFile(JSONArray rawJSON) {
         // TODO: Change this to type group
-        List<Object> loadedShapesData = new ArrayList<>();
+        List<Shape> loadedShapesData = new ArrayList<>();
 
         //Iterate over employee array
         rawJSON.forEach(item -> {

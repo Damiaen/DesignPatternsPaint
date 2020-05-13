@@ -1,6 +1,6 @@
 package com.designpatterns.paint.base.Models;
 
-import com.designpatterns.paint.base.Models.Actions.*;
+import com.designpatterns.paint.base.Models.Actions.Invoker;
 import com.designpatterns.paint.base.Models.Shapes.Ellipse;
 import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Figure.ShapeType;
@@ -8,7 +8,6 @@ import com.designpatterns.paint.base.Models.Shapes.Rectangle;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -162,7 +161,7 @@ public class DrawPanel extends JPanel {
      * Load saved drawing data, if none selected we do nothing
      */
     public void loadDrawing() {
-        List<Object> loadedShapes = LoadFile.getInstance().load();
+        List<Shape> loadedShapes = LoadFile.getInstance().load();
         if (loadedShapes != null) {
             shapes = loadedShapes;
             repaint();
