@@ -34,6 +34,7 @@ public class UserInterface extends JFrame {
     private JList<String> mergeShapeList;
     private JButton mergeLayersButton;
     private JButton updateShapeButton;
+    private JButton loadDrawingButton;
 
     private DrawPanel drawPanel = new DrawPanel();
     private DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -49,12 +50,6 @@ public class UserInterface extends JFrame {
 
         // Setup all the listeners that we require
         setupListeners();
-        saveDrawingButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                drawPanel.saveDrawing();
-            }
-        });
     }
 
     /**
@@ -108,6 +103,18 @@ public class UserInterface extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 combineShapes();
+            }
+        });
+        saveDrawingButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                drawPanel.saveDrawing();
+            }
+        });
+        loadDrawingButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                drawPanel.loadDrawing();
             }
         });
 
