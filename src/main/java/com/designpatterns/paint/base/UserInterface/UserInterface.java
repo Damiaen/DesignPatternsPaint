@@ -14,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
 import java.util.Objects;
 
 public class UserInterface extends JFrame {
@@ -56,6 +55,12 @@ public class UserInterface extends JFrame {
 
         // Setup all the listeners that we require
         setupListeners();
+        mergeShapeList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                drawPanel.setSelectedMergeShapes(mergeShapeList.getSelectedIndices());
+            }
+        });
     }
 
     /**
@@ -94,7 +99,7 @@ public class UserInterface extends JFrame {
                 if (editRadioButton.isSelected())
                 {
                     moveShape = new MoveShape(new Vector2(e.getX(),e.getY()),drawPanel.getShapeByCoordinates(e.getX(),e.getY()),drawPanel);
-                    System.out.println("pressed");
+//                    System.out.println("pressed");
                 }
             }
             @Override
@@ -104,7 +109,7 @@ public class UserInterface extends JFrame {
                     moveShape.setNewPos(new Vector2(e.getX(),e.getY()));
                     drawPanel.invoker.execute(moveShape);
                     moveShape = null;
-                    System.out.println("release");
+//                    System.out.println("release");
                     repaint();
                 }
             }
@@ -122,7 +127,8 @@ public class UserInterface extends JFrame {
 
         clearDrawingButton.addActionListener(actionEvent -> {
             drawPanel.clearShapes();
-            updateSelectedList();
+            // Check if there have been any changes in the shapes list, update side menu list
+            updateShapesOverviewList();
         });
         updateShapeButton.addActionListener(actionEvent -> drawPanel.updateShapes(Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText())));
         mergeLayersButton.addActionListener(actionEvent -> combineShapes());
@@ -142,7 +148,8 @@ public class UserInterface extends JFrame {
         // When the user switches mode we need to reset certain settings to prevent random shit from happening
         ActionListener listener = actionEvent -> {
             drawPanel.clearSelectedShapes();
-            updateSelectedList();
+            // Check if there have been any changes in the shapes list, update side menu list
+            updateShapesOverviewList();
         };
         addRadioButton.addActionListener(listener);
         editRadioButton.addActionListener(listener);
@@ -160,12 +167,13 @@ public class UserInterface extends JFrame {
         } else if (editRadioButton.isSelected()) {
             // Check if the values from the size inputs are valid and update selected shape
             if (validateFields()) {
-                drawPanel.checkSelectShape(e.getX(), e.getY());
+                drawPanel.checkIfSelectedShape(e.getX(), e.getY());
             }
         } else if (removeRadioButton.isSelected()) {
             drawPanel.removeSelectedShape(e.getX(), e.getY());
         }
-        updateSelectedList();
+        // Check if there have been any changes in the shapes list, update side menu list
+        updateShapesOverviewList();
     }
 
     /**
@@ -216,26 +224,20 @@ public class UserInterface extends JFrame {
     }
 
     /**
-     * Update the selected items/shapes list after doing an operation
+     * Update the all the shapes that we have in the view
      */
-    private void updateSelectedList() {
+    private void updateShapesOverviewList() {
         listModel.removeAllElements();
-        for (String selectedShape : drawPanel.getSelectedShapes()) {
+        for (String selectedShape : drawPanel.getAllShapesForView()) {
             listModel.addElement(selectedShape);
         }
     }
 
     /**
      * Get get the selected shapes and combine these into 1 layer
-     * TODO: implement
      */
     private void combineShapes() {
-        List<String> selectedShapes = drawPanel.getSelectedShapes();
-        if (!selectedShapes.isEmpty()) {
-            System.out.println("Should merge here, not implemented yet");
-        } else {
-            System.out.println("Shapes array empty, no shapes selected!");
-        }
+        drawPanel.mergeLayers();
     }
 }
 

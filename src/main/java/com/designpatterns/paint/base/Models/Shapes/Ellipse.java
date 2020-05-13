@@ -29,9 +29,9 @@ public class Ellipse extends Shape {
     }
 
     @Override
-    public void drawContour(Graphics g) {
+    public void drawContour(Graphics g, Color color) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.darkGray);
+        g2d.setColor(color);
 
         g2d.fillOval((int) (this.getX() - (this.getWidth() / 2.0D) - 3), (int) (this.getY() - (this.getHeight() / 2.0D) - 3), this.getWidth() + 6, this.getHeight() + 6);
     }

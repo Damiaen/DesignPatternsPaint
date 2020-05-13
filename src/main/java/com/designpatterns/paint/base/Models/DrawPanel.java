@@ -18,8 +18,11 @@ public class DrawPanel extends JPanel {
     // Store shapes here, so we can call on them later
     private List<Shape> shapes = new ArrayList<>();
 
-    // Store selectedShape indexes here, so we can select multiple and loop through selected
+    // Store which shapes the user has selected in edit mode
     private List<Integer> selectedShapes = new ArrayList<>();
+
+    // Store which shapes have been selected for merging, select these from the side-menu
+    private List<Integer> selectedMergeShapes = new ArrayList<>();
 
     int cursorSelectedX, cursorSelectedY;
 
@@ -59,17 +62,21 @@ public class DrawPanel extends JPanel {
         repaint();
         return shape;
     }
+
+    /**
+     * Remove shape based from the shapes list
+     */
     public void removeShape(Shape shape) {
         shapes.remove(shape);
         repaint();
     }
 
     /**
-     * Check if the user has selected a shape, if not reset the selectedShapes List
+     * Check if the user has selected a shape in the drawPanel view, if false we reset the selected lists
      */
-    public void checkSelectShape(int mousePosX, int mousePosY) {
+    public void checkIfSelectedShape(int mousePosX, int mousePosY) {
         if (!checkIfClickedShape(mousePosX, mousePosY)) {
-            selectedShapes = new ArrayList<>();
+            clearSelectedShapes();
         }
     }
 
@@ -87,6 +94,7 @@ public class DrawPanel extends JPanel {
 
     /**
      * Remove selected shape and check if it was selected, if so remove it from the selected list
+     * Action: Delete
      */
     public void removeSelectedShape(int mousePosX, int mousePosY) {
         Object shape = getShapeByCoordinates(mousePosX, mousePosY);
@@ -99,27 +107,50 @@ public class DrawPanel extends JPanel {
         }
     }
 
-    /**
-     * add shape to the selected shape index, check for duplicates here.
-     */
-    public void setSelectedShapes(int selectedShapeIndex) {
-        if (!selectedShapes.contains(selectedShapeIndex)) {
-            selectedShapes.add(selectedShapeIndex);
-        }
-        System.out.println("Selected shape indexes: " + selectedShapes);
+    public void mergeLayers() {
+        // Shapes selected from the side-menu
+        System.out.println("SelectedMergeShapes: " + selectedMergeShapes);
+        // Shapes selected from the drawPanel view
+        System.out.println("SelectedShapes: " + selectedShapes);
     }
 
     /**
-     * get the selected shapes, so we can display these
+     * Add the selected shapes form the merge tab to the selectedMergeShapes.
+     * CLear the list before we fill, due to how JList works
      */
-    public List<String> getSelectedShapes() {
-        List<String> selectedShapesNames = new ArrayList<>();
-
-        for (Integer i : selectedShapes) {
-            selectedShapesNames.add("Index of selected shape: " + i);
+    public void setSelectedMergeShapes(int[] shapeIndices) {
+        selectedMergeShapes.clear();
+        for(Integer i: shapeIndices) {
+            selectedShapes.remove(i);
+            selectedMergeShapes.add(i);
         }
         repaint();
-        return selectedShapesNames;
+    }
+
+    /**
+     * add shape to the selected shape index, check for duplicates here.
+     */
+    public void setSelectedShapes(int shapeIndex) {
+        if (!selectedShapes.contains(shapeIndex) && !selectedMergeShapes.contains(shapeIndex)) {
+            selectedShapes.add(shapeIndex);
+        } else if(!selectedShapes.contains(shapeIndex) && selectedMergeShapes.contains(shapeIndex)) {
+            selectedMergeShapes.remove(shapeIndex);
+            selectedShapes.add(shapeIndex);
+        }
+        repaint();
+    }
+
+    /**
+     * Get all shapes/groups that we have, so we can display these
+     */
+    public List<String> getAllShapesForView() {
+        List<String> drawingObjectsNames = new ArrayList<>();
+
+        for (Shape s : shapes) {
+            drawingObjectsNames.add(s.getType().name() + " on position x: " + s.getX() + " and y: " + s.getY());
+        }
+        repaint();
+        return drawingObjectsNames;
     }
 
     /**
@@ -139,6 +170,8 @@ public class DrawPanel extends JPanel {
      */
     public void clearSelectedShapes() {
         selectedShapes = new ArrayList<>();
+        selectedMergeShapes = new ArrayList<>();
+        repaint();
     }
 
     /**
@@ -147,6 +180,7 @@ public class DrawPanel extends JPanel {
     public void clearShapes() {
         shapes = new ArrayList<>();
         selectedShapes = new ArrayList<>();
+        selectedMergeShapes = new ArrayList<>();
         repaint();
     }
 
@@ -222,8 +256,11 @@ public class DrawPanel extends JPanel {
         super.paintComponent(g);
 
         for (Shape s : shapes) {
+            System.out.println(selectedMergeShapes);
             if (selectedShapes.contains(shapes.indexOf(s))) {
-                s.drawContour(g);
+                s.drawContour(g, Color.darkGray);
+            } else if(selectedMergeShapes.contains(shapes.indexOf(s))) {
+                s.drawContour(g, Color.blue);
             }
             s.draw(g);
         }
