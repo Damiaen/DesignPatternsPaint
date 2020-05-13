@@ -8,6 +8,8 @@ import com.designpatterns.paint.base.Models.Shapes.Rectangle;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,6 +114,12 @@ public class DrawPanel extends JPanel {
         System.out.println("SelectedMergeShapes: " + selectedMergeShapes);
         // Shapes selected from the drawPanel view
         System.out.println("SelectedShapes: " + selectedShapes);
+    }
+
+    public void createScreenshot() throws IOException {
+        BufferedImage bufImage = new BufferedImage(this.getSize().width, this.getSize().height, BufferedImage.TYPE_INT_RGB);
+        this.paint(bufImage.createGraphics());
+        SaveScreenshot.getInstance().store(bufImage);
     }
 
     /**

@@ -14,32 +14,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.Objects;
 
 public class UserInterface extends JFrame {
     private JPanel rootPanel;
-    private JPanel right_menu_panel;
     private JButton selectShapes;
     private JPanel content_panel;
-    private JPanel shape_add_panel;
     private JTextField new_shape_height;
     private JTextField new_shape_width;
     private JComboBox<String> new_shape_combobox;
     private JPanel draw_panel;
     private JRadioButton addRadioButton;
     private JRadioButton editRadioButton;
-    private JPanel top_menu_panel;
-    private JRadioButton mergeRadioButton;
     private JButton clearDrawingButton;
     private JButton undoButton;
     private JButton redoButton;
     private JButton saveDrawingButton;
     private JRadioButton removeRadioButton;
-    private JPanel shape_merge_panel;
     private JList<String> mergeShapeList;
     private JButton mergeLayersButton;
     private JButton updateShapeButton;
     private JButton loadDrawingButton;
+    private JButton createScreenshotButton;
 
     private final DrawPanel drawPanel = new DrawPanel();
     private final DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -55,22 +52,45 @@ public class UserInterface extends JFrame {
 
         // Setup all the listeners that we require
         setupListeners();
-        mergeShapeList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                drawPanel.setSelectedMergeShapes(mergeShapeList.getSelectedIndices());
-            }
-        });
     }
 
     /**
      * All of the listeners that we require
      */
     private void setupListeners() {
-        drawPanel.addMouseListener(new MouseAdapter() {
+        // Button listeners:
+        clearDrawingButton.addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent e) {
-                mousePressedAction(e);
+            public void mousePressed(MouseEvent e) { if (drawPanel.getShapes().size() != 0) drawPanel.invoker.execute(new ClearDrawing(drawPanel)); }
+        });
+        createScreenshotButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try {
+                    drawPanel.createScreenshot();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        clearDrawingButton.addActionListener(actionEvent -> {
+            drawPanel.clearShapes();
+            // Check if there have been any changes in the shapes list, update side menu list
+            updateShapesOverviewList();
+        });
+        updateShapeButton.addActionListener(actionEvent -> drawPanel.updateShapes(Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText())));
+        mergeLayersButton.addActionListener(actionEvent -> combineShapes());
+        saveDrawingButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                drawPanel.saveDrawing();
+            }
+        });
+        loadDrawingButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                drawPanel.loadDrawing();
+                updateShapesOverviewList();
             }
         });
         undoButton.addMouseListener(new MouseAdapter() {
@@ -85,10 +105,20 @@ public class UserInterface extends JFrame {
                 drawPanel.invoker.redo();
             }
         });
-        clearDrawingButton.addMouseListener(new MouseAdapter() {
+
+        // ui element listeners
+        mergeShapeList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                drawPanel.setSelectedMergeShapes(mergeShapeList.getSelectedIndices());
+            }
+        });
+
+        // drawPanel specific listeners
+        drawPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (drawPanel.getShapes().size() != 0) drawPanel.invoker.execute(new ClearDrawing(drawPanel));
+                mousePressedAction(e);
             }
         });
         drawPanel.addMouseListener(new MouseAdapter() {
@@ -114,6 +144,7 @@ public class UserInterface extends JFrame {
                 }
             }
         });
+
         drawPanel.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e)
@@ -125,31 +156,19 @@ public class UserInterface extends JFrame {
             }
         });
 
-        clearDrawingButton.addActionListener(actionEvent -> {
-            drawPanel.clearShapes();
-            // Check if there have been any changes in the shapes list, update side menu list
-            updateShapesOverviewList();
-        });
-        updateShapeButton.addActionListener(actionEvent -> drawPanel.updateShapes(Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText())));
-        mergeLayersButton.addActionListener(actionEvent -> combineShapes());
-        saveDrawingButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                drawPanel.saveDrawing();
-            }
-        });
-        loadDrawingButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                drawPanel.loadDrawing();
-            }
-        });
-
         // When the user switches mode we need to reset certain settings to prevent random shit from happening
         ActionListener listener = actionEvent -> {
             drawPanel.clearSelectedShapes();
             // Check if there have been any changes in the shapes list, update side menu list
             updateShapesOverviewList();
+            //Enable or disable certain menu items here
+            if (addRadioButton.isSelected()) {
+                mergeShapeList.setEnabled(false);
+            } else if (editRadioButton.isSelected()) {
+                mergeShapeList.setEnabled(true);
+            } else if (removeRadioButton.isSelected()) {
+                mergeShapeList.setEnabled(true);
+            }
         };
         addRadioButton.addActionListener(listener);
         editRadioButton.addActionListener(listener);
@@ -192,6 +211,8 @@ public class UserInterface extends JFrame {
         draw_panel.add(drawPanel);
         // Setting up listModel so we can see the selected shapes
         mergeShapeList.setModel(listModel);
+        // Setup which ui elements we need to disable on startup
+        mergeShapeList.setEnabled(false);
     }
 
     /**
