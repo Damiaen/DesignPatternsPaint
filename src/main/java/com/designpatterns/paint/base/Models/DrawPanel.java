@@ -174,16 +174,14 @@ public class DrawPanel extends JPanel {
      * Save the drawings data to json
      */
     public void saveDrawing() {
-        SaveDrawing save = new SaveDrawing();
-        save.save(shapes);
+        SaveFile.getInstance().save(shapes);
     }
 
     /**
-     * Save the drawings data to json
+     * Load saved drawing data, if none selected we do nothing
      */
     public void loadDrawing() {
-        SaveDrawing save = new SaveDrawing();
-        List<Object> loadedShapes = save.load();
+        List<Object> loadedShapes = LoadFile.getInstance().load();
         if (loadedShapes != null) {
             shapes = loadedShapes;
             repaint();
