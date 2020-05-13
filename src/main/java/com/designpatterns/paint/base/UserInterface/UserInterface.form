@@ -361,7 +361,7 @@
                     </constraints>
                     <properties>
                       <background color="-2429697"/>
-                      <selected value="true"/>
+                      <selected value="false"/>
                       <text value="Remove drawing"/>
                     </properties>
                   </component>

@@ -49,4 +49,6 @@ public class Shape {
 
     public void draw(Graphics g) {}
 
+    public void drawContour(Graphics g) {}
+
 }

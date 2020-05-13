@@ -21,10 +21,18 @@ public class Rectangle extends Shape {
     @Override
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        rectangle = new Rectangle2D.Double(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        rectangle = new Rectangle2D.Double((this.getX() - (this.getWidth() / 2.0D)), (this.getY() - (this.getHeight() / 2.0D)), this.getWidth(), this.getHeight());
 
         g2d.setColor(Color.RED);
         g2d.fill(rectangle);
+    }
+
+    @Override
+    public void drawContour(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.darkGray);
+
+        g2d.fillRect((int) (this.getX() - (this.getWidth() / 2.0D) - 3), (int) ((this.getY() - (this.getHeight() / 2.0D)) - 3), this.getWidth() + 6, this.getHeight() + 6);
     }
 
 }

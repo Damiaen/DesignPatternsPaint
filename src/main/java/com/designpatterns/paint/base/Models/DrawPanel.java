@@ -94,6 +94,7 @@ public class DrawPanel extends JPanel {
             if (!selectedShapes.isEmpty() && selectedShapes.contains(shapes.indexOf(shape))) {
                 selectedShapes.remove(shapes.indexOf(shape));
             }
+            shapes.remove(shape);
             repaint();
         }
     }
@@ -117,6 +118,7 @@ public class DrawPanel extends JPanel {
         for (Integer i : selectedShapes) {
             selectedShapesNames.add("Index of selected shape: " + i);
         }
+        repaint();
         return selectedShapesNames;
     }
 
@@ -197,13 +199,14 @@ public class DrawPanel extends JPanel {
         cursorSelectedX = mouseX;
         cursorSelectedY = mouseY;
         repaint();
-
     }
 
     public void moveShapeBack(Shape shape, int x,int y)
     {
-        shape.setPosition(x,y);
-        repaint();
+        if (shape != null) {
+            shape.setPosition(x,y);
+            repaint();
+        }
     }
 
     public List<Shape> getShapes(){
@@ -219,6 +222,9 @@ public class DrawPanel extends JPanel {
         super.paintComponent(g);
 
         for (Shape s : shapes) {
+            if (selectedShapes.contains(shapes.indexOf(s))) {
+                s.drawContour(g);
+            }
             s.draw(g);
         }
     }
