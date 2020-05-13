@@ -174,7 +174,9 @@ public class DrawPanel extends JPanel {
      * Save the drawings data to json
      */
     public void saveDrawing() {
-        SaveFile.getInstance().save(shapes);
+        if (!shapes.isEmpty()) {
+            SaveFile.getInstance().save(shapes);
+        }
     }
 
     /**

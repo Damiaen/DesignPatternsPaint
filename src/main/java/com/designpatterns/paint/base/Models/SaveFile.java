@@ -2,6 +2,7 @@ package com.designpatterns.paint.base.Models;
 
 import com.designpatterns.paint.base.Models.Shapes.Ellipse;
 import com.designpatterns.paint.base.Models.Shapes.Rectangle;
+import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -37,37 +38,51 @@ public class SaveFile {
      * TODO: toevoegen van ornaments hiero
      */
     public void save(List<Object> shapes) {
-        //Add employees to list
         JSONArray shapesList = new JSONArray();
 
+        // loop through all shapes
         for (Object s : shapes) {
             JSONObject newShapeDetailsObject = new JSONObject();
+
             if (s instanceof Ellipse) {
-                newShapeDetailsObject.put("type", "Ellipse");
-                newShapeDetailsObject.put("top", ((Ellipse) s).getX());
-                newShapeDetailsObject.put("left", ((Ellipse) s).getY());
-                newShapeDetailsObject.put("height", ((Ellipse) s).getHeight());
-                newShapeDetailsObject.put("width", ((Ellipse) s).getWidth());
+                newShapeDetailsObject = createEllipseObject((Ellipse) s);
             }
             if (s instanceof Rectangle) {
-                newShapeDetailsObject.put("type", "Rectangle");
-                newShapeDetailsObject.put("top", ((Rectangle) s).getX());
-                newShapeDetailsObject.put("left", ((Rectangle) s).getY());
-                newShapeDetailsObject.put("height", ((Rectangle) s).getHeight());
-                newShapeDetailsObject.put("width", ((Rectangle) s).getWidth());
+                newShapeDetailsObject = createRectangleObject((Rectangle) s);
             }
             JSONObject newShapesObject = new JSONObject();
             newShapesObject.put("shape", newShapeDetailsObject);
             shapesList.add(newShapesObject);
         }
 
-        //Write JSON file
+        // Write JSON file
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         try (FileWriter file = new FileWriter("./saves/save_"+ timeStamp + ".json")) {
             file.write(shapesList.toJSONString());
             file.flush();
+            System.out.println("Saved drawing to: './saves/save_"+ timeStamp + ".json'");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @NotNull
+    private JSONObject getShapeJsonObject(int x, int y, int height, int width, String type) {
+        JSONObject newShapeObject = new JSONObject();
+        newShapeObject.put("type", type);
+        newShapeObject.put("top", x);
+        newShapeObject.put("left", y);
+        newShapeObject.put("height", height);
+        newShapeObject.put("width", width);
+
+        return newShapeObject;
+    }
+
+    private JSONObject createEllipseObject(Ellipse ellipse) {
+        return getShapeJsonObject(ellipse.getX(), ellipse.getY(), ellipse.getHeight(), ellipse.getWidth(), "Ellipse");
+    }
+
+    private JSONObject createRectangleObject(Rectangle rectangle) {
+        return getShapeJsonObject(rectangle.getX(), rectangle.getY(), rectangle.getHeight(), rectangle.getWidth(), "Rectangle");
     }
 }
