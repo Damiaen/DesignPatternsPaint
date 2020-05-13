@@ -150,6 +150,26 @@ public class DrawPanel extends JPanel {
     }
 
     /**
+     * Save the drawings data to json
+     */
+    public void saveDrawing() {
+        if (!shapes.isEmpty()) {
+            SaveFile.getInstance().save(shapes);
+        }
+    }
+
+    /**
+     * Load saved drawing data, if none selected we do nothing
+     */
+    public void loadDrawing() {
+        List<Object> loadedShapes = LoadFile.getInstance().load();
+        if (loadedShapes != null) {
+            shapes = loadedShapes;
+            repaint();
+        }
+    }
+
+    /**
      * Check if user clicked on a shape, returns bool
      */
     public boolean checkIfClickedShape(int mousePosX, int mousePosY) {

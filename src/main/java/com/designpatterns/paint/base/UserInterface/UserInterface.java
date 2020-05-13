@@ -37,6 +37,7 @@ public class UserInterface extends JFrame {
     private JList<String> mergeShapeList;
     private JButton mergeLayersButton;
     private JButton updateShapeButton;
+    private JButton loadDrawingButton;
 
     private final DrawPanel drawPanel = new DrawPanel();
     private final DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -122,6 +123,18 @@ public class UserInterface extends JFrame {
         });
         updateShapeButton.addActionListener(actionEvent -> drawPanel.updateShapes(Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText())));
         mergeLayersButton.addActionListener(actionEvent -> combineShapes());
+        saveDrawingButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                drawPanel.saveDrawing();
+            }
+        });
+        loadDrawingButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                drawPanel.loadDrawing();
+            }
+        });
 
         // When the user switches mode we need to reset certain settings to prevent random shit from happening
         ActionListener listener = actionEvent -> {
@@ -204,7 +217,9 @@ public class UserInterface extends JFrame {
      */
     private void updateSelectedList() {
         listModel.removeAllElements();
-        listModel.addAll(drawPanel.getSelectedShapes());
+        for (String selectedShape : drawPanel.getSelectedShapes()) {
+            listModel.addElement(selectedShape);
+        }
     }
 
     /**
