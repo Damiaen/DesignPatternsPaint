@@ -1,5 +1,7 @@
 package com.designpatterns.paint.base.Models.Shapes.Figure;
 
+import com.designpatterns.paint.base.Models.Shapes.Ornament;
+
 import java.awt.*;
 
 public class Shape {
@@ -50,5 +52,7 @@ public class Shape {
     public void draw(Graphics g) {}
 
     public void drawContour(Graphics g, Color color) {}
+
+    public void drawOrnament(Graphics g, Ornament ornament) {}
 
 }

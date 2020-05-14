@@ -35,4 +35,30 @@ public class Rectangle extends Shape {
         g2d.fillRect((int) (this.getX() - (this.getWidth() / 2.0D) - 3), (int) ((this.getY() - (this.getHeight() / 2.0D)) - 3), this.getWidth() + 6, this.getHeight() + 6);
     }
 
+    @Override
+    public void drawOrnament(Graphics g, Ornament ornament) {
+        // Get relative center positions of shape
+        float positionX = (float)rectangle.getCenterX();
+        float positionY = (float)rectangle.getCenterY();
+
+        // Check what the position of the ornament is, and change values accordingly
+        switch (ornament.getOrnamentPosition()) {
+            case TOP:
+                positionY -= (((float)this.getHeight() / 2) + 20);
+                break;
+            case BOTTOM:
+                positionY += (((float)this.getHeight() / 2) - 20);
+                break;
+            case LEFT:
+                positionX -= (((float)this.getWidth() / 2) + 20);
+                break;
+            case RIGHT:
+                positionX += (((float)this.getHeight() / 2) - 20);
+                break;
+        }
+
+        // Draw the ornament
+        ornament.draw(g, positionX, positionY);
+    }
+
 }
