@@ -1,9 +1,5 @@
 package com.designpatterns.paint.base.Models.Shapes;
 
-import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
-import com.designpatterns.paint.base.Models.Shapes.Figure.ShapeType;
-import org.w3c.dom.css.Rect;
-
 import java.util.ArrayList;
 import java.util.List;
 
