@@ -1,7 +1,8 @@
 package com.designpatterns.paint.base.Models.Shapes;
 
-import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
-import com.designpatterns.paint.base.Models.Shapes.Figure.ShapeType;
+import com.designpatterns.paint.base.Models.Position;
+import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
+import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -10,19 +11,19 @@ public class Ellipse extends Shape {
 
     private Ellipse2D.Double circle;
 
-    public Ellipse(int x, int y, int width, int height) {
-        super(ShapeType.Ellipse, x, y, width, height);
+    public Ellipse(Position position, double width, double height) {
+        super(ShapeType.Ellipse,position, width, height);
     }
 
     @Override
-    public boolean checkPosition(int x, int y) {
-        return circle.contains(x, y);
+    public boolean checkPosition(Position position) {
+        return circle.contains(position.x, position.y);
     }
 
     @Override
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        circle = new Ellipse2D.Double((this.getX() - (this.getWidth() / 2.0D)), (this.getY() - (this.getHeight() / 2.0D)), this.getWidth(), this.getHeight());
+        circle = new Ellipse2D.Double((this.getPosition().x - (this.getWidth() / 2.0D)), (this.getPosition().y - (this.getHeight() / 2.0D)), this.getWidth(), this.getHeight());
 
         g2d.setColor(Color.GREEN);
         g2d.fill(circle);
@@ -33,6 +34,6 @@ public class Ellipse extends Shape {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(color);
 
-        g2d.fillOval((int) (this.getX() - (this.getWidth() / 2.0D) - 3), (int) (this.getY() - (this.getHeight() / 2.0D) - 3), this.getWidth() + 6, this.getHeight() + 6);
+        g2d.fillOval((int) (this.getPosition().x - (this.getWidth() / 2.0D) - 3), (int) (this.getPosition().y - (this.getHeight() / 2.0D) - 3), (int)this.getWidth() + 6, (int)this.getHeight() + 6);
     }
 }

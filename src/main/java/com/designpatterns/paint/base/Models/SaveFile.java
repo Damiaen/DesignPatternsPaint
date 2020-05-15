@@ -1,7 +1,7 @@
 package com.designpatterns.paint.base.Models;
 
 import com.designpatterns.paint.base.Models.Shapes.Ellipse;
-import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
+import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Rectangle;
 import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
@@ -69,7 +69,7 @@ public class SaveFile {
     }
 
     @NotNull
-    private JSONObject getShapeJsonObject(int x, int y, int height, int width, String type) {
+    private JSONObject getShapeJsonObject(double x, double y, double height, double width, String type) {
         JSONObject newShapeObject = new JSONObject();
         newShapeObject.put("type", type);
         newShapeObject.put("top", x);
@@ -81,10 +81,10 @@ public class SaveFile {
     }
 
     private JSONObject createEllipseObject(Ellipse ellipse) {
-        return getShapeJsonObject(ellipse.getX(), ellipse.getY(), ellipse.getHeight(), ellipse.getWidth(), "Ellipse");
+        return getShapeJsonObject(ellipse.getPosition().x, ellipse.getPosition().y, ellipse.getHeight(), ellipse.getWidth(), ellipse.getType().toString());
     }
 
     private JSONObject createRectangleObject(Rectangle rectangle) {
-        return getShapeJsonObject(rectangle.getX(), rectangle.getY(), rectangle.getHeight(), rectangle.getWidth(), "Rectangle");
+        return getShapeJsonObject(rectangle.getPosition().x, rectangle.getPosition().y, rectangle.getHeight(), rectangle.getWidth(), rectangle.getType().toString());
     }
 }

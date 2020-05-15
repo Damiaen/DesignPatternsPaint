@@ -1,7 +1,7 @@
 package com.designpatterns.paint.base.Models;
 
 import com.designpatterns.paint.base.Models.Shapes.Ellipse;
-import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
+import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Rectangle;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -109,7 +109,7 @@ public class LoadFile {
         Long width = (Long) rectangle.get("width");
         Long height = (Long) rectangle.get("height");
 
-        return new Rectangle(top.intValue(), left.intValue(), width.intValue(), height.intValue());
+        return new Rectangle(new Position(top.doubleValue(), left.doubleValue()), width.doubleValue(), height.doubleValue());
     }
 
     /**
@@ -121,6 +121,6 @@ public class LoadFile {
         Long width = (Long) ellipse.get("width");
         Long height = (Long) ellipse.get("height");
 
-        return new Ellipse(top.intValue(), left.intValue(), width.intValue(), height.intValue());
+        return new Ellipse(new Position(top.doubleValue(), left.doubleValue()), width.doubleValue(), height.doubleValue());
     }
 }

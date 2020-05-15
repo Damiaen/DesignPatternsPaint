@@ -1,6 +1,7 @@
 package com.designpatterns.paint.base.Models.Shapes;
-import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
-import com.designpatterns.paint.base.Models.Shapes.Figure.ShapeType;
+import com.designpatterns.paint.base.Models.Position;
+import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
+import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -9,19 +10,19 @@ public class Rectangle extends Shape {
 
     private Rectangle2D.Double rectangle;
 
-    public Rectangle(int x, int y, int width, int height) {
-        super(ShapeType.Rectangle, x, y, width, height);
+    public Rectangle(Position position, double width, double height) {
+        super(ShapeType.Rectangle, position, width, height);
     }
 
     @Override
-    public boolean checkPosition(int cursorX, int cursorY) {
-        return rectangle.contains(cursorX, cursorY);
+    public boolean checkPosition(Position position) {
+        return rectangle.contains(position.x, position.y);
     }
 
     @Override
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        rectangle = new Rectangle2D.Double((this.getX() - (this.getWidth() / 2.0D)), (this.getY() - (this.getHeight() / 2.0D)), this.getWidth(), this.getHeight());
+        rectangle = new Rectangle2D.Double((this.getPosition().x - (this.getWidth() / 2.0D)), (this.getPosition().y - (this.getHeight() / 2.0D)), this.getWidth(), this.getHeight());
 
         g2d.setColor(Color.RED);
         g2d.fill(rectangle);
@@ -32,7 +33,7 @@ public class Rectangle extends Shape {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(color);
 
-        g2d.fillRect((int) (this.getX() - (this.getWidth() / 2.0D) - 3), (int) ((this.getY() - (this.getHeight() / 2.0D)) - 3), this.getWidth() + 6, this.getHeight() + 6);
+        g2d.fillRect((int) (this.getPosition().x - (this.getWidth() / 2.0D) - 3), (int) ((this.getPosition().y - (this.getHeight() / 2.0D)) - 3), (int)this.getWidth() + 6, (int)this.getHeight() + 6);
     }
 
 }
