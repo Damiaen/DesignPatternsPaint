@@ -3,9 +3,9 @@ package com.designpatterns.paint.base.Models;
 import com.designpatterns.paint.base.Models.Actions.Invoker;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
 import com.designpatterns.paint.base.Models.Shapes.Ellipse;
+import com.designpatterns.paint.base.Models.Shapes.Rectangle;
 import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
-import com.designpatterns.paint.base.Models.Shapes.Rectangle;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,7 +61,6 @@ public class DrawPanel extends JPanel {
                 break;
         }
         shapes.add(shape);
-        System.out.println(shapes.get(shapes.size()-1));
         repaint();
         return shape;
     }
@@ -79,15 +78,6 @@ public class DrawPanel extends JPanel {
     }
 
     /**
-     * Check if the user has selected a shape in the drawPanel view, if false we reset the selected lists
-     */
-    public void checkIfSelectedShape(Position position) {
-        if (!checkIfClickedShape(position)) {
-            clearSelectedShapes();
-        }
-    }
-
-    /**
      * Update all shapes based on values in selected shapes array
      */
     public void updateShapes(int newWidth, int newHeight) {
@@ -101,25 +91,36 @@ public class DrawPanel extends JPanel {
 
     /**
      * Remove selected shape and check if it was selected, if so remove it from the selected list
-     * Action: Delete
      */
     public void removeSelectedShape(Position position) {
-        Object shape = getShapeByCoordinates(position);
+        Shape shape = getShapeByCoordinates(position);
         if (shape != null) {
             if (!selectedShapes.isEmpty() && selectedShapes.contains(shapes.indexOf(shape))) {
                 selectedShapes.remove(shapes.indexOf(shape));
+                shape.setSelected(false);
             }
+            shape.setSelected(false);
             shapes.remove(shape);
             repaint();
         }
     }
 
-    public void mergeLayers() {
-        List<Shape> selected = new ArrayList<>();
-        // Shapes selected from the side-menu
-        System.out.println("SelectedMergeShapes: " + selectedMergeShapes);
-        // Shapes selected from the drawPanel view
-        System.out.println("SelectedShapes: " + selectedShapes);
+    /**
+     * Loop through selected shapes from paint UI and side menu
+     */
+    public List<Shape> getSelectedShapes() {
+        List<Integer> selectedShapesIndices = new ArrayList<>(selectedShapes);
+        selectedShapesIndices.addAll(selectedMergeShapes);
+        System.out.println("Selected shapes indices: " + selectedShapesIndices);
+
+        List<Shape> selectedShapes = new ArrayList<>();
+
+        // Loop and add shapes to list, also set selected to false to prevent nested selected errors
+        for (Integer i: selectedShapesIndices) {
+            shapes.get(i).setSelected(false);
+            selectedShapes.add(shapes.get(i));
+        }
+        return selectedShapes;
     }
 
     public void createScreenshot() throws IOException {
@@ -134,9 +135,10 @@ public class DrawPanel extends JPanel {
      */
     public void setSelectedMergeShapes(int[] shapeIndices) {
         selectedMergeShapes.clear();
-        for(Integer i: shapeIndices) {
+        for (Integer i: shapeIndices) {
             selectedShapes.remove(i);
             selectedMergeShapes.add(i);
+            shapes.get(i).setSelected(true);
         }
         repaint();
     }
@@ -147,9 +149,11 @@ public class DrawPanel extends JPanel {
     public void setSelectedShapes(int shapeIndex) {
         if (!selectedShapes.contains(shapeIndex) && !selectedMergeShapes.contains(shapeIndex)) {
             selectedShapes.add(shapeIndex);
+            shapes.get(shapeIndex).setSelected(true);
         } else if(!selectedShapes.contains(shapeIndex) && selectedMergeShapes.contains(shapeIndex)) {
             selectedMergeShapes.remove(shapeIndex);
             selectedShapes.add(shapeIndex);
+            shapes.get(shapeIndex).setSelected(true);
         }
         repaint();
     }
@@ -169,6 +173,7 @@ public class DrawPanel extends JPanel {
 
     /**
      * Get which shape is on which coordinate
+     * TODO: hier gaat shit fout, denk dat ie niet goed om kan gaan met de boundaries van de groups
      */
     public Shape getShapeByCoordinates(Position position) {
         for (Shape s : shapes)
@@ -185,13 +190,14 @@ public class DrawPanel extends JPanel {
      * Remove all the shapes from the ui by resetting the object list and then repainting
      */
     public void clearSelectedShapes() {
+        // Reset lists
         selectedShapes = new ArrayList<>();
         selectedMergeShapes = new ArrayList<>();
+        // Set all to false
+        for (Shape shape: shapes) {
+            shape.setSelected(false);
+        }
         repaint();
-    }
-
-    public void clearSelectedShape(Integer integer) {
-
     }
 
     /**
@@ -223,15 +229,25 @@ public class DrawPanel extends JPanel {
     }
 
     /**
-     * Check if user clicked on a shape, returns bool
+     * Check if the user has selected a shape in the drawPanel view, if false we reset the selected lists
+     */
+    public void checkIfSelectedShape(Position position) {
+        if (!checkIfClickedShape(position)) {
+            clearSelectedShapes();
+        }
+    }
+
+    /**
+     * Loop through all shapes and return true if one of the shapes contains the mouse coordinates
      */
     public boolean checkIfClickedShape(Position position) {
         for (Shape s : shapes) {
             if (s.checkPosition(position)) {
                 setSelectedShapes(shapes.indexOf(s));
-                repaint();
+                s.setSelected(true);
                 cursorSelectedX = position.x;
                 cursorSelectedY = position.y;
+                repaint();
                 return true;
             }
         }
@@ -246,11 +262,22 @@ public class DrawPanel extends JPanel {
         Shape s = getShapeByCoordinates(mousePosition);
         if (s == null) return;
         if (!s.isSelected()) return;
-        Position position = s.getPosition();
-        s.setPosition(new Position(
-                (position.x + mousePosition.x) - cursorSelectedX,
-                (position.y + mousePosition.y) - cursorSelectedY)
-        );
+        if (s instanceof CompositeShape) {
+            for (Shape shape: ((CompositeShape) s).getShapes()) {
+                Position position = shape.getPosition();
+                shape.setPosition(new Position(
+                        (position.x + mousePosition.x) - cursorSelectedX,
+                        (position.y + mousePosition.y) - cursorSelectedY)
+                );
+            }
+            ((CompositeShape) s).updateBounds();
+        } else {
+            Position position = s.getPosition();
+            s.setPosition(new Position(
+                    (position.x + mousePosition.x) - cursorSelectedX,
+                    (position.y + mousePosition.y) - cursorSelectedY)
+            );
+        }
         cursorSelectedX = mousePosition.x;
         cursorSelectedY = mousePosition.y;
         repaint();
@@ -266,7 +293,6 @@ public class DrawPanel extends JPanel {
     public List<Shape> getShapes(){
         return new ArrayList<>(shapes);
     }
-
 
     /**
      * Override the paintComponent method so we can use our own code to draw shit

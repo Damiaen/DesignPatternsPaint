@@ -1,9 +1,8 @@
 package com.designpatterns.paint.base.Models.Shapes;
 
-import com.designpatterns.paint.base.Models.Shapes.Shape.BoundingBox;
-import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
-import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 import com.designpatterns.paint.base.Models.Position;
+import com.designpatterns.paint.base.Models.Shapes.Shape.BoundingBox;
+import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
 
 import java.awt.*;
@@ -18,7 +17,7 @@ public class CompositeShape extends Shape {
     /**
      * Shapes
      */
-    private final List<Shape> shapes = new ArrayList<>();
+    private List<Shape> shapes = new ArrayList<>();
 
     /**
      * Count of all figures that are present in the group
@@ -35,20 +34,27 @@ public class CompositeShape extends Shape {
     public CompositeShape(List<Shape> shapes, ShapeType type, Position position, double width, double height) {
         super(type,position,width,height);
         this.count = shapes.size();
+        this.shapes = shapes;
         double[] bounds = getBounds();
         boundingBox = new BoundingBox(bounds[0],bounds[1],bounds[2],bounds[3]);
-        position = new Position(bounds[0] - bounds[2],bounds[1] - bounds[3]);
-        width = bounds[2];
-        height = bounds[3];
+        setPosition(new Position(bounds[0] - bounds[2],bounds[1] - bounds[3]));
+        setSize(bounds[2], bounds[3]);
     }
 
     public List<Shape> getShapes() {
         return shapes;
     }
 
-
     public Integer getCount() {
         return count;
+    }
+
+    // TODO: We moeten wel de bounds updaten ivm het kijken of een user iets select, weet niet of dit correct is, maar lijkt te werken
+    public void updateBounds() {
+        double[] bounds = getBounds();
+        boundingBox = new BoundingBox(bounds[0],bounds[1],bounds[2],bounds[3]);
+        setPosition(new Position(bounds[0] - bounds[2],bounds[1] - bounds[3]));
+        setSize(bounds[2], bounds[3]);
     }
 
     public double[] getBounds () {
@@ -86,8 +92,9 @@ public class CompositeShape extends Shape {
 
     @Override
     public void draw(Graphics g) {
-        for (Shape shape : shapes)
+        for (Shape shape : shapes) {
             shape.draw(g);
+        }
     }
 
     @Override

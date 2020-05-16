@@ -2,9 +2,9 @@ package com.designpatterns.paint.base.UserInterface;
 
 import com.designpatterns.paint.base.Models.Actions.*;
 import com.designpatterns.paint.base.Models.DrawPanel;
+import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
-import com.designpatterns.paint.base.Models.Position;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -123,14 +122,16 @@ public class UserInterface extends JFrame {
             }
         });
         drawPanel.addMouseListener(new MouseAdapter() {
-            MoveShape moveShape;
+            MoveShape moveShape = null;
 
             @Override
             public void mousePressed(MouseEvent e) {
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     if (editRadioButton.isSelected()) {
                         Shape shape = drawPanel.getShapeByCoordinates(new Position(e.getX(), e.getY()));
-                        if (editRadioButton.isSelected()) {
+                        if (shape != null && shape.isSelected()) {
+                            // TODO: Verplaatsen van checkIfSelectedShape() functie fixed het probleem met draggen
+                            drawPanel.checkIfSelectedShape(new Position(e.getX(), e.getY()));
                             moveShape = new MoveShape(new Position(e.getX(), e.getY()), shape, drawPanel);
                         }
                     }
@@ -141,7 +142,7 @@ public class UserInterface extends JFrame {
             public void mouseReleased(MouseEvent e)
             {
                 if (SwingUtilities.isLeftMouseButton(e)) {
-                    if (editRadioButton.isSelected()) {
+                    if (editRadioButton.isSelected() && moveShape != null) {
                         moveShape.setNewPos(new Position(e.getX(), e.getY()));
                         drawPanel.invoker.execute(moveShape);
                         moveShape = null;
@@ -155,10 +156,7 @@ public class UserInterface extends JFrame {
             public void mouseDragged(MouseEvent e) {
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     if (editRadioButton.isSelected()) {
-                        Shape shape = drawPanel.getShapeByCoordinates(new Position(e.getX(), e.getY()));
-                        if (editRadioButton.isSelected()) {
-                            drawPanel.moveShape(new Position(e.getX(), e.getY()));
-                        }
+                        drawPanel.moveShape(new Position(e.getX(), e.getY()));
                     }
                 }
             }
@@ -192,14 +190,9 @@ public class UserInterface extends JFrame {
             //Add selected shape to panel, based on xy coords from mouse
             addShapeToPanel(e.getX(), e.getY());
         } else if (editRadioButton.isSelected()) {
+            // On right mouse button click check if we selected a shape, if we did it will get set to selected
             if (SwingUtilities.isRightMouseButton(e)) {
-                Shape shape = drawPanel.getShapeByCoordinates(new Position(e.getX(), e.getY()));
-                if (shape != null) shape.setSelected(!shape.isSelected());
-
-                // Check if the values from the size inputs are valid and update selected shape
-                if (validateFields()) {
-                    drawPanel.checkIfSelectedShape(new Position(e.getX(), e.getY()));
-                }
+                drawPanel.checkIfSelectedShape(new Position(e.getX(), e.getY()));
             }
         } else if (removeRadioButton.isSelected()) {
             drawPanel.invoker.execute(new RemoveShape(new Position(e.getX(), e.getY()), drawPanel));
@@ -273,20 +266,9 @@ public class UserInterface extends JFrame {
      */
     private void combineShapes()
     {
-        List<Shape> newlist = drawPanel.getShapes();
-        int[] selected = mergeShapeList.getSelectedIndices();
-        List<Integer> selectedList = new ArrayList<Integer>();
-        for (int i : selected){
-            selectedList.add(i);
-        }
-
-        List<Shape> selectedShapes = new ArrayList<>();
-        for (Shape s : newlist) {
-            if (selectedList.contains(newlist.indexOf(s)) || s.isSelected()) {
-                selectedShapes.add(s);
-            }
-        }
+        List<Shape> selectedShapes = drawPanel.getSelectedShapes();
         drawPanel.invoker.execute(new CombineShapes(selectedShapes,drawPanel));
+        updateShapesOverviewList();
     }
 }
 
