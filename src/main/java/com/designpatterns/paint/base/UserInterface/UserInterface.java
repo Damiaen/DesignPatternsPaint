@@ -37,6 +37,8 @@ public class UserInterface extends JFrame {
     private JButton updateShapeButton;
     private JButton loadDrawingButton;
     private JButton createScreenshotButton;
+    private JComboBox ornamentPos;
+    private JButton ornamentButton;
 
     private final DrawPanel drawPanel = new DrawPanel();
     private final DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -200,7 +202,7 @@ public class UserInterface extends JFrame {
      */
     private void createInterfaceElements() {
         userInterfaceFrame.setContentPane(rootPanel);
-        userInterfaceFrame.setSize(1280,720);
+        userInterfaceFrame.setSize(1280,800);
         userInterfaceFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         userInterfaceFrame.setVisible(true);
         // Set Combobox content, fill it with the shapes we need
