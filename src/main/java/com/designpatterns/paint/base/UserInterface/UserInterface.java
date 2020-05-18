@@ -4,6 +4,7 @@ import com.designpatterns.paint.base.Models.Actions.AddShape;
 import com.designpatterns.paint.base.Models.Actions.ClearDrawing;
 import com.designpatterns.paint.base.Models.Actions.MoveShape;
 import com.designpatterns.paint.base.Models.DrawPanel;
+import com.designpatterns.paint.base.Models.Shapes.Figure.OrnamentPosition;
 import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Figure.ShapeType;
 import com.designpatterns.paint.base.Models.Vector2;
@@ -39,6 +40,7 @@ public class UserInterface extends JFrame {
     private JButton createScreenshotButton;
     private JComboBox ornamentPos;
     private JButton ornamentButton;
+    private JTextField ornamentText;
 
     private final DrawPanel drawPanel = new DrawPanel();
     private final DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -54,6 +56,12 @@ public class UserInterface extends JFrame {
 
         // Setup all the listeners that we require
         setupListeners();
+        ornamentButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                drawPanel.addOrnament(OrnamentPosition.valueOf(Objects.requireNonNull(ornamentPos.getSelectedItem()).toString()), Objects.requireNonNull(ornamentText.getText()));
+            }
+        });
     }
 
     /**

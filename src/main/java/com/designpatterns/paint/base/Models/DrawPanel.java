@@ -2,8 +2,10 @@ package com.designpatterns.paint.base.Models;
 
 import com.designpatterns.paint.base.Models.Actions.Invoker;
 import com.designpatterns.paint.base.Models.Shapes.Ellipse;
+import com.designpatterns.paint.base.Models.Shapes.Figure.OrnamentPosition;
 import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Figure.ShapeType;
+import com.designpatterns.paint.base.Models.Shapes.Ornament;
 import com.designpatterns.paint.base.Models.Shapes.Rectangle;
 
 import javax.swing.*;
@@ -12,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DrawPanel extends JPanel {
 
@@ -63,6 +66,21 @@ public class DrawPanel extends JPanel {
         System.out.println(shapes.get(shapes.size()-1));
         repaint();
         return shape;
+    }
+
+    /**
+     * Add ornament to drawPanel view
+     * TODO: ornament is type shape, dus we kunnen dit later generaliseren + we moeten een pattern toepassen hiero. Maar dit is een tijdelijke oplossing om even te testen of het werkt.
+     */
+    public void addOrnament(OrnamentPosition ornamentPosition, String ornamentContent)
+    {
+        // Check if we have at least one shape, otherwise we cant base the position on this shape
+        if (shapes.size() != 0) {
+            System.out.println("Ornament added with position: " + ornamentPosition + " and content: " + ornamentContent);
+            Shape shape = new Ornament(ornamentPosition, ornamentContent);
+            shapes.add(shape);
+            repaint();
+        }
     }
 
     /**
@@ -265,6 +283,13 @@ public class DrawPanel extends JPanel {
 
         for (Shape s : shapes) {
             System.out.println(selectedMergeShapes);
+            // TODO: Fix this shit with pattern
+            if (s instanceof Ornament) {
+                // Scuffed check om te kijken of de array groter is dan onze index value, zo voorkomen we even out of bounds errors
+                if ((shapes.size() - 1) > shapes.indexOf(s)) {
+                    ((Ornament) s).draw(g, Objects.requireNonNull(shapes.get(shapes.indexOf(s) + 1)));
+                }
+            }
             if (selectedShapes.contains(shapes.indexOf(s))) {
                 s.drawContour(g, Color.darkGray);
             } else if(selectedMergeShapes.contains(shapes.indexOf(s))) {

@@ -1,13 +1,10 @@
 package com.designpatterns.paint.base.Models.Shapes;
 
-import com.designpatterns.paint.base.Models.Shapes.Figure.OrnamentPosition;
 import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Figure.ShapeType;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
-
-import static com.designpatterns.paint.base.Models.Shapes.Figure.OrnamentPosition.TOP;
 
 public class Ellipse extends Shape {
 
@@ -37,31 +34,5 @@ public class Ellipse extends Shape {
         g2d.setColor(color);
 
         g2d.fillOval((int) (this.getX() - (this.getWidth() / 2.0D) - 3), (int) (this.getY() - (this.getHeight() / 2.0D) - 3), this.getWidth() + 6, this.getHeight() + 6);
-    }
-
-    @Override
-    public void drawOrnament(Graphics g, Ornament ornament) {
-        // Get relative center positions of shape
-        float positionX = (float)circle.getCenterX();
-        float positionY = (float)circle.getCenterY();
-
-        // Check what the position of the ornament is, and change values accordingly
-        switch (ornament.getOrnamentPosition()) {
-            case TOP:
-                positionY -= (((float)this.getHeight() / 2) + 20);
-                break;
-            case BOTTOM:
-                positionY += (((float)this.getHeight() / 2) - 20);
-                break;
-            case LEFT:
-                positionX -= (((float)this.getWidth() / 2) + 20);
-                break;
-            case RIGHT:
-                positionX += (((float)this.getHeight() / 2) - 20);
-                break;
-        }
-
-        // Draw the ornament
-        ornament.draw(g, positionX, positionY);
     }
 }
