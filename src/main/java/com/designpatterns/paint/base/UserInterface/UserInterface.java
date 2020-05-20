@@ -188,7 +188,9 @@ public class UserInterface extends JFrame {
      */
     private void updateSelectedList() {
         listModel.removeAllElements();
-        listModel.addAll(drawPanel.getSelectedShapes());
+        for (String selectedShape : drawPanel.getSelectedShapes()) {
+            listModel.addElement(selectedShape);
+        }
     }
 
     /**
