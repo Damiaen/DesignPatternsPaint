@@ -19,21 +19,4 @@ public class Ellipse extends Shape {
     public boolean checkPosition(Position position) {
         return circle.contains(position.x, position.y);
     }
-
-    @Override
-    public void draw(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        circle = new Ellipse2D.Double((this.getPosition().x - (this.getWidth() / 2.0D)), (this.getPosition().y - (this.getHeight() / 2.0D)), this.getWidth(), this.getHeight());
-
-        g2d.setColor(Color.GREEN);
-        g2d.fill(circle);
-    }
-
-    @Override
-    public void drawContour(Graphics g, Color color) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(color);
-
-        g2d.fillOval((int) (this.getPosition().x - (this.getWidth() / 2.0D) - 3), (int) (this.getPosition().y - (this.getHeight() / 2.0D) - 3), (int)this.getWidth() + 6, (int)this.getHeight() + 6);
-    }
 }
