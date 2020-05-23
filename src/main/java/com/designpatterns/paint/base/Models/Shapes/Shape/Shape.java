@@ -62,4 +62,8 @@ public class Shape implements IShape {
 
     public boolean isMoving() {return isMoving;}
 
+    public void moveShape(Position position){
+        this.position = position;
+    }
+
 }
