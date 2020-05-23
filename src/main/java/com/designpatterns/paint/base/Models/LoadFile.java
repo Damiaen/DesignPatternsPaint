@@ -1,8 +1,7 @@
 package com.designpatterns.paint.base.Models;
 
-import com.designpatterns.paint.base.Models.Shapes.Ellipse;
 import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
-import com.designpatterns.paint.base.Models.Shapes.Rectangle;
+import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -92,9 +91,9 @@ public class LoadFile {
             String type = (String) shape.get("type");
 
             if (type.equals("Rectangle")) {
-                loadedShapesData.add(parseRectangle(shape));
+                loadedShapesData.add(parseShape(shape, ShapeType.Rectangle));
             } else if (type.equals("Ellipse")) {
-                loadedShapesData.add(parseEllipse(shape));
+                loadedShapesData.add(parseShape(shape, ShapeType.Ellipse));
             }
         });
         return loadedShapesData;
@@ -103,24 +102,12 @@ public class LoadFile {
     /**
      * Parse JSON to Rectangle.
      */
-    private Rectangle parseRectangle(JSONObject rectangle) {
+    private Shape parseShape(JSONObject rectangle, ShapeType type) {
         Long top = (Long) rectangle.get("top");
         Long left = (Long) rectangle.get("left");
         Long width = (Long) rectangle.get("width");
         Long height = (Long) rectangle.get("height");
 
-        return new Rectangle(new Position(top.doubleValue(), left.doubleValue()), width.doubleValue(), height.doubleValue());
-    }
-
-    /**
-     * Parse JSON to Ellipse.
-     */
-    private Ellipse parseEllipse(JSONObject ellipse) {
-        Long top = (Long) ellipse.get("top");
-        Long left = (Long) ellipse.get("left");
-        Long width = (Long) ellipse.get("width");
-        Long height = (Long) ellipse.get("height");
-
-        return new Ellipse(new Position(top.doubleValue(), left.doubleValue()), width.doubleValue(), height.doubleValue());
+        return new Shape(type, new Position(top.doubleValue(), left.doubleValue()), width.doubleValue(), height.doubleValue());
     }
 }

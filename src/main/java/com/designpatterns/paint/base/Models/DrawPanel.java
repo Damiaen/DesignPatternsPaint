@@ -2,8 +2,6 @@ package com.designpatterns.paint.base.Models;
 
 import com.designpatterns.paint.base.Models.Actions.Invoker;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
-import com.designpatterns.paint.base.Models.Shapes.Ellipse;
-import com.designpatterns.paint.base.Models.Shapes.Rectangle;
 import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
 
@@ -52,12 +50,12 @@ public class DrawPanel extends JPanel {
         Shape shape = null;
         switch (type) {
             case Ellipse:
-                shape = new Ellipse(position, width, height);
+                shape = new Shape(ShapeType.Ellipse, position, width, height);
                 break;
             case Ornament:
                 break;
             case Rectangle:
-                shape = new Rectangle(position, width, height);
+                shape = new Shape(ShapeType.Rectangle, position, width, height);
                 break;
         }
         shapes.add(shape);
@@ -212,9 +210,9 @@ public class DrawPanel extends JPanel {
      * Save the drawings data to json
      */
     public void saveDrawing() {
-        if (!shapes.isEmpty()) {
-            SaveFile.getInstance().save(shapes);
-        }
+//        if (!shapes.isEmpty()) {
+//            SaveFile.getInstance().save(shapes);
+//        }
     }
 
     /**

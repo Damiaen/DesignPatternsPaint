@@ -2,10 +2,14 @@ package com.designpatterns.paint.base.Models.Shapes.Shape;
 
 import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.Strategies.DrawContourStrategy.EllipseContour;
+import com.designpatterns.paint.base.Models.Shapes.Strategies.DrawContourStrategy.RectangleContour;
 import com.designpatterns.paint.base.Models.Shapes.Strategies.DrawShapeStrategy.ShapeDrawContext;
 import com.designpatterns.paint.base.Models.Shapes.Strategies.DrawShapeStrategy.drawEllipse;
 import com.designpatterns.paint.base.Models.Shapes.Strategies.DrawShapeStrategy.drawRectangle;
 import  com.designpatterns.paint.base.Models.Shapes.Strategies.DrawContourStrategy.ShapeContourContext;
+import com.designpatterns.paint.base.Models.Shapes.Strategies.ContainsStrategy.EllipseContains;
+import com.designpatterns.paint.base.Models.Shapes.Strategies.ContainsStrategy.RectangleContains;
+import com.designpatterns.paint.base.Models.Shapes.Strategies.ContainsStrategy.ShapeContainsContext;
 
 import java.awt.*;
 
@@ -19,6 +23,7 @@ public class Shape implements IShape {
 
     private ShapeDrawContext shapeDrawContext;
     private ShapeContourContext shapeContourContext;
+    private ShapeContainsContext shapeContainsContext;
 
     public Shape(ShapeType type, Position position, double width, double height) {
         this.type = type;
@@ -30,9 +35,11 @@ public class Shape implements IShape {
         if (type.equals(ShapeType.Ellipse)) {
             shapeDrawContext = new ShapeDrawContext(new drawEllipse());
             shapeContourContext = new ShapeContourContext(new EllipseContour());
+            shapeContainsContext = new ShapeContainsContext(new EllipseContains());
         } else if (type.equals(ShapeType.Rectangle)) {
             shapeDrawContext = new ShapeDrawContext(new drawRectangle());
-            shapeContourContext = new ShapeContourContext(new EllipseContour());
+            shapeContourContext = new ShapeContourContext(new RectangleContour());
+            shapeContainsContext = new ShapeContainsContext(new RectangleContains());
         }
     }
 
@@ -60,7 +67,7 @@ public class Shape implements IShape {
     public final ShapeType getType() { return type; }
 
     public boolean checkPosition(Position position) {
-        return false;
+        return shapeContainsContext.executeShapeDrawStrategy(this, position.x, position.y);
     }
 
     public void draw(Graphics g) {
