@@ -1,14 +1,16 @@
 package com.designpatterns.paint.base.Models.Shapes.Shape;
 
 import com.designpatterns.paint.base.Models.Position;
+import com.designpatterns.paint.base.Models.Shapes.Shape.Visitors.ShapeVisitor;
 
 import java.awt.*;
 
 public interface IShape
 {
-    public boolean checkPosition(Position position);
-    public void draw(Graphics g);
-    public void drawContour(Graphics g, Color color);
-    public void setSelected(boolean bool);
-    public boolean isSelected();
+    boolean checkPosition(Position position);
+    void draw(Graphics g);
+    void drawContour(Graphics g, Color color);
+    void setSelected(boolean bool);
+    boolean isSelected();
+    String accept(ShapeVisitor v);
 }

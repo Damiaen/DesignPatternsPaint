@@ -1,6 +1,7 @@
 package com.designpatterns.paint.base.Models.Shapes.Shape;
 
 import com.designpatterns.paint.base.Models.Position;
+import com.designpatterns.paint.base.Models.Shapes.Shape.Visitors.ShapeVisitor;
 import com.designpatterns.paint.base.Models.Shapes.Strategies.DrawContourStrategy.EllipseContour;
 import com.designpatterns.paint.base.Models.Shapes.Strategies.DrawContourStrategy.RectangleContour;
 import com.designpatterns.paint.base.Models.Shapes.Strategies.DrawShapeStrategy.ShapeDrawContext;
@@ -86,8 +87,17 @@ public class Shape implements IShape {
         return isSelected;
     }
 
+    public String accept(ShapeVisitor v) {
+        return v.visitShape( this );
+    }
+
     public void setMoving(boolean bool){isMoving = bool;}
 
     public boolean isMoving() {return isMoving;}
+
+    @Override
+    public String toString() {
+        return type + " " + position.x + " " + position.y + " " + height + " " + width;
+    }
 
 }

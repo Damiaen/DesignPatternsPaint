@@ -4,6 +4,8 @@ import com.designpatterns.paint.base.Models.Actions.Invoker;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
+import com.designpatterns.paint.base.Models.Shapes.Shape.Visitors.ShapeVisitor;
+import com.designpatterns.paint.base.Models.Shapes.Shape.Visitors.ShapeVisitorSave;
 
 import javax.swing.*;
 import java.awt.*;
@@ -210,9 +212,15 @@ public class DrawPanel extends JPanel {
      * Save the drawings data to json
      */
     public void saveDrawing() {
-//        if (!shapes.isEmpty()) {
-//            SaveFile.getInstance().save(shapes);
-//        }
+        // Check if not empty
+        if (!shapes.isEmpty()) {
+            // Create master group
+            CompositeShape shape = new CompositeShape(shapes, ShapeType.CompositeShape,new Position(0,0),0,0);
+            // User visitor pattern to get all the shape data
+            ShapeVisitorSave saveVisitor = new ShapeVisitorSave();
+            // Access SaveText and save it to file
+            SaveText.getInstance().save(saveVisitor.export(shape));
+        }
     }
 
     /**

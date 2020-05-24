@@ -4,6 +4,7 @@ import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.Shape.BoundingBox;
 import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
+import com.designpatterns.paint.base.Models.Shapes.Shape.Visitors.ShapeVisitor;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -102,6 +103,20 @@ public class CompositeShape extends Shape {
         for (Shape shape : shapes)
             shape.drawContour(g,color);
     }
+
+    @Override
+    public String accept(ShapeVisitor v) {
+        return v.visitCompositeShape(this);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Shape shape : shapes)
+            stringBuilder.append(shape.toString()).append("\n");
+        return stringBuilder.toString();
+    }
+
 
     public void setSelected(boolean bool) {
         isSelected = bool;
