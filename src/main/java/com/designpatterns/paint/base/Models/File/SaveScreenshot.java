@@ -1,4 +1,4 @@
-package com.designpatterns.paint.base.Models;
+package com.designpatterns.paint.base.Models.File;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

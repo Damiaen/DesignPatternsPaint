@@ -1,7 +1,7 @@
 package com.designpatterns.paint.base.Models;
 
 import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
-import com.designpatterns.paint.base.Models.Shapes.Shape.Visitors.ShapeVisitorSave;
+import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorSave;
 import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

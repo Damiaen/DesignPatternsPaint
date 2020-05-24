@@ -1,7 +1,7 @@
 package com.designpatterns.paint.base.Models.Shapes.Shape;
 
 import com.designpatterns.paint.base.Models.Position;
-import com.designpatterns.paint.base.Models.Shapes.Shape.Visitors.ShapeVisitor;
+import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitor;
 
 import java.awt.*;
 

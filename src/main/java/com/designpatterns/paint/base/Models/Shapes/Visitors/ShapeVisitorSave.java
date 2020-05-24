@@ -1,6 +1,6 @@
-package com.designpatterns.paint.base.Models.Shapes.Shape.Visitors;
+package com.designpatterns.paint.base.Models.Shapes.Visitors;
 
-import com.designpatterns.paint.base.Models.SaveText;
+import com.designpatterns.paint.base.Models.File.SaveText;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 

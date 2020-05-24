@@ -1,4 +1,4 @@
-//package com.designpatterns.paint.base.Models.Shapes.Shape.Visitors;
+//package com.designpatterns.paint.base.Models.Shapes.Visitors;
 //
 //import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 //
