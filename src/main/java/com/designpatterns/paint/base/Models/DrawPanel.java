@@ -109,6 +109,7 @@ public class DrawPanel extends JPanel {
     /**
      * Loop through selected shapes from paint UI and side menu
      */
+    //TODO: still sees images as individuals after merging, so it trows a out of bounds exception
     public List<Shape> getSelectedShapes() {
         List<Integer> selectedShapesIndices = new ArrayList<>(selectedShapes);
         selectedShapesIndices.addAll(selectedMergeShapes);
@@ -287,13 +288,6 @@ public class DrawPanel extends JPanel {
         cursorSelectedX = mousePosition.x;
         cursorSelectedY = mousePosition.y;
         repaint();
-    }
-
-    public void moveShapeBack(Shape shape, Position position) {
-        if (shape != null) {
-            shape.setPosition(position);
-            repaint();
-        }
     }
 
     public List<Shape> getShapes(){

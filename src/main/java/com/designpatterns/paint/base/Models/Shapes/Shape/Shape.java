@@ -100,4 +100,8 @@ public class Shape implements IShape {
         return type + " " + position.x + " " + position.y + " " + height + " " + width;
     }
 
+    public void moveShape(Position position){
+        this.position = position;
+    }
+
 }

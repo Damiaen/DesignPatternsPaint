@@ -3,6 +3,7 @@ package com.designpatterns.paint.base.UserInterface;
 import com.designpatterns.paint.base.Models.Actions.*;
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Position;
+import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
 
@@ -133,6 +134,7 @@ public class UserInterface extends JFrame {
                             // TODO: Verplaatsen van checkIfSelectedShape() functie fixed het probleem met draggen
                             drawPanel.checkIfSelectedShape(new Position(e.getX(), e.getY()));
                             moveShape = new MoveShape(new Position(e.getX(), e.getY()), shape, drawPanel);
+                            shape.setMoving(true);
                         }
                     }
                 }
@@ -264,10 +266,21 @@ public class UserInterface extends JFrame {
     /**
      * Get the selected shapes and combine these into 1 layer
      */
+    //TODO: fix merging of new shape/composite shape and composite shape
     private void combineShapes()
     {
         List<Shape> selectedShapes = drawPanel.getSelectedShapes();
-        drawPanel.invoker.execute(new CombineShapes(selectedShapes,drawPanel));
+        List<Shape> checkedShapes = drawPanel.getSelectedShapes();
+        for (Shape s : selectedShapes){
+            if (s.getType() == ShapeType.CompositeShape)
+            {
+                CompositeShape cs = (CompositeShape) s;
+                checkedShapes.addAll(cs.getShapes());
+                selectedShapes.remove(cs);
+            }
+        }
+
+        drawPanel.invoker.execute(new CombineShapes(checkedShapes,drawPanel));
         updateShapesOverviewList();
     }
 }

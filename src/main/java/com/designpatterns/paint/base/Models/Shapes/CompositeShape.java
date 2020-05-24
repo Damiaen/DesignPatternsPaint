@@ -1,12 +1,12 @@
 package com.designpatterns.paint.base.Models.Shapes;
 
 import com.designpatterns.paint.base.Models.Position;
-import com.designpatterns.paint.base.Models.Shapes.Shape.BoundingBox;
 import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitor;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,21 +25,22 @@ public class CompositeShape extends Shape {
      */
     private final Integer count;
 
-    BoundingBox boundingBox;
+
+    private Rectangle2D rectangle2D;
 
     boolean isSelected;
 
     /**
      * CompositeShape constructor
      */
-    public CompositeShape(List<Shape> shapes, ShapeType type, Position position, double width, double height) {
-        super(type,position,width,height);
+    public CompositeShape(List<Shape> shapes, ShapeType type) {
+        super(type,new Position(0,0),0,0);
         this.count = shapes.size();
         this.shapes = shapes;
         double[] bounds = getBounds();
-        boundingBox = new BoundingBox(bounds[0],bounds[1],bounds[2],bounds[3]);
-        setPosition(new Position(bounds[0] - bounds[2],bounds[1] - bounds[3]));
+        setPosition(new Position(bounds[0],bounds[1]));
         setSize(bounds[2], bounds[3]);
+        System.out.println("width: " + getWidth() + " height: " + getHeight());
     }
 
     public List<Shape> getShapes() {
@@ -53,42 +54,70 @@ public class CompositeShape extends Shape {
     // TODO: We moeten wel de bounds updaten ivm het kijken of een user iets select, weet niet of dit correct is, maar lijkt te werken
     public void updateBounds() {
         double[] bounds = getBounds();
-        boundingBox = new BoundingBox(bounds[0],bounds[1],bounds[2],bounds[3]);
-        setPosition(new Position(bounds[0] - bounds[2],bounds[1] - bounds[3]));
-        setSize(bounds[2], bounds[3]);
+        setPosition(new Position(bounds[0],bounds[1]));
     }
 
     public double[] getBounds () {
         double[] bounds = new double[4];
 
-        bounds[0] = 0; // X
-        bounds[1] = 0; // Y
-        bounds[2] = 0; // width
-        bounds[3] = 0; // height
+        /*
+            top left == lowest x and highest y
+            bottom right == highest x and lowest y
 
+            width == maxx - minx
+            height == maxy - miny
+            x = minx + (maxx / 2)
+            y = miny + (maxy / 2)
+        */
+
+        double minx = 9999;
+        double miny = 9999;
+        double maxx = 0;
+        double maxy = 0;
+
+        double newminx = 0;
+        double newminxy = 0;
+        double newmaxx = 0;
+        double newmaxy = 0;
         for (Shape shape : shapes)
         {
             Position position = shape.getPosition();
-            if (position.x < bounds[0]) continue;
-            bounds[0] = position.x;
-            if (position.y < bounds[1]) continue;
-            bounds[1] = position.y;
-            if (shape.getWidth() < bounds[2]) continue;
-            bounds[2] = shape.getWidth();
-            if (shape.getHeight() < bounds[3]) continue;
-            bounds[3] = shape.getHeight();
+            double width = shape.getWidth();
+            double height = shape.getHeight();
+            if (position.x < minx) {
+                minx = position.x;
+                newminx = position.x - width / 2;
+            }
+            if (position.y < miny) {
+                miny = position.y;
+                newminxy = position.y - height / 2;
+            }
+            if (position.x > maxx)
+            {
+                maxx = position.x;
+                newmaxx = position.x + width / 2;
+            }
+            if (position.y > maxy)
+            {
+                maxy = position.y;
+                newmaxy = position.y + height / 2;
+            }
+
         }
+        bounds[0] = newminx;
+        bounds[1] = newminxy;
+        bounds[2] = newmaxx - newminx;
+        bounds[3] = newmaxy - newminxy;
+
         return bounds;
     }
 
     @Override
     public boolean checkPosition(Position position)
     {
-        if (shapes.size() != count) {
-            double[] bounds = getBounds();
-            boundingBox = new BoundingBox(bounds[0],bounds[1],bounds[2],bounds[3]);
-        }
-        return boundingBox.Contains(position.x,position.y);
+        updateBounds();
+        rectangle2D = new Rectangle2D.Double((this.getPosition().x), (this.getPosition().y), this.getWidth(), this.getHeight());
+        return rectangle2D.contains(position.x,position.y);
     }
 
     @Override
@@ -96,12 +125,16 @@ public class CompositeShape extends Shape {
         for (Shape shape : shapes) {
             shape.draw(g);
         }
+
     }
 
     @Override
     public void drawContour(Graphics g, Color color) {
-        for (Shape shape : shapes)
-            shape.drawContour(g,color);
+        updateBounds();
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(color);
+
+        g2d.drawRect((int) (this.getPosition().x - 3), (int) (this.getPosition().y - 3), (int)this.getWidth() + 6, (int)this.getHeight() + 6);
     }
 
     @Override

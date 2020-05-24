@@ -28,13 +28,15 @@ public class MoveShape implements Command
     @Override
     public void execute()
     {
-        panel.moveShapeBack(shape,newPos);
+        shape.moveShape(newPos);
+        panel.repaint();
     }
 
     @Override
     public void undo()
     {
-        panel.moveShapeBack(shape,oldPos);
+        shape.moveShape(oldPos);
+        panel.repaint();
     }
 
     @Override
