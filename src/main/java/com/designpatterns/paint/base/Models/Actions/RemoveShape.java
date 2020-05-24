@@ -1,7 +1,8 @@
 package com.designpatterns.paint.base.Models.Actions;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
-import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
+import com.designpatterns.paint.base.Models.Position;
+import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 
 public class RemoveShape implements Command {
 
@@ -9,8 +10,8 @@ public class RemoveShape implements Command {
     private Shape shape;
     private DrawPanel drawPanel;
 
-    public RemoveShape(Shape shape,DrawPanel drawPanel) {
-        this.shape = shape;
+    public RemoveShape(Position position, DrawPanel drawPanel) {
+        this.shape = drawPanel.getShapeByCoordinates(position);
         this.drawPanel = drawPanel;
     }
 
@@ -21,7 +22,7 @@ public class RemoveShape implements Command {
 
     @Override
     public void undo() {
-        shape = drawPanel.addShape(shape.getType(),shape.getX(),shape.getY(),shape.getWidth(),shape.getHeight());
+        shape = drawPanel.addShape(shape.getType(),shape.getPosition(),shape.getWidth(),shape.getHeight());
     }
 
     @Override

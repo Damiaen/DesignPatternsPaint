@@ -1,24 +1,24 @@
 package com.designpatterns.paint.base.Models;
 
-public class Vector2
+public class Position
 {
     // Members
-    public float x;
-    public float y;
+    public double x;
+    public double y;
 
     // Constructors
-    public Vector2() {
-        this.x = 0.0f;
-        this.y = 0.0f;
+    public Position() {
+        this.x = 0;
+        this.y = 0;
     }
 
-    public Vector2(float x, float y) {
+    public Position(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
     // Compare two vectors
-    public boolean equals(Vector2 other) {
+    public boolean equals(Position other) {
         return (this.x == other.x && this.y == other.y);
     }
 }

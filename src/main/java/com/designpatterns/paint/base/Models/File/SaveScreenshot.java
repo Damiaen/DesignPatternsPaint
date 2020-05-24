@@ -1,4 +1,4 @@
-package com.designpatterns.paint.base.Models;
+package com.designpatterns.paint.base.Models.File;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -41,6 +41,5 @@ public class SaveScreenshot {
         ImageIO.write(bufferedImage, "jpg", imageFile);
         System.out.println("Created screenshot at: ./screenshots/screenshot_" + timeStamp + ".jpg");
     }
-
 
 }

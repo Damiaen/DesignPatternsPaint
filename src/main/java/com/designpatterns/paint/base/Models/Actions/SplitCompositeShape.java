@@ -8,33 +8,33 @@ import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
 
 import java.util.List;
 
-public class CombineShapes implements Command
+public class SplitCompositeShape implements Command
 {
     private final CompositeShape shape;
     private final DrawPanel drawPanel;
 
-    public CombineShapes(List<Shape> shapes, DrawPanel drawPanel) {
-        shape = new CompositeShape(shapes, ShapeType.CompositeShape);
+    public SplitCompositeShape(CompositeShape shape, DrawPanel drawPanel) {
+        this.shape = shape;
         this.drawPanel = drawPanel;
     }
 
 
     @Override
     public void execute() {
-        drawPanel.addShape(shape);
         for (Shape shape : shape.getShapes()){
-            drawPanel.removeShape(shape);
+            drawPanel.addShape(shape.getType(),shape.getPosition(),shape.getWidth(),shape.getHeight());
         }
-        System.out.println("added");
+        System.out.println("deleted");
     }
 
     @Override
     public void undo()
     {
+        drawPanel.addShape(shape);
         for (Shape shape : shape.getShapes()){
-            drawPanel.addShape(shape.getType(),shape.getPosition(),shape.getWidth(),shape.getHeight());
+            drawPanel.removeShape(shape);
         }
-        System.out.println("deleted");
+        System.out.println("added");
     }
 
     @Override

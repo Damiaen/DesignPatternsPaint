@@ -1,7 +1,7 @@
 package com.designpatterns.paint.base.Models.Actions;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
-import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
+import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class ClearDrawing implements Command
     {
         List<Shape> newShapes = new ArrayList<>();
         for (Shape shape : shapes) {
-            Shape s = drawPanel.addShape(shape.getType(),shape.getX(),shape.getY(),shape.getWidth(),shape.getHeight());
+            Shape s = drawPanel.addShape(shape.getType(),shape.getPosition(),shape.getWidth(),shape.getHeight());
             newShapes.add(s);
         }
         shapes = newShapes;

@@ -1,0 +1,13 @@
+CompositeShape 4 
+	Ellipse 626.0 190.0 100.0 100.0
+	CompositeShape 2 
+		Ornament TOP "example text"
+		Ellipse 178.0 214.0 100.0 100.0
+		Ornament TOP "example text"
+		Ellipse 426.0 299.0 100.0 100.0
+		Ellipse 577.0 386.0 100.0 100.0
+	CompositeShape 2 
+			Ornament LEFT "example text"
+			Ellipse 390.0 572.0 100.0 100.0
+			Ornament LEFT "example text"
+			Ellipse 565.0 762.0 100.0 100.0

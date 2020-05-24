@@ -1,40 +1,42 @@
 package com.designpatterns.paint.base.Models.Actions;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
-import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
-import com.designpatterns.paint.base.Models.Vector2;
+import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
+import com.designpatterns.paint.base.Models.Position;
 
 public class MoveShape implements Command
 {
 
-    private Vector2 oldPos;
+    private Position oldPos;
 
-    private Vector2 newPos;
+    private Position newPos;
 
     private DrawPanel panel;
 
     private Shape shape;
 
-    public MoveShape (Vector2 pos,Shape shape, DrawPanel panel){
+    public MoveShape (Position pos, Shape shape, DrawPanel panel){
         oldPos = pos;
         this.shape = shape;
         this.panel = panel;
     }
 
-    public void setNewPos(Vector2 pos) {
+    public void setNewPos(Position pos) {
         newPos = pos;
     }
 
     @Override
     public void execute()
     {
-        panel.moveShapeBack(shape,(int)newPos.x,(int)newPos.y);
+        shape.moveShape(newPos);
+        panel.repaint();
     }
 
     @Override
     public void undo()
     {
-        panel.moveShapeBack(shape,(int)oldPos.x,(int)oldPos.y);
+        shape.moveShape(oldPos);
+        panel.repaint();
     }
 
     @Override

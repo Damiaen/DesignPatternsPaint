@@ -1,7 +1,7 @@
 package com.designpatterns.paint.base.Models.Actions;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
-import com.designpatterns.paint.base.Models.Shapes.Figure.Shape;
+import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 
 public class AddShape implements Command {
 
@@ -16,7 +16,7 @@ public class AddShape implements Command {
 
     @Override
     public void execute() {
-        shape = drawPanel.addShape(shape.getType(),shape.getX(),shape.getY(),shape.getWidth(),shape.getHeight());
+        shape = drawPanel.addShape(shape.getType(),shape.getPosition(),shape.getWidth(),shape.getHeight());
     }
 
     @Override
