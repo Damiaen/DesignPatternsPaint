@@ -33,10 +33,10 @@ public class SaveText {
         System.out.println("Attempting to save to text file...");
         System.out.println(shapes);
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-        try (FileWriter file = new FileWriter("./saves/text/save_"+ timeStamp + ".txt")) {
+        try (FileWriter file = new FileWriter("./saves/save_"+ timeStamp + ".txt")) {
             file.write(shapes);
             file.flush();
-            System.out.println("Saved drawing to: './saves/text/save_"+ timeStamp + ".txt'");
+            System.out.println("Saved drawing to: './saves/save_"+ timeStamp + ".txt'");
         } catch (IOException e) {
             e.printStackTrace();
         }
