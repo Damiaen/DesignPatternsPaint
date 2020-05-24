@@ -4,7 +4,6 @@ import com.designpatterns.paint.base.Models.Actions.Invoker;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
-import com.designpatterns.paint.base.Models.Shapes.Shape.Visitors.ShapeVisitor;
 import com.designpatterns.paint.base.Models.Shapes.Shape.Visitors.ShapeVisitorSave;
 
 import javax.swing.*;
@@ -218,8 +217,7 @@ public class DrawPanel extends JPanel {
             CompositeShape shape = new CompositeShape(shapes, ShapeType.CompositeShape,new Position(0,0),0,0);
             // User visitor pattern to get all the shape data
             ShapeVisitorSave saveVisitor = new ShapeVisitorSave();
-            // Access SaveText and save it to file
-            SaveText.getInstance().save(saveVisitor.export(shape));
+            saveVisitor.export(shape);
         }
     }
 

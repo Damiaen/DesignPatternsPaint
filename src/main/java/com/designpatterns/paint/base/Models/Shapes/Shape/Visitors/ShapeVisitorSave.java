@@ -1,18 +1,18 @@
 package com.designpatterns.paint.base.Models.Shapes.Shape.Visitors;
 
+import com.designpatterns.paint.base.Models.SaveText;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 
 public class ShapeVisitorSave implements ShapeVisitor {
 
-
-    public String export(Shape... args) {
+    public void export(Shape... args) {
         StringBuilder sb = new StringBuilder();
         for (Shape shape : args) {
             sb.append(shape.accept(this)).append("\n");
         }
-        System.out.println(sb.toString());
-        return sb.toString();
+        //Write the generated data to text
+        SaveText.getInstance().save(sb.toString());
     }
 
     public String visitShape(Shape shape) {
@@ -31,7 +31,7 @@ public class ShapeVisitorSave implements ShapeVisitor {
         StringBuilder sb = new StringBuilder();
         for (Shape shape : compositeShape.getShapes()) {
             String obj = shape.accept(this);
-            obj = "    " + obj.replace("\n", "\n\t");
+            obj = "\t" + obj.replace("\n", "\n\t");
             sb.append(obj).append("\n");
         }
         sb.deleteCharAt(sb.length() - 1);
