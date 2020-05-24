@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="26" y="97" width="1362" height="774"/>
+      <xy x="26" y="97" width="1298" height="1079"/>
     </constraints>
     <properties>
       <background color="-12759343"/>
@@ -22,10 +22,10 @@
         </properties>
         <border type="none"/>
         <children>
-          <grid id="32218" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="32218" layout-manager="GridLayoutManager" row-count="9" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="3" column="3" row-span="3" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="1" indent="0" use-parent-layout="false">
+              <grid row="1" column="3" row-span="6" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="200" height="-1"/>
               </grid>
             </constraints>
@@ -39,12 +39,14 @@
               <grid id="59cde" layout-manager="GridLayoutManager" row-count="8" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <background color="-3678990"/>
                 </properties>
-                <border type="none"/>
+                <border type="line">
+                  <color color="-7500403"/>
+                </border>
                 <children>
                   <component id="5e170" class="javax.swing.JComboBox" binding="new_shape_combobox">
                     <constraints>
@@ -115,8 +117,8 @@
                   <hspacer id="aef6d">
                     <constraints>
                       <grid row="7" column="1" row-span="1" col-span="3" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                        <minimum-size width="-1" height="20"/>
-                        <maximum-size width="-1" height="20"/>
+                        <minimum-size width="-1" height="10"/>
+                        <maximum-size width="-1" height="10"/>
                       </grid>
                     </constraints>
                   </hspacer>
@@ -125,15 +127,15 @@
                       <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <font size="16"/>
-                      <text value="Add and Edit settings"/>
+                      <font name="Calibri" size="16" style="0"/>
+                      <text value="SETTINGS FOR SHAPES"/>
                     </properties>
                   </component>
                   <hspacer id="fb8dd">
                     <constraints>
                       <grid row="2" column="1" row-span="1" col-span="3" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                        <minimum-size width="-1" height="10"/>
-                        <maximum-size width="-1" height="10"/>
+                        <minimum-size width="-1" height="2"/>
+                        <maximum-size width="-1" height="2"/>
                       </grid>
                     </constraints>
                   </hspacer>
@@ -143,7 +145,7 @@
                     </constraints>
                     <properties>
                       <background color="-3678990"/>
-                      <text value="Update shape"/>
+                      <text value="Update selected shape(s)"/>
                     </properties>
                   </component>
                 </children>
@@ -151,12 +153,14 @@
               <grid id="3abab" layout-manager="GridLayoutManager" row-count="8" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <background color="-3678990"/>
                 </properties>
-                <border type="none"/>
+                <border type="line">
+                  <color color="-7500403"/>
+                </border>
                 <children>
                   <vspacer id="dde72">
                     <constraints>
@@ -169,8 +173,8 @@
                   <hspacer id="ad24">
                     <constraints>
                       <grid row="7" column="1" row-span="1" col-span="3" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                        <minimum-size width="-1" height="20"/>
-                        <maximum-size width="-1" height="20"/>
+                        <minimum-size width="-1" height="10"/>
+                        <maximum-size width="-1" height="10"/>
                       </grid>
                     </constraints>
                   </hspacer>
@@ -187,8 +191,8 @@
                       <grid row="1" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <font size="16"/>
-                      <text value="Shapes in Drawing"/>
+                      <font name="Calibri" size="16" style="0"/>
+                      <text value="SHAPES IN DRAWING"/>
                     </properties>
                   </component>
                   <hspacer id="7fa77">
@@ -202,8 +206,8 @@
                   <hspacer id="d257d">
                     <constraints>
                       <grid row="2" column="1" row-span="1" col-span="3" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                        <minimum-size width="-1" height="10"/>
-                        <maximum-size width="-1" height="10"/>
+                        <minimum-size width="-1" height="5"/>
+                        <maximum-size width="-1" height="5"/>
                       </grid>
                     </constraints>
                   </hspacer>
@@ -219,7 +223,7 @@
                   <scrollpane id="c2393">
                     <constraints>
                       <grid row="3" column="1" row-span="3" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                        <minimum-size width="-1" height="250"/>
+                        <minimum-size width="-1" height="300"/>
                         <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
@@ -238,22 +242,170 @@
               </grid>
               <vspacer id="bfc9d">
                 <constraints>
-                  <grid row="1" column="0" row-span="2" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
-                    <minimum-size width="-1" height="40"/>
-                    <maximum-size width="-1" height="40"/>
+                  <grid row="6" column="0" row-span="2" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                    <minimum-size width="-1" height="10"/>
+                    <maximum-size width="-1" height="10"/>
                   </grid>
                 </constraints>
               </vspacer>
+              <grid id="cf293" layout-manager="GridLayoutManager" row-count="7" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-3678990"/>
+                </properties>
+                <border type="line">
+                  <color color="-7500403"/>
+                </border>
+                <children>
+                  <component id="cff80" class="javax.swing.JComboBox" binding="ornamentPos">
+                    <constraints>
+                      <grid row="3" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <model>
+                        <item value="TOP"/>
+                        <item value="BOTTOM"/>
+                        <item value="LEFT"/>
+                        <item value="RIGHT"/>
+                      </model>
+                    </properties>
+                  </component>
+                  <vspacer id="390a1">
+                    <constraints>
+                      <grid row="3" column="0" row-span="3" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                        <minimum-size width="5" height="-1"/>
+                        <maximum-size width="5" height="-1"/>
+                      </grid>
+                    </constraints>
+                  </vspacer>
+                  <vspacer id="54628">
+                    <constraints>
+                      <grid row="3" column="4" row-span="3" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                        <minimum-size width="5" height="-1"/>
+                        <maximum-size width="5" height="-1"/>
+                      </grid>
+                    </constraints>
+                  </vspacer>
+                  <hspacer id="e087f">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="3" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                        <minimum-size width="-1" height="10"/>
+                        <maximum-size width="-1" height="10"/>
+                      </grid>
+                    </constraints>
+                  </hspacer>
+                  <hspacer id="385b2">
+                    <constraints>
+                      <grid row="6" column="1" row-span="1" col-span="3" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                        <minimum-size width="-1" height="10"/>
+                        <maximum-size width="-1" height="10"/>
+                      </grid>
+                    </constraints>
+                  </hspacer>
+                  <component id="bee29" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <enabled value="true"/>
+                      <font name="Calibri" size="16" style="0"/>
+                      <text value="SETTINGS FOR ORNAMENTS"/>
+                    </properties>
+                  </component>
+                  <hspacer id="62661">
+                    <constraints>
+                      <grid row="2" column="1" row-span="1" col-span="3" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                        <minimum-size width="-1" height="2"/>
+                        <maximum-size width="-1" height="2"/>
+                      </grid>
+                    </constraints>
+                  </hspacer>
+                  <component id="32d45" class="javax.swing.JTextField" binding="ornamentText">
+                    <constraints>
+                      <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <text value="example text"/>
+                    </properties>
+                  </component>
+                  <component id="fb202" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Content:"/>
+                    </properties>
+                  </component>
+                  <component id="b91c9" class="javax.swing.JButton" binding="ornamentButton">
+                    <constraints>
+                      <grid row="5" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <background color="-3678990"/>
+                      <text value="Add/Update ornament"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <vspacer id="1687e">
+                <constraints>
+                  <grid row="3" column="0" row-span="2" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                    <minimum-size width="-1" height="10"/>
+                    <maximum-size width="-1" height="10"/>
+                  </grid>
+                </constraints>
+              </vspacer>
+              <grid id="d0afe" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <minimum-size width="-1" height="30"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <background color="-2429697"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="17ddf" class="javax.swing.JButton" binding="saveDrawingButton">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                        <minimum-size width="110" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <background color="-2429697"/>
+                      <text value="Save"/>
+                    </properties>
+                  </component>
+                  <component id="83275" class="javax.swing.JButton" binding="loadDrawingButton">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false">
+                        <minimum-size width="110" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <background color="-2429697"/>
+                      <text value="Load"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <hspacer id="4a5f3">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="2" use-parent-layout="false">
+                    <minimum-size width="-1" height="15"/>
+                    <maximum-size width="-1" height="15"/>
+                  </grid>
+                </constraints>
+              </hspacer>
             </children>
           </grid>
-          <vspacer id="8c336">
-            <constraints>
-              <grid row="1" column="0" row-span="6" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
-                <minimum-size width="20" height="-1"/>
-                <maximum-size width="20" height="-1"/>
-              </grid>
-            </constraints>
-          </vspacer>
           <vspacer id="21467">
             <constraints>
               <grid row="1" column="4" row-span="6" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
@@ -273,8 +425,8 @@
           <hspacer id="64dda">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="3" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="2" use-parent-layout="false">
-                <minimum-size width="-1" height="20"/>
-                <maximum-size width="-1" height="20"/>
+                <minimum-size width="-1" height="15"/>
+                <maximum-size width="-1" height="15"/>
               </grid>
             </constraints>
           </hspacer>
@@ -289,12 +441,14 @@
               <background color="-1"/>
               <foreground color="-1"/>
             </properties>
-            <border type="none"/>
+            <border type="line">
+              <color color="-7500403"/>
+            </border>
             <children/>
           </grid>
           <vspacer id="d7630">
             <constraints>
-              <grid row="3" column="2" row-span="4" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+              <grid row="1" column="2" row-span="6" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
                 <minimum-size width="20" height="-1"/>
                 <maximum-size width="20" height="-1"/>
               </grid>
@@ -303,7 +457,7 @@
           <grid id="d7b65" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
                 <minimum-size width="-1" height="30"/>
               </grid>
             </constraints>
@@ -383,7 +537,7 @@
                   </hspacer>
                 </children>
               </grid>
-              <grid id="a917d" layout-manager="GridLayoutManager" row-count="1" column-count="12" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="a917d" layout-manager="GridLayoutManager" row-count="1" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="4" fill="2" indent="0" use-parent-layout="false"/>
@@ -400,25 +554,6 @@
                     <properties>
                       <background color="-2429697"/>
                       <text value="Clear drawing"/>
-                    </properties>
-                  </component>
-                  <hspacer id="5c951">
-                    <constraints>
-                      <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                        <minimum-size width="5" height="-1"/>
-                        <maximum-size width="5" height="-1"/>
-                      </grid>
-                    </constraints>
-                  </hspacer>
-                  <component id="17ddf" class="javax.swing.JButton" binding="saveDrawingButton">
-                    <constraints>
-                      <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false">
-                        <minimum-size width="110" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties>
-                      <background color="-2429697"/>
-                      <text value="Save"/>
                     </properties>
                   </component>
                   <component id="6d3a8" class="javax.swing.JButton" binding="undoButton">
@@ -454,31 +589,6 @@
                       </grid>
                     </constraints>
                   </hspacer>
-                  <hspacer id="41648">
-                    <constraints>
-                      <grid row="0" column="9" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                        <minimum-size width="5" height="-1"/>
-                      </grid>
-                    </constraints>
-                  </hspacer>
-                  <component id="83275" class="javax.swing.JButton" binding="loadDrawingButton">
-                    <constraints>
-                      <grid row="0" column="10" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false">
-                        <minimum-size width="110" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties>
-                      <background color="-2429697"/>
-                      <text value="Load"/>
-                    </properties>
-                  </component>
-                  <hspacer id="3e072">
-                    <constraints>
-                      <grid row="0" column="11" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                        <minimum-size width="5" height="-1"/>
-                      </grid>
-                    </constraints>
-                  </hspacer>
                   <component id="86190" class="javax.swing.JButton" binding="createScreenshotButton" default-binding="true">
                     <constraints>
                       <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -502,9 +612,9 @@
           </grid>
           <hspacer id="7b8b9">
             <constraints>
-              <grid row="2" column="1" row-span="1" col-span="3" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="2" use-parent-layout="false">
-                <minimum-size width="-1" height="20"/>
-                <maximum-size width="-1" height="20"/>
+              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="2" use-parent-layout="false">
+                <minimum-size width="-1" height="15"/>
+                <maximum-size width="-1" height="15"/>
               </grid>
             </constraints>
           </hspacer>
@@ -516,6 +626,14 @@
               </grid>
             </constraints>
           </hspacer>
+          <vspacer id="8c336">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                <minimum-size width="20" height="-1"/>
+                <maximum-size width="20" height="-1"/>
+              </grid>
+            </constraints>
+          </vspacer>
         </children>
       </grid>
     </children>

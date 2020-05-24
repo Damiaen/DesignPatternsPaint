@@ -4,6 +4,9 @@ import com.designpatterns.paint.base.Models.Actions.Invoker;
 import com.designpatterns.paint.base.Models.File.LoadText;
 import com.designpatterns.paint.base.Models.File.SaveScreenshot;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
+import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentDecorator;
+import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentPosition;
+import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorSave;
@@ -113,8 +116,6 @@ public class DrawPanel extends JPanel {
     public List<Shape> getSelectedShapes() {
         List<Integer> selectedShapesIndices = new ArrayList<>(selectedShapes);
         selectedShapesIndices.addAll(selectedMergeShapes);
-        System.out.println("Selected shapes indices: " + selectedShapesIndices);
-
         List<Shape> selectedShapes = new ArrayList<>();
 
         // Loop and add shapes to list, also set selected to false to prevent nested selected errors
@@ -159,6 +160,22 @@ public class DrawPanel extends JPanel {
             shapes.get(shapeIndex).setSelected(true);
         }
         repaint();
+    }
+
+    /**
+     * Add ornament to drawPanel view
+     */
+    public void addOrnament(OrnamentPosition ornamentPosition, String ornamentContent)
+    {
+        List<Shape> shapeList = getSelectedShapes();
+        // Check if we have at least one shape, otherwise we cant base the position on this shape
+        if (shapeList.size() != 0) {
+            for (IShape iShape: shapeList) {
+                IShape shape = new OrnamentDecorator( iShape, ornamentPosition, ornamentContent);
+//                shapes.set(shapes.indexOf(iShape), (OrnamentDecorator) shape);
+            }
+            repaint();
+        }
     }
 
     /**

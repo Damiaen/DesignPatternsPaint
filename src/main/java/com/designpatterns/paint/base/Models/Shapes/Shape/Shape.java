@@ -13,6 +13,7 @@ import com.designpatterns.paint.base.Models.Shapes.Strategies.ContainsStrategy.R
 import com.designpatterns.paint.base.Models.Shapes.Strategies.ContainsStrategy.ShapeContainsContext;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Shape implements IShape {
 
@@ -57,12 +58,27 @@ public class Shape implements IShape {
         return position;
     }
 
+    @Override
+    public ArrayList<String> getSaveData() {
+        return null;
+    }
+
     public final double getWidth() {
         return width;
     }
 
+    @Override
+    public double getY() {
+        return position.y;
+    }
+
     public final double getHeight() {
         return height;
+    }
+
+    @Override
+    public void setSize(int newWidth, int newHeight) {
+
     }
 
     public final ShapeType getType() { return type; }
@@ -85,6 +101,11 @@ public class Shape implements IShape {
 
     public boolean isSelected() {
         return isSelected;
+    }
+
+    @Override
+    public double getX() {
+        return position.x;
     }
 
     public String accept(ShapeVisitor v) {

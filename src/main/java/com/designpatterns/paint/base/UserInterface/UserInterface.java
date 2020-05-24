@@ -4,6 +4,7 @@ import com.designpatterns.paint.base.Models.Actions.*;
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
+import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentPosition;
 import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
 
@@ -37,6 +38,9 @@ public class UserInterface extends JFrame {
     private JButton updateShapeButton;
     private JButton loadDrawingButton;
     private JButton createScreenshotButton;
+    private JComboBox ornamentPos;
+    private JTextField ornamentText;
+    private JButton ornamentButton;
 
     private final DrawPanel drawPanel = new DrawPanel();
     private final DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -59,6 +63,13 @@ public class UserInterface extends JFrame {
      */
     private void setupListeners() {
         // Button listeners:
+        // Button listeners:
+        ornamentButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                drawPanel.addOrnament(OrnamentPosition.valueOf(Objects.requireNonNull(ornamentPos.getSelectedItem()).toString()), Objects.requireNonNull(ornamentText.getText()));
+            }
+        });
         clearDrawingButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -209,7 +220,7 @@ public class UserInterface extends JFrame {
      */
     private void createInterfaceElements() {
         userInterfaceFrame.setContentPane(rootPanel);
-        userInterfaceFrame.setSize(1280,720);
+        userInterfaceFrame.setSize(1280,800);
         userInterfaceFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         userInterfaceFrame.setVisible(true);
         // Set Combobox content, fill it with the shapes we need

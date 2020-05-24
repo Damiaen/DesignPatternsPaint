@@ -2,6 +2,7 @@ package com.designpatterns.paint.base.Models.Shapes.Visitors;
 
 import com.designpatterns.paint.base.Models.File.SaveText;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
+import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentDecorator;
 import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 
 public class ShapeVisitorSave implements ShapeVisitor {
@@ -17,6 +18,10 @@ public class ShapeVisitorSave implements ShapeVisitor {
 
     public String visitShape(Shape shape) {
         return shape.toString();
+    }
+
+    public String visitOrnamentDecorator(OrnamentDecorator ornamentDecorator) {
+        return ornamentDecorator.toString();
     }
 
     public String visitCompositeShape(CompositeShape compositeShape) {
