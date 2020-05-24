@@ -1,0 +1,6 @@
+CompositeShape 1
+	CompositeShape 4
+		Ellipse 303.0 160.0 100.0 100.0
+		Ellipse 429.0 285.0 100.0 100.0
+		Ellipse 603.0 139.0 100.0 100.0
+		Ellipse 731.0 246.0 100.0 100.0

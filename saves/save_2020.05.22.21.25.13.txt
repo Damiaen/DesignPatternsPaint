@@ -1,0 +1,13 @@
+CompositeShape 1 
+	CompositeShape 2
+		CompositeShape 3 
+			Ellipse 117.0 257.0 100.0 100.0
+			Ellipse 253.0 501.0 100.0 100.0
+			Ellipse 579.0 297.0 100.0 100.0
+		CompositeShape 2 
+			CompositeShape 3 
+				Rectangle 392.0 99.0 100.0 100.0
+				Rectangle 507.0 494.0 100.0 100.0
+				Rectangle 755.0 91.0 100.0 100.0
+			Ornament TOP "example text"
+			Rectangle 295.0 315.0 100.0 100.0

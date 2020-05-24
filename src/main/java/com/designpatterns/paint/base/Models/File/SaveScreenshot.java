@@ -42,5 +42,4 @@ public class SaveScreenshot {
         System.out.println("Created screenshot at: ./screenshots/screenshot_" + timeStamp + ".jpg");
     }
 
-
 }

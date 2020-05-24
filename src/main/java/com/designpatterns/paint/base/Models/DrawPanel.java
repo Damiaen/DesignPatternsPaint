@@ -147,8 +147,9 @@ public class DrawPanel extends JPanel {
 
     /**
      * add shape to the selected shape index, check for duplicates here.
+     * @param shapeIndex = index of shape, should be type Integer and not (int) to prevent random shit
      */
-    public void setSelectedShapes(int shapeIndex) {
+    public void setSelectedShapes(Integer shapeIndex) {
         if (!selectedShapes.contains(shapeIndex) && !selectedMergeShapes.contains(shapeIndex)) {
             selectedShapes.add(shapeIndex);
             shapes.get(shapeIndex).setSelected(true);
@@ -217,7 +218,7 @@ public class DrawPanel extends JPanel {
         // Check if not empty
         if (!shapes.isEmpty()) {
             // Create master group
-            CompositeShape shape = new CompositeShape(shapes, ShapeType.CompositeShape,new Position(0,0),0,0);
+            CompositeShape shape = new CompositeShape(shapes, ShapeType.CompositeShape);
             // User visitor pattern to get all the shape data
             ShapeVisitorSave saveVisitor = new ShapeVisitorSave();
             saveVisitor.export(shape);

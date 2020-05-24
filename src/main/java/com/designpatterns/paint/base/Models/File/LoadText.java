@@ -65,7 +65,7 @@ public class LoadText {
             String fileExtension = saveFileName.split("\\.")[saveFileName.split("\\.").length - 1];
             if (fileExtension.equals("txt")) {
                 System.out.println("Attempting to load from selected TextFile");
-                try (FileReader reader = new FileReader("./saves/text/" + saveFileName)) {
+                try (FileReader reader = new FileReader("./saves/" + saveFileName)) {
                     BufferedReader bufferedReader = new BufferedReader(reader);
                     return LoadText.getInstance().loadTextFile(bufferedReader);
                 } catch (IOException e) {
@@ -162,7 +162,7 @@ public class LoadText {
                 compositeShapeData.add(parseGroup(line));
             }
         }
-        return new CompositeShape(compositeShapeData, ShapeType.CompositeShape,new Position(0,0),0,0);
+        return new CompositeShape(compositeShapeData, ShapeType.CompositeShape);
     }
 
     /**
