@@ -1,7 +1,6 @@
 package com.designpatterns.paint.base.Models.Shapes.Strategies.DrawContourStrategy;
 
-import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
-import com.designpatterns.paint.base.Models.Shapes.Strategies.DrawContourStrategy.ShapeContourStrategy;
+import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
 
 import java.awt.*;
 
@@ -12,7 +11,7 @@ public class ShapeContourContext {
         this.shapeContourStrategy = shapeContourStrategy;
     }
 
-    public void executeShapeDrawStrategy(Graphics g, Shape shape, Color color) {
-        shapeContourStrategy.drawContour(g, shape, color);
+    public void executeShapeDrawStrategy(Graphics g, BaseShape baseShape, Color color) {
+        shapeContourStrategy.drawContour(g, baseShape, color);
     }
 }

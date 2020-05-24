@@ -1,8 +1,10 @@
 package com.designpatterns.paint.base.Models.Shapes;
 
 import com.designpatterns.paint.base.Models.Position;
-import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
+import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
+import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
+import com.designpatterns.paint.base.Models.Shapes.Visitors.SaveVisitor.ShapeVisitorSave;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitor;
 
 import java.awt.*;
@@ -13,12 +15,12 @@ import java.util.List;
 /**
  * CompositeShape class
  */
-public class CompositeShape extends Shape {
+public class CompositeShape extends BaseShape {
 
     /**
      * Shapes
      */
-    private List<Shape> shapes = new ArrayList<>();
+    private List<IShape> shapes = new ArrayList<>();
 
     /**
      * Count of all figures that are present in the group
@@ -33,7 +35,7 @@ public class CompositeShape extends Shape {
     /**
      * CompositeShape constructor
      */
-    public CompositeShape(List<Shape> shapes, ShapeType type) {
+    public CompositeShape(List<IShape> shapes, ShapeType type) {
         super(type,new Position(0,0),0,0);
         this.count = shapes.size();
         this.shapes = shapes;
@@ -43,7 +45,7 @@ public class CompositeShape extends Shape {
         System.out.println("width: " + getWidth() + " height: " + getHeight());
     }
 
-    public List<Shape> getShapes() {
+    public List<IShape> getBaseShapes() {
         return shapes;
     }
 
@@ -79,7 +81,7 @@ public class CompositeShape extends Shape {
         double newminxy = 0;
         double newmaxx = 0;
         double newmaxy = 0;
-        for (Shape shape : shapes)
+        for (IShape shape : shapes)
         {
             Position position = shape.getPosition();
             double width = shape.getWidth();
@@ -122,10 +124,9 @@ public class CompositeShape extends Shape {
 
     @Override
     public void draw(Graphics g) {
-        for (Shape shape : shapes) {
+        for (IShape shape : shapes) {
             shape.draw(g);
         }
-
     }
 
     @Override
@@ -138,24 +139,28 @@ public class CompositeShape extends Shape {
     }
 
     @Override
-    public String accept(ShapeVisitor v) {
-        return v.visitCompositeShape(this);
+    public String acceptSave(ShapeVisitorSave v) {
+        return v.visitCompositeShape( this );
+    }
+
+    @Override
+    public void accept(ShapeVisitor v) {
+        v.visitCompositeShape( this );
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Shape shape : shapes)
+        for (IShape shape : shapes)
             stringBuilder.append(shape.toString()).append("\n");
         return stringBuilder.toString();
     }
 
-
-    public void setSelected(boolean bool) {
-        isSelected = bool;
-    }
-
-    public boolean isSelected() {
-        return isSelected;
+    @Override
+    public void setMovingPosition(Double mousePositionX, Double mousePositionY, Double cursorSelectedX, Double cursorSelectedY) {
+        for (IShape shape : getBaseShapes()) {
+            shape.setMovingPosition(mousePositionX, mousePositionY,cursorSelectedX,cursorSelectedY);
+        }
+        updateBounds();
     }
 }

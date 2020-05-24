@@ -1,8 +1,8 @@
 package com.designpatterns.paint.base.Models.Actions;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
-import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
 import com.designpatterns.paint.base.Models.Position;
+import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 
 public class MoveShape implements Command
 {
@@ -13,9 +13,9 @@ public class MoveShape implements Command
 
     private DrawPanel panel;
 
-    private Shape shape;
+    private IShape shape;
 
-    public MoveShape (Position pos, Shape shape, DrawPanel panel){
+    public MoveShape (Position pos, IShape shape, DrawPanel panel){
         oldPos = pos;
         this.shape = shape;
         this.panel = panel;

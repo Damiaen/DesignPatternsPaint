@@ -1,6 +1,6 @@
 package com.designpatterns.paint.base.Models.Shapes.Strategies.ContainsStrategy;
 
-import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
+import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
 
 public class ShapeContainsContext {
     private ShapeContainsStrategy shapeContourStrategy;
@@ -9,7 +9,7 @@ public class ShapeContainsContext {
         this.shapeContourStrategy = shapeContourStrategy;
     }
 
-    public boolean executeShapeDrawStrategy(Shape shape, double x, double y) {
-        return shapeContourStrategy.contains(shape, x, y);
+    public boolean executeShapeDrawStrategy(BaseShape baseShape, double x, double y) {
+        return shapeContourStrategy.contains(baseShape, x, y);
     }
 }

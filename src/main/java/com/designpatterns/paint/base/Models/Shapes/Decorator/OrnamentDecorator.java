@@ -3,10 +3,10 @@ package com.designpatterns.paint.base.Models.Shapes.Decorator;
 import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
+import com.designpatterns.paint.base.Models.Shapes.Visitors.SaveVisitor.ShapeVisitorSave;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitor;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class OrnamentDecorator extends ShapeDecorator {
 
@@ -16,7 +16,6 @@ public class OrnamentDecorator extends ShapeDecorator {
 
     public OrnamentDecorator(IShape decoratedShape, OrnamentPosition ornamentPosition, String content) {
         super(decoratedShape);
-        System.out.println("adding decoartor");
         this.ornamentPosition = ornamentPosition;
         this.content = content;
     }
@@ -49,16 +48,16 @@ public class OrnamentDecorator extends ShapeDecorator {
         // Check what the position of the ornament is, and change values accordingly
         switch (this.ornamentPosition) {
             case TOP:
-                positionY -= (((double) decoratedShape.getHeight() / 2) + 20);
+                positionY -= ((decoratedShape.getHeight() / 2) + 20);
                 break;
             case BOTTOM:
-                positionY += (((double) decoratedShape.getHeight() / 2) - 20);
+                positionY += ((decoratedShape.getHeight() / 2) - 20);
                 break;
             case LEFT:
-                positionX -= (((double) decoratedShape.getWidth() / 2) + 20);
+                positionX -= ((decoratedShape.getWidth() / 2) + 20);
                 break;
             case RIGHT:
-                positionX += (((double) decoratedShape.getHeight() / 2) - 20);
+                positionX += ((decoratedShape.getHeight() / 2) - 20);
                 break;
         }
 
@@ -120,6 +119,11 @@ public class OrnamentDecorator extends ShapeDecorator {
     }
 
     @Override
+    public void setMovingPosition(Double mousePositionX, Double mousePositionY, Double cursorSelectedX, Double cursorSelectedY) {
+        decoratedShape.setMovingPosition(mousePositionX, mousePositionY, cursorSelectedX, cursorSelectedY);
+    }
+
+    @Override
     public void setPosition(Position position) {
         decoratedShape.setPosition(position);
     }
@@ -130,25 +134,35 @@ public class OrnamentDecorator extends ShapeDecorator {
     }
 
     @Override
-    public ArrayList<String> getSaveData() {
-        ArrayList<String> test = new ArrayList<>();
-
-        test.addAll(decoratedShape.getSaveData());
-        test.add("Ornament" + " " + ornamentPosition + " " + "\"" + content + "\"");
-
-        return test;
+    public String acceptSave(ShapeVisitorSave v) {
+        return v.visitOrnamentDecorator( this );
     }
 
     @Override
-    public String accept(ShapeVisitor v) {
-        return v.visitOrnamentDecorator(this);
+    public void accept(ShapeVisitor v) {
+        v.visitOrnamentDecorator( this );
+    }
+
+    @Override
+    public void moveShape(Position oldPos) {
+        decoratedShape.moveShape(oldPos);
+    }
+
+    @Override
+    public void setMoving(boolean b) {
+        decoratedShape.setMoving(b);
+    }
+
+    @Override
+    public boolean isMoving() {
+        return decoratedShape.isMoving();
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(decoratedShape.getSaveData()).append("\n");
-        stringBuilder.append("Ornament" + " ").append(ornamentPosition).append(" ").append("\"").append(content).append("\"");
+        stringBuilder.append("Ornament" + " ").append(ornamentPosition).append(" ").append("\"").append(content).append("\"").append("\n");
+        stringBuilder.append(decoratedShape.toString());
         return stringBuilder.toString();
     }
 

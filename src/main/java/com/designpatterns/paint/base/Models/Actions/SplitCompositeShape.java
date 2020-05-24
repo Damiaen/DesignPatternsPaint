@@ -1,12 +1,8 @@
 package com.designpatterns.paint.base.Models.Actions;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
-import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
-import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
-import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
-
-import java.util.List;
+import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 
 public class SplitCompositeShape implements Command
 {
@@ -21,8 +17,8 @@ public class SplitCompositeShape implements Command
 
     @Override
     public void execute() {
-        for (Shape shape : shape.getShapes()){
-            drawPanel.addShape(shape.getType(),shape.getPosition(),shape.getWidth(),shape.getHeight());
+        for (IShape shape : this.shape.getBaseShapes()){
+            drawPanel.addShape(shape.getType(), shape.getPosition(), shape.getWidth(), shape.getHeight());
         }
         System.out.println("deleted");
     }
@@ -31,7 +27,7 @@ public class SplitCompositeShape implements Command
     public void undo()
     {
         drawPanel.addShape(shape);
-        for (Shape shape : shape.getShapes()){
+        for (IShape shape : this.shape.getBaseShapes()){
             drawPanel.removeShape(shape);
         }
         System.out.println("added");

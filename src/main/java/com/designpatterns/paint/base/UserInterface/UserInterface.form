@@ -145,7 +145,7 @@
                     </constraints>
                     <properties>
                       <background color="-3678990"/>
-                      <text value="Update selected shape(s)"/>
+                      <text value="Update selected baseShape(s)"/>
                     </properties>
                   </component>
                 </children>

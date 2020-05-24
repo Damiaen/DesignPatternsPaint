@@ -1,6 +1,7 @@
 package com.designpatterns.paint.base.Models.Shapes.Shape;
 
 import com.designpatterns.paint.base.Models.Position;
+import com.designpatterns.paint.base.Models.Shapes.Visitors.SaveVisitor.ShapeVisitorSave;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitor;
 import com.designpatterns.paint.base.Models.Shapes.Strategies.DrawContourStrategy.EllipseContour;
 import com.designpatterns.paint.base.Models.Shapes.Strategies.DrawContourStrategy.RectangleContour;
@@ -13,9 +14,8 @@ import com.designpatterns.paint.base.Models.Shapes.Strategies.ContainsStrategy.R
 import com.designpatterns.paint.base.Models.Shapes.Strategies.ContainsStrategy.ShapeContainsContext;
 
 import java.awt.*;
-import java.util.ArrayList;
 
-public class Shape implements IShape {
+public class BaseShape implements IShape {
 
     private double width, height;
     private Position position;
@@ -27,7 +27,7 @@ public class Shape implements IShape {
     private ShapeContourContext shapeContourContext;
     private ShapeContainsContext shapeContainsContext;
 
-    public Shape(ShapeType type, Position position, double width, double height) {
+    public BaseShape(ShapeType type, Position position, double width, double height) {
         this.type = type;
         this.position = position;
         this.width = width;
@@ -50,17 +50,20 @@ public class Shape implements IShape {
         this.height = height;
     }
 
-    public final void setPosition(Position position) {
+    public void setMovingPosition(Double mousePositionX, Double mousePositionY, Double cursorSelectedX, Double cursorSelectedY) {
+        Position oldPod = getPosition();
+        setPosition(new Position(
+                (oldPod.x + mousePositionX) - cursorSelectedX,
+                (oldPod.y + mousePositionX) - cursorSelectedY
+        ));
+    }
+
+    public void setPosition(Position position) {
         this.position = position;
     }
 
     public final Position getPosition() {
         return position;
-    }
-
-    @Override
-    public ArrayList<String> getSaveData() {
-        return null;
     }
 
     public final double getWidth() {
@@ -95,10 +98,12 @@ public class Shape implements IShape {
         shapeContourContext.executeShapeDrawStrategy(g, this, color);
     }
 
+    @Override
     public void setSelected(boolean bool) {
         isSelected = bool;
     }
 
+    @Override
     public boolean isSelected() {
         return isSelected;
     }
@@ -108,12 +113,20 @@ public class Shape implements IShape {
         return position.x;
     }
 
-    public String accept(ShapeVisitor v) {
+    @Override
+    public String acceptSave(ShapeVisitorSave v) {
         return v.visitShape( this );
     }
 
+    @Override
+    public void accept(ShapeVisitor v) {
+        v.visitShape( this );
+    }
+
+    @Override
     public void setMoving(boolean bool){isMoving = bool;}
 
+    @Override
     public boolean isMoving() {return isMoving;}
 
     @Override

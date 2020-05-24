@@ -2,7 +2,10 @@ package com.designpatterns.paint.base.Models.File;
 
 import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
-import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
+import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentDecorator;
+import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentPosition;
+import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
+import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
 import com.designpatterns.paint.base.Models.File.SaveModels.TextData;
 
@@ -56,7 +59,7 @@ public class LoadText {
     /**
      * Check which extension we selected, and load accordingly
      */
-    public List<Shape> load() {
+    public List<IShape> load() {
         // Open file selection screen
         String saveFileName = selectFile();
 
@@ -80,8 +83,8 @@ public class LoadText {
     /**
      * Parse raw JSON to correct classes.
      */
-    public List<Shape> loadTextFile(BufferedReader bufferedReader) throws IOException {
-        List<Shape> loadedData = new ArrayList<>();
+    public List<IShape> loadTextFile(BufferedReader bufferedReader) throws IOException {
+        List<IShape> loadedData = new ArrayList<>();
 
         String lineJustFetched = null;
         String[] wordsArray;
@@ -97,7 +100,7 @@ public class LoadText {
 
                 for(String each : wordsArray){
                     if(!"".equals(each)){
-                        // System.out.println("Type: " + each.split(" ")[0] + "; content: " + each +  "; tabCount: " + (wordsArray.length - 1));
+                        System.out.println("Type: " + each.split(" ")[0] + "; content: " + each +  "; tabCount: " + (wordsArray.length - 1));
                         loadedTextLines.add(new TextData((wordsArray.length - 1), each, ShapeType.valueOf(each.split(" ")[0])));
                     }
                 }
@@ -122,7 +125,7 @@ public class LoadText {
     /**
      * We get the main object and iterate through it
      */
-    private Shape turboParser(TextData loadTextData) {
+    private IShape turboParser(TextData loadTextData) {
         String[] splitLine = loadTextData.getLine().split(" ");
 
         if (loadTextData.getType().equals(ShapeType.CompositeShape)) {
@@ -131,6 +134,9 @@ public class LoadText {
         if (loadTextData.getType().equals(ShapeType.Ellipse)) {
             return parseShape(ShapeType.Ellipse, splitLine);
         }
+        if (loadTextData.getType().equals(ShapeType.Ornament)) {
+            return parseOrnament(loadTextData);
+        }
         if (loadTextData.getType().equals(ShapeType.Rectangle)) {
             return parseShape(ShapeType.Rectangle, splitLine);
         }
@@ -138,17 +144,66 @@ public class LoadText {
         return null;
     }
 
+    private List<TextData> getOrnamentThing(TextData loadTextLine) {
+        List<TextData> temp = new ArrayList<>();
+        temp.add(loadTextLine);
+        for (TextData line: loadedTextLines) {
+            if (line.getType().equals(ShapeType.Ornament) && !line.equals(loadTextLine) && !line.isLoaded() && loadTextLine.getTabCount().equals(line.getTabCount())) {
+                temp.add(line);
+                line.setLoaded(true);
+            } else if (!line.getType().equals(ShapeType.Ornament) && !line.isLoaded() && loadTextLine.getTabCount().equals(line.getTabCount())) {
+                temp.add(line);
+                line.setLoaded(true);
+            }
+        }
+        return temp;
+    }
+
+    private IShape parseOrnament(TextData loadTextLine) {
+        // Temporarily store data of loaded group
+        IShape ornamentData = null;
+
+        // Get which ornaments we have, clean and get the shape we need to add them to
+        List<TextData> ornaments = getOrnamentThing(loadTextLine);
+        TextData loadedShape = ornaments.get(ornaments.size() - 1);
+        ornaments.remove(ornaments.size() - 1);
+
+        if (loadedShape.getType().equals(ShapeType.Rectangle)) {
+            ornamentData = (parseShape(ShapeType.Rectangle, loadedShape.getLine().split(" ")));
+        } else if (loadedShape.getType().equals(ShapeType.Ellipse)) {
+            ornamentData = (parseShape(ShapeType.Ellipse, loadedShape.getLine().split(" ")));
+        } else if (loadedShape.getType().equals(ShapeType.CompositeShape)) {
+            ornamentData = (parseGroup(loadedShape));
+        }
+
+        // set first decorator pattern to shape
+        IShape shape = new OrnamentDecorator( ornamentData, OrnamentPosition.valueOf(ornaments.get(0).getLine().split(" ")[1]), ornaments.get(0).getLine().split("\"")[1]);
+
+        // Now we can loop and add more ornaments to the already set ornament
+        for (TextData ornament: ornaments) {
+            if (!ornaments.get(0).equals(ornament) && ornament.getType().equals(ShapeType.Ornament)) {
+                System.out.println(ornament.getLine());
+                shape = new OrnamentDecorator( shape, OrnamentPosition.valueOf(ornament.getLine().split(" ")[1]), ornament.getLine().split("\"")[1]);
+            }
+        }
+
+        return shape;
+    }
     /**
      * Parse JSON to Rectangle.
      */
     private CompositeShape parseGroup(TextData loadTextLine) {
         // Temporarily store data of loaded group
         loadTextLine.setLoaded(true);
-        List<Shape> compositeShapeData = new ArrayList<>();
+        List<IShape> compositeShapeData = new ArrayList<>();
         List<TextData> similarTabCount = getTextWithSimilarTabCount(loadTextLine);
 
         for (TextData line: similarTabCount) {
             String[] split = line.getLine().split(" ");
+            if (line.getType().equals(ShapeType.Ornament) && !line.isLoaded()) {
+                compositeShapeData.add(parseOrnament(line));
+                line.setLoaded(true);
+            }
             if (line.getType().equals(ShapeType.Ellipse) && !line.isLoaded()) {
                 compositeShapeData.add(parseShape(ShapeType.Ellipse, split));
                 line.setLoaded(true);
@@ -189,7 +244,7 @@ public class LoadText {
     /**
      * Parse shape
      */
-    private Shape parseShape(ShapeType type, String[] ellipse) {
-        return new Shape(type, new Position(Double.parseDouble(ellipse[1]), Double.parseDouble(ellipse[2])), Double.parseDouble(ellipse[3]), Double.parseDouble(ellipse[4]));
+    private BaseShape parseShape(ShapeType type, String[] ellipse) {
+        return new BaseShape(type, new Position(Double.parseDouble(ellipse[1]), Double.parseDouble(ellipse[2])), Double.parseDouble(ellipse[3]), Double.parseDouble(ellipse[4]));
     }
 }
