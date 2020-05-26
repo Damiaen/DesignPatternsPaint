@@ -3,7 +3,7 @@ package com.designpatterns.paint.base.Models.Shapes.Decorator;
 import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
-import com.designpatterns.paint.base.Models.Shapes.Visitors.SaveVisitor.ShapeVisitorSave;
+import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorSave;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitor;
 
 import java.awt.*;
@@ -134,11 +134,6 @@ public class OrnamentDecorator extends ShapeDecorator {
     }
 
     @Override
-    public String acceptSave(ShapeVisitorSave v) {
-        return v.visitOrnamentDecorator( this );
-    }
-
-    @Override
     public void accept(ShapeVisitor v) {
         v.visitOrnamentDecorator( this );
     }
@@ -162,15 +157,12 @@ public class OrnamentDecorator extends ShapeDecorator {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Ornament" + " ").append(ornamentPosition).append(" ").append("\"").append(content).append("\"").append("\n");
-        System.out.println(decoratedShape);
+
         stringBuilder.append(decoratedShape.toString());
-        ;
 
         if ((Character.compare(stringBuilder.charAt(stringBuilder.length() - 1), '\t')) == 1) {
-            System.out.println("kkkkkkk");
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         }
-        System.out.println(decoratedShape.toString());
         return stringBuilder.toString();
     }
 

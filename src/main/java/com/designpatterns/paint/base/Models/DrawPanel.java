@@ -9,7 +9,7 @@ import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentPosition;
 import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
-import com.designpatterns.paint.base.Models.Shapes.Visitors.SaveVisitor.ShapeVisitorSave;
+import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorSave;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorMove;
 
 import javax.swing.*;

@@ -1,10 +1,11 @@
 package com.designpatterns.paint.base.Models.Shapes;
 
 import com.designpatterns.paint.base.Models.Position;
+import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentDecorator;
 import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
-import com.designpatterns.paint.base.Models.Shapes.Visitors.SaveVisitor.ShapeVisitorSave;
+import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorSave;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitor;
 
 import java.awt.*;
@@ -139,11 +140,6 @@ public class CompositeShape extends BaseShape {
     }
 
     @Override
-    public String acceptSave(ShapeVisitorSave v) {
-        return v.visitCompositeShape( this );
-    }
-
-    @Override
     public void accept(ShapeVisitor v) {
         v.visitCompositeShape( this );
     }
@@ -154,7 +150,19 @@ public class CompositeShape extends BaseShape {
         stringBuilder.append(getType()).append(" ").append(getCount()).append("\n");
 
         for (IShape shape : shapes) {
-            stringBuilder.append("\t").append(shape.toString()).append("\n");
+            if (shape instanceof OrnamentDecorator) {
+                String[] splitLine = shape.toString().split("\n");
+                for (String split: splitLine) {
+                    System.out.println("split:" + split);
+                    stringBuilder.append("\t").append(split).append("\n");
+                }
+            } else {
+                stringBuilder.append("\t").append(shape.toString()).append("\n");
+            }
+        }
+
+        if ((Character.compare(stringBuilder.charAt(stringBuilder.length() - 1), '\t')) == 1) {
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         }
         return stringBuilder.toString();
     }
