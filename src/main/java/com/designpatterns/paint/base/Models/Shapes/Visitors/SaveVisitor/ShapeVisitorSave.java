@@ -1,22 +1,29 @@
-package com.designpatterns.paint.base.Models.Shapes.Visitors;
+package com.designpatterns.paint.base.Models.Shapes.Visitors.SaveVisitor;
 
 import com.designpatterns.paint.base.Models.File.SaveText;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
-import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
+import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentDecorator;
+import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
+import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 
-public class ShapeVisitorSave implements ShapeVisitor {
+public class ShapeVisitorSave implements SaveShapeVisitor {
 
-    public void export(Shape... args) {
+    public void export(BaseShape... args) {
         StringBuilder sb = new StringBuilder();
-        for (Shape shape : args) {
-            sb.append(shape.accept(this)).append("\n");
+        for (BaseShape baseShape : args) {
+            sb.append(baseShape.acceptSave(this)).append("\n");
         }
+        System.out.println(sb.toString());
         //Write the generated data to text
         SaveText.getInstance().save(sb.toString());
     }
 
-    public String visitShape(Shape shape) {
+    public String visitShape(IShape shape) {
         return shape.toString();
+    }
+
+    public String visitOrnamentDecorator(OrnamentDecorator ornamentDecorator) {
+        return ornamentDecorator.toString();
     }
 
     public String visitCompositeShape(CompositeShape compositeShape) {
@@ -29,8 +36,8 @@ public class ShapeVisitorSave implements ShapeVisitor {
 
     private String _visitCompoundGraphic(CompositeShape compositeShape) {
         StringBuilder sb = new StringBuilder();
-        for (Shape shape : compositeShape.getShapes()) {
-            String obj = shape.accept(this);
+        for (IShape shape : compositeShape.getBaseShapes()) {
+            String obj = shape.acceptSave(this);
             obj = "\t" + obj.replace("\n", "\n\t");
             sb.append(obj).append("\n");
         }

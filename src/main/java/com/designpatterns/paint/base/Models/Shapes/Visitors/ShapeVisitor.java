@@ -1,9 +1,11 @@
 package com.designpatterns.paint.base.Models.Shapes.Visitors;
 
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
-import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
+import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentDecorator;
+import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 
 public interface ShapeVisitor {
-    String visitShape(Shape shape);
-    String visitCompositeShape(CompositeShape compositeShape);
+    void visitShape(IShape shape);
+    void visitCompositeShape(CompositeShape compositeShape);
+    void visitOrnamentDecorator(OrnamentDecorator ornamentDecorator);
 }

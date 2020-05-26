@@ -1,9 +1,8 @@
 package com.designpatterns.paint.base.Models.Actions;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
-import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
-import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
+import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
 
 import java.util.List;
@@ -13,7 +12,7 @@ public class CombineShapes implements Command
     private final CompositeShape shape;
     private final DrawPanel drawPanel;
 
-    public CombineShapes(List<Shape> shapes, DrawPanel drawPanel) {
+    public CombineShapes(List<IShape> shapes, DrawPanel drawPanel) {
         shape = new CompositeShape(shapes, ShapeType.CompositeShape);
         this.drawPanel = drawPanel;
     }
@@ -22,7 +21,7 @@ public class CombineShapes implements Command
     @Override
     public void execute() {
         drawPanel.addShape(shape);
-        for (Shape shape : shape.getShapes()){
+        for (IShape shape : this.shape.getBaseShapes()){
             drawPanel.removeShape(shape);
         }
         System.out.println("added");
@@ -31,8 +30,8 @@ public class CombineShapes implements Command
     @Override
     public void undo()
     {
-        for (Shape shape : shape.getShapes()){
-            drawPanel.addShape(shape.getType(),shape.getPosition(),shape.getWidth(),shape.getHeight());
+        for (IShape shape : this.shape.getBaseShapes()){
+            drawPanel.addShape(shape.getType(), shape.getPosition(), shape.getWidth(), shape.getHeight());
         }
         System.out.println("deleted");
     }

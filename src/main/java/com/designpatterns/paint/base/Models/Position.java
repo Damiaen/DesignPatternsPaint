@@ -3,8 +3,8 @@ package com.designpatterns.paint.base.Models;
 public class Position
 {
     // Members
-    public double x;
-    public double y;
+    public int x;
+    public int y;
 
     // Constructors
     public Position() {
@@ -12,7 +12,7 @@ public class Position
         this.y = 0;
     }
 
-    public Position(double x, double y) {
+    public Position(int x, int y) {
         this.x = x;
         this.y = y;
     }

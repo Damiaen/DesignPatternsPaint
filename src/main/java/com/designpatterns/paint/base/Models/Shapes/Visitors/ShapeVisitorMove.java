@@ -1,10 +1,32 @@
-//package com.designpatterns.paint.base.Models.Shapes.Visitors;
-//
-//import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
-//
-//public class ShapeVisitorMove implements ShapeVisitor {
-//    public String visitShape(Shape shape) {
-//        System.out.println("Move: " + shape.toString());
-//        return shape.toString();
-//    }
-//}
+package com.designpatterns.paint.base.Models.Shapes.Visitors;
+
+import com.designpatterns.paint.base.Models.Position;
+import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
+import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentDecorator;
+import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
+
+public class ShapeVisitorMove implements ShapeVisitor {
+
+    Position mousePosition;
+
+    public ShapeVisitorMove(Position mousePosition)
+    {
+        this.mousePosition = mousePosition;
+    }
+
+    @Override
+    public void visitShape(IShape shape) {
+        shape.setPosition(mousePosition);
+    }
+
+    @Override
+    public void visitCompositeShape(CompositeShape compositeShape) {
+        compositeShape.setPosition(mousePosition);
+        compositeShape.updateBounds();
+    }
+
+    @Override
+    public void visitOrnamentDecorator(OrnamentDecorator ornamentDecorator) {
+
+    }
+}

@@ -1,6 +1,6 @@
 package com.designpatterns.paint.base.Models.Shapes.Strategies.DrawShapeStrategy;
 
-import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
+import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
 
 import java.awt.*;
 
@@ -11,7 +11,7 @@ public class ShapeDrawContext {
         this.shapeDrawStrategy = shapeDrawStrategy;
     }
 
-    public void executeShapeDrawStrategy(Graphics g, Shape shape, Color color) {
-        shapeDrawStrategy.draw(g, shape, color);
+    public void executeShapeDrawStrategy(Graphics g, BaseShape baseShape, Color color) {
+        shapeDrawStrategy.draw(g, baseShape, color);
     }
 }

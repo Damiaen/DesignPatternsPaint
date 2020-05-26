@@ -4,8 +4,11 @@ import com.designpatterns.paint.base.Models.Actions.*;
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
-import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
+import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentPosition;
+import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
+import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
+import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorMove;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,6 +40,9 @@ public class UserInterface extends JFrame {
     private JButton updateShapeButton;
     private JButton loadDrawingButton;
     private JButton createScreenshotButton;
+    private JComboBox ornamentPos;
+    private JTextField ornamentText;
+    private JButton ornamentButton;
 
     private final DrawPanel drawPanel = new DrawPanel();
     private final DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -59,6 +65,13 @@ public class UserInterface extends JFrame {
      */
     private void setupListeners() {
         // Button listeners:
+        // Button listeners:
+        ornamentButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                drawPanel.addOrnament(OrnamentPosition.valueOf(Objects.requireNonNull(ornamentPos.getSelectedItem()).toString()), Objects.requireNonNull(ornamentText.getText()));
+            }
+        });
         clearDrawingButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -129,9 +142,9 @@ public class UserInterface extends JFrame {
             public void mousePressed(MouseEvent e) {
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     if (editRadioButton.isSelected()) {
-                        Shape shape = drawPanel.getShapeByCoordinates(new Position(e.getX(), e.getY()));
+                        IShape shape = drawPanel.getShapeByCoordinates(new Position(e.getX(), e.getY()));
                         if (shape != null && shape.isSelected()) {
-                            // TODO: Verplaatsen van checkIfSelectedShape() functie fixed het probleem met draggen
+                            System.out.println(shape);
                             drawPanel.checkIfSelectedShape(new Position(e.getX(), e.getY()));
                             moveShape = new MoveShape(new Position(e.getX(), e.getY()), shape, drawPanel);
                             shape.setMoving(true);
@@ -157,8 +170,17 @@ public class UserInterface extends JFrame {
             @Override
             public void mouseDragged(MouseEvent e) {
                 if (SwingUtilities.isLeftMouseButton(e)) {
-                    if (editRadioButton.isSelected()) {
-                        drawPanel.moveShape(new Position(e.getX(), e.getY()));
+                    if (editRadioButton.isSelected())
+                    {
+                        Position pos = new Position(e.getX(),e.getY());
+                        ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove(pos);
+                        IShape shape = drawPanel.getShapeByCoordinates(pos);
+                        if(shape != null) {
+                            if(shape.getType() == ShapeType.CompositeShape) shapeVisitorMove.visitCompositeShape((CompositeShape) shape);
+                            else shapeVisitorMove.visitShape(shape);
+
+                        }
+                        //drawPanel.moveShape(new Position(e.getX(), e.getY()));
                     }
                 }
             }
@@ -209,7 +231,7 @@ public class UserInterface extends JFrame {
      */
     private void createInterfaceElements() {
         userInterfaceFrame.setContentPane(rootPanel);
-        userInterfaceFrame.setSize(1280,720);
+        userInterfaceFrame.setSize(1280,800);
         userInterfaceFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         userInterfaceFrame.setVisible(true);
         // Set Combobox content, fill it with the shapes we need
@@ -227,12 +249,12 @@ public class UserInterface extends JFrame {
     /**
      * Get selected combobox values and check if xy has been filled, if true continue and add the shape to the JPanel
      */
-    private void addShapeToPanel(double mousePosX, double mousePosY) {
+    private void addShapeToPanel(int mousePosX, int mousePosY) {
         System.out.println("Adding new shape: selected shape: '" + new_shape_combobox.getSelectedItem() + "' with values: x:" + new_shape_width.getText() + " y:" + new_shape_height.getText());
 
         if (validateFields()) {
-            Shape shape = new Shape(ShapeType.valueOf(Objects.requireNonNull(new_shape_combobox.getSelectedItem()).toString()),new Position(mousePosX,mousePosY), Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText()));
-            drawPanel.invoker.execute(new AddShape(shape,drawPanel));
+            BaseShape baseShape = new BaseShape(ShapeType.valueOf(Objects.requireNonNull(new_shape_combobox.getSelectedItem()).toString()),new Position(mousePosX,mousePosY), Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText()));
+            drawPanel.invoker.execute(new AddShape(baseShape,drawPanel));
         }
     }
 
@@ -269,18 +291,18 @@ public class UserInterface extends JFrame {
     //TODO: fix merging of new shape/composite shape and composite shape
     private void combineShapes()
     {
-        List<Shape> selectedShapes = drawPanel.getSelectedShapes();
-        List<Shape> checkedShapes = drawPanel.getSelectedShapes();
-        for (Shape s : selectedShapes){
+        List<IShape> selectedShapes = drawPanel.getSelectedShapes();
+        List<IShape> checkedshapes = drawPanel.getSelectedShapes();
+        for (IShape s : selectedShapes){
             if (s.getType() == ShapeType.CompositeShape)
             {
                 CompositeShape cs = (CompositeShape) s;
-                checkedShapes.addAll(cs.getShapes());
+                checkedshapes.addAll(cs.getBaseShapes());
                 selectedShapes.remove(cs);
             }
         }
 
-        drawPanel.invoker.execute(new CombineShapes(checkedShapes,drawPanel));
+        drawPanel.invoker.execute(new CombineShapes(checkedshapes,drawPanel));
         updateShapesOverviewList();
     }
 }
