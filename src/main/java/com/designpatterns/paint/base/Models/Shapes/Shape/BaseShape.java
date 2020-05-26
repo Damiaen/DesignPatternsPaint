@@ -17,7 +17,7 @@ import java.awt.*;
 
 public class BaseShape implements IShape {
 
-    private double width, height;
+    private int width, height;
     private Position position;
     private final ShapeType type;
     private boolean isSelected;
@@ -27,7 +27,7 @@ public class BaseShape implements IShape {
     private ShapeContourContext shapeContourContext;
     private ShapeContainsContext shapeContainsContext;
 
-    public BaseShape(ShapeType type, Position position, double width, double height) {
+    public BaseShape(ShapeType type, Position position, int width, int height) {
         this.type = type;
         this.position = position;
         this.width = width;
@@ -45,17 +45,10 @@ public class BaseShape implements IShape {
         }
     }
 
-    public final void setSize(double width, double height) {
+    @Override
+    public final void setSize(int width, int height) {
         this.width = width;
         this.height = height;
-    }
-
-    public void setMovingPosition(Double mousePositionX, Double mousePositionY, Double cursorSelectedX, Double cursorSelectedY) {
-        Position oldPod = getPosition();
-        setPosition(new Position(
-                (oldPod.x + mousePositionX) - cursorSelectedX,
-                (oldPod.y + mousePositionX) - cursorSelectedY
-        ));
     }
 
     public void setPosition(Position position) {
@@ -66,25 +59,25 @@ public class BaseShape implements IShape {
         return position;
     }
 
-    public final double getWidth() {
+    public final int getWidth() {
         return width;
     }
 
     @Override
-    public double getY() {
+    public int getY() {
         return position.y;
     }
 
-    public final double getHeight() {
+    public final int getHeight() {
         return height;
     }
 
+    public final ShapeType getType() { return type; }
+
     @Override
-    public void setSize(int newWidth, int newHeight) {
+    public void setMovingPosition(Double mousePositionX, Double mousePositionY, Double cursorSelectedX, Double cursorSelectedY) {
 
     }
-
-    public final ShapeType getType() { return type; }
 
     public boolean checkPosition(Position position) {
         return shapeContainsContext.executeShapeDrawStrategy(this, position.x, position.y);
@@ -109,13 +102,18 @@ public class BaseShape implements IShape {
     }
 
     @Override
-    public double getX() {
+    public int getX() {
         return position.x;
     }
 
     @Override
     public void accept(ShapeVisitor v) {
         v.visitShape( this );
+    }
+
+    @Override
+    public void moveShape(Position oldPos) {
+
     }
 
     @Override
@@ -127,10 +125,6 @@ public class BaseShape implements IShape {
     @Override
     public String toString() {
         return type + " " + position.x + " " + position.y + " " + height + " " + width;
-    }
-
-    public void moveShape(Position position){
-        this.position = position;
     }
 
 }

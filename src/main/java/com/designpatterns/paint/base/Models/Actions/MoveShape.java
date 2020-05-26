@@ -3,6 +3,9 @@ package com.designpatterns.paint.base.Models.Actions;
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
+import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
+import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
+import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorMove;
 
 public class MoveShape implements Command
 {
@@ -28,14 +31,16 @@ public class MoveShape implements Command
     @Override
     public void execute()
     {
-        shape.moveShape(newPos);
+        ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove(newPos);
+        shapeVisitorMove.visitShape(shape);
         panel.repaint();
     }
 
     @Override
     public void undo()
     {
-        shape.moveShape(oldPos);
+        ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove(oldPos);
+        shapeVisitorMove.visitShape(shape);
         panel.repaint();
     }
 
