@@ -11,7 +11,9 @@ import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.SaveVisitor.ShapeVisitorSave;
+import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitor;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorMove;
+import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorResize;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +28,6 @@ public class DrawPanel extends JPanel {
 
     // Store shapes here, so we can call on them later
     private List<IShape> shapes = new ArrayList<>();
-    private List<CompositeShape> groups = new ArrayList<>();
 
     // Store which shapes the user has selected in edit mode
     private List<Integer> selectedShapes = new ArrayList<>();
@@ -88,26 +89,12 @@ public class DrawPanel extends JPanel {
     {
         if(getSelectedShapes() == null) return;
         for (IShape s : getSelectedShapes()) {
-            invoker.execute(new Reshape(s, newWidth, newHeight, getInstance()));
+            ShapeVisitorResize shapeVisitorResize = new ShapeVisitorResize(newWidth,newHeight,getInstance());
+            shapeVisitorResize.visitShape(s);
             repaint();
         }
     }
 
-    /**
-     * Remove selected shape and check if it was selected, if so remove it from the selected list
-     */
-    public void removeSelectedShape(Position position) {
-        IShape shape = getShapeByCoordinates(position);
-        if (shape != null) {
-            if (!selectedShapes.isEmpty() && selectedShapes.contains(shapes.indexOf(shape))) {
-                selectedShapes.remove(shapes.indexOf(shape));
-                shape.setSelected(false);
-            }
-            shape.setSelected(false);
-            shapes.remove(shape);
-            repaint();
-        }
-    }
 
     /**
      * Loop through selected shapes from paint UI and side menu
@@ -279,23 +266,6 @@ public class DrawPanel extends JPanel {
         return false;
     }
 
-    /**
-     * Check which shape has been selected and move it
-     * TODO: Fix dat je ook ornaments in compositeshape kan moven
-     */
-    //TODO: remove this, because of the visitor pattern
-    public void moveShape(Position mousePosition)
-    {
-        IShape s = getShapeByCoordinates(mousePosition);
-        if (s == null) return;
-        if (!s.isSelected()) return;
-        ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove(mousePosition);
-        shapeVisitorMove.visitShape(s);
-        cursorSelectedX = mousePosition.x;
-        cursorSelectedY = mousePosition.y;
-        repaint();
-    }
-
     public List<IShape> getShapes(){
         return new ArrayList<>(shapes);
     }
@@ -307,7 +277,8 @@ public class DrawPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        for (IShape s : shapes) {
+        for (IShape s : shapes)
+        {
             if (selectedShapes.contains(shapes.indexOf(s))) {
                 s.drawContour(g, Color.darkGray);
             } else if(selectedMergeShapes.contains(shapes.indexOf(s))) {

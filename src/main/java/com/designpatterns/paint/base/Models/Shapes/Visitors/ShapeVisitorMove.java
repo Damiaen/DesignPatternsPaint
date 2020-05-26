@@ -18,13 +18,6 @@ public class ShapeVisitorMove implements ShapeVisitor {
     public void visitShape(IShape shape) {
         shape.setPosition(mousePosition);
     }
-
-    @Override
-    public void visitCompositeShape(CompositeShape compositeShape) {
-        compositeShape.setPosition(mousePosition);
-        compositeShape.updateBounds();
-    }
-
     @Override
     public void visitOrnamentDecorator(OrnamentDecorator ornamentDecorator) {
 

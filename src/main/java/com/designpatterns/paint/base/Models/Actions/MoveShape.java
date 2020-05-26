@@ -32,8 +32,7 @@ public class MoveShape implements Command
     public void execute()
     {
         ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove(newPos);
-        if (shape.getType() == ShapeType.CompositeShape) shapeVisitorMove.visitCompositeShape((CompositeShape)shape);
-        else shapeVisitorMove.visitShape(shape);
+        shapeVisitorMove.visitShape(shape);
         panel.repaint();
     }
 
@@ -41,8 +40,7 @@ public class MoveShape implements Command
     public void undo()
     {
         ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove(oldPos);
-        if (shape.getType() == ShapeType.CompositeShape) shapeVisitorMove.visitCompositeShape((CompositeShape)shape);
-        else shapeVisitorMove.visitShape(shape);
+        shapeVisitorMove.visitShape(shape);
         panel.repaint();
     }
 

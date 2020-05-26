@@ -79,7 +79,7 @@ public class CompositeShape extends BaseShape {
         int maxy = 0;
 
         int newminx = 0;
-        int newminxy = 0;
+        int newminy = 0;
         int newmaxx = 0;
         int newmaxy = 0;
         for (IShape shape : shapes)
@@ -93,7 +93,7 @@ public class CompositeShape extends BaseShape {
             }
             if (position.y < miny) {
                 miny = position.y;
-                newminxy = (int) (position.y - height / 2);
+                newminy = (int) (position.y - height / 2);
             }
             if (position.x > maxx)
             {
@@ -108,9 +108,9 @@ public class CompositeShape extends BaseShape {
 
         }
         bounds[0] = newminx;
-        bounds[1] = newminxy;
+        bounds[1] = newminy;
         bounds[2] = newmaxx - newminx;
-        bounds[3] = newmaxy - newminxy;
+        bounds[3] = newmaxy - newminy;
 
         return bounds;
     }
@@ -146,7 +146,7 @@ public class CompositeShape extends BaseShape {
 
     @Override
     public void accept(ShapeVisitor v) {
-        v.visitCompositeShape( this );
+        v.visitShape( this );
     }
 
     @Override
@@ -167,4 +167,15 @@ public class CompositeShape extends BaseShape {
         return isSelected;
     }
 
+    @Override
+    public void setPosition(Position position) {
+        super.setPosition(position);
+        for (IShape shape : shapes){
+            shape.setPosition(new Position(
+                    (shape.getPosition().x + position.x) - position.x,
+                    (shape.getPosition().y + position.y) - position.y)
+            );
+        }
+        DrawPanel.getInstance().repaint();
+    }
 }
