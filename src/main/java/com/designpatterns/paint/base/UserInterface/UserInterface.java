@@ -174,7 +174,7 @@ public class UserInterface extends JFrame {
                     {
                         Position pos = new Position(e.getX(),e.getY());
                         ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove(pos);
-                        Shape shape = drawPanel.getShapeByCoordinates(pos);
+                        IShape shape = drawPanel.getShapeByCoordinates(pos);
                         if(shape != null) {
                             if(shape.getType() == ShapeType.CompositeShape) shapeVisitorMove.visitCompositeShape((CompositeShape) shape);
                             else shapeVisitorMove.visitShape(shape);

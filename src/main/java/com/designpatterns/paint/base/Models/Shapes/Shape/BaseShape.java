@@ -27,11 +27,7 @@ public class BaseShape implements IShape {
     private ShapeContourContext shapeContourContext;
     private ShapeContainsContext shapeContainsContext;
 
-<<<<<<< Updated upstream:src/main/java/com/designpatterns/paint/base/Models/Shapes/Shape/BaseShape.java
-    public BaseShape(ShapeType type, Position position, double width, double height) {
-=======
-    public Shape(ShapeType type, Position position, int width, int height) {
->>>>>>> Stashed changes:src/main/java/com/designpatterns/paint/base/Models/Shapes/Shape/Shape.java
+    public BaseShape(ShapeType type, Position position, int width, int height) {
         this.type = type;
         this.position = position;
         this.width = width;
@@ -49,22 +45,12 @@ public class BaseShape implements IShape {
         }
     }
 
+    @Override
     public final void setSize(int width, int height) {
         this.width = width;
         this.height = height;
     }
 
-<<<<<<< Updated upstream:src/main/java/com/designpatterns/paint/base/Models/Shapes/Shape/BaseShape.java
-    public void setMovingPosition(Double mousePositionX, Double mousePositionY, Double cursorSelectedX, Double cursorSelectedY) {
-        Position oldPod = getPosition();
-        setPosition(new Position(
-                (oldPod.x + mousePositionX) - cursorSelectedX,
-                (oldPod.y + mousePositionX) - cursorSelectedY
-        ));
-    }
-
-=======
->>>>>>> Stashed changes:src/main/java/com/designpatterns/paint/base/Models/Shapes/Shape/Shape.java
     public void setPosition(Position position) {
         this.position = position;
     }
@@ -77,25 +63,21 @@ public class BaseShape implements IShape {
         return width;
     }
 
-<<<<<<< Updated upstream:src/main/java/com/designpatterns/paint/base/Models/Shapes/Shape/BaseShape.java
     @Override
-    public double getY() {
+    public int getY() {
         return position.y;
     }
 
-    public final double getHeight() {
-=======
     public final int getHeight() {
->>>>>>> Stashed changes:src/main/java/com/designpatterns/paint/base/Models/Shapes/Shape/Shape.java
         return height;
     }
 
+    public final ShapeType getType() { return type; }
+
     @Override
-    public void setSize(int newWidth, int newHeight) {
+    public void setMovingPosition(Double mousePositionX, Double mousePositionY, Double cursorSelectedX, Double cursorSelectedY) {
 
     }
-
-    public final ShapeType getType() { return type; }
 
     public boolean checkPosition(Position position) {
         return shapeContainsContext.executeShapeDrawStrategy(this, position.x, position.y);
@@ -120,7 +102,7 @@ public class BaseShape implements IShape {
     }
 
     @Override
-    public double getX() {
+    public int getX() {
         return position.x;
     }
 
@@ -132,6 +114,11 @@ public class BaseShape implements IShape {
     @Override
     public void accept(ShapeVisitor v) {
         v.visitShape( this );
+    }
+
+    @Override
+    public void moveShape(Position oldPos) {
+
     }
 
     @Override

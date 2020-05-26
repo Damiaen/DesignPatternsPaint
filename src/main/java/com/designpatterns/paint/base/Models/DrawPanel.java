@@ -54,13 +54,8 @@ public class DrawPanel extends JPanel {
     /**
      * Check what we need to draw and repaint the panel
      */
-<<<<<<< Updated upstream
-    public IShape addShape(ShapeType type, Position position, double width, double height) {
+    public IShape addShape(ShapeType type, Position position, int width, int height) {
         IShape shape = null;
-=======
-    public Shape addShape(ShapeType type, Position position, int width, int height) {
-        Shape shape = null;
->>>>>>> Stashed changes
         switch (type) {
             case Ellipse:
                 shape = new BaseShape(ShapeType.Ellipse, position, width, height);
@@ -92,7 +87,7 @@ public class DrawPanel extends JPanel {
     public void updateShapes(int newWidth, int newHeight)
     {
         if(getSelectedShapes() == null) return;
-        for (Shape s : getSelectedShapes()) {
+        for (IShape s : getSelectedShapes()) {
             invoker.execute(new Reshape(s, newWidth, newHeight, getInstance()));
             repaint();
         }
@@ -294,8 +289,8 @@ public class DrawPanel extends JPanel {
         IShape s = getShapeByCoordinates(mousePosition);
         if (s == null) return;
         if (!s.isSelected()) return;
-        ShapeVisitorMove saveVisitor = new ShapeVisitorMove();
-        saveVisitor.moveShape(s, mousePosition.y, mousePosition.x, cursorSelectedX, cursorSelectedY);
+        ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove(mousePosition);
+        shapeVisitorMove.visitShape(s);
         cursorSelectedX = mousePosition.x;
         cursorSelectedY = mousePosition.y;
         repaint();

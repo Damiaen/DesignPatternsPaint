@@ -1,11 +1,10 @@
 package com.designpatterns.paint.base.Models.Shapes.Visitors;
 
-import com.designpatterns.paint.base.Models.Actions.Reshape;
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
-import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
-
-import java.util.List;
+import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentDecorator;
+import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
+import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 
 public class ShapeVisitorResize implements ShapeVisitor {
 
@@ -19,27 +18,30 @@ public class ShapeVisitorResize implements ShapeVisitor {
         this.drawPanel = drawPanel;
     }
 
-    public String visitShape(Shape shape)
-    {
-        if (drawPanel.getSelectedShapes() == null) return null;
-        for (Shape selectedShapes : drawPanel.getSelectedShapes()) {
+    @Override
+    public void visitShape(IShape shape) {
+        if (drawPanel.getSelectedShapes() == null) return;
+        for (IShape selectedShapes : drawPanel.getSelectedShapes()) {
             if (selectedShapes != null) {
                 shape.setSize(newWidth,newHeight);
                 drawPanel.repaint();
             }
         }
-        return shape.toString();
     }
 
     @Override
-    public String visitCompositeShape(CompositeShape compositeShape)
+    public void visitCompositeShape(CompositeShape compositeShape)
     {
-        for (Shape selectedShapes : drawPanel.getSelectedShapes()) {
+        for (IShape selectedShapes : drawPanel.getSelectedShapes()) {
             if (selectedShapes != null) {
                 compositeShape.setSize(newWidth,newHeight);
                 drawPanel.repaint();
             }
         }
-        return null;
+    }
+
+    @Override
+    public void visitOrnamentDecorator(OrnamentDecorator ornamentDecorator) {
+
     }
 }

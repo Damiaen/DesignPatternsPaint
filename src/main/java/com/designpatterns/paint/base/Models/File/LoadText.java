@@ -244,12 +244,7 @@ public class LoadText {
     /**
      * Parse shape
      */
-<<<<<<< Updated upstream
     private BaseShape parseShape(ShapeType type, String[] ellipse) {
-        return new BaseShape(type, new Position(Double.parseDouble(ellipse[1]), Double.parseDouble(ellipse[2])), Double.parseDouble(ellipse[3]), Double.parseDouble(ellipse[4]));
-=======
-    private Shape parseShape(ShapeType type, String[] ellipse) {
-        return new Shape(type, new Position(Integer.parseInt(ellipse[1]), Integer.parseInt(ellipse[2])), Integer.parseInt(ellipse[3]), Integer.parseInt(ellipse[4]));
->>>>>>> Stashed changes
+        return new BaseShape(type, new Position(Integer.parseInt(ellipse[1]), Integer.parseInt(ellipse[2])), Integer.parseInt(ellipse[3]), Integer.parseInt(ellipse[4]));
     }
 }

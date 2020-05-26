@@ -78,19 +78,11 @@ public class CompositeShape extends BaseShape {
         int maxx = 0;
         int maxy = 0;
 
-<<<<<<< Updated upstream
-        double newminx = 0;
-        double newminxy = 0;
-        double newmaxx = 0;
-        double newmaxy = 0;
-        for (IShape shape : shapes)
-=======
         int newminx = 0;
         int newminxy = 0;
         int newmaxx = 0;
         int newmaxy = 0;
-        for (Shape shape : shapes)
->>>>>>> Stashed changes
+        for (IShape shape : shapes)
         {
             Position position = shape.getPosition();
             double width = shape.getWidth();
@@ -166,13 +158,6 @@ public class CompositeShape extends BaseShape {
     }
 
     @Override
-<<<<<<< Updated upstream
-    public void setMovingPosition(Double mousePositionX, Double mousePositionY, Double cursorSelectedX, Double cursorSelectedY) {
-        for (IShape shape : getBaseShapes()) {
-            shape.setMovingPosition(mousePositionX, mousePositionY,cursorSelectedX,cursorSelectedY);
-        }
-        updateBounds();
-=======
     public void setSelected(boolean bool) {
         isSelected = bool;
     }
@@ -180,7 +165,6 @@ public class CompositeShape extends BaseShape {
     @Override
     public boolean isSelected() {
         return isSelected;
->>>>>>> Stashed changes
     }
 
 }
