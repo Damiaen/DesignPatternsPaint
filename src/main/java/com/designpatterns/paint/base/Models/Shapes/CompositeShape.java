@@ -151,8 +151,11 @@ public class CompositeShape extends BaseShape {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (IShape shape : shapes)
-            stringBuilder.append(shape.toString()).append("\n");
+        stringBuilder.append(getType()).append(" ").append(getCount()).append("\n");
+
+        for (IShape shape : shapes) {
+            stringBuilder.append("\t").append(shape.toString()).append("\n");
+        }
         return stringBuilder.toString();
     }
 

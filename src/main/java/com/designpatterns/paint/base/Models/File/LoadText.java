@@ -100,7 +100,7 @@ public class LoadText {
 
                 for(String each : wordsArray){
                     if(!"".equals(each)){
-                        System.out.println("Type: " + each.split(" ")[0] + "; content: " + each +  "; tabCount: " + (wordsArray.length - 1));
+//                        System.out.println("Type: " + each.split(" ")[0] + "; content: " + each +  "; tabCount: " + (wordsArray.length - 1));
                         loadedTextLines.add(new TextData((wordsArray.length - 1), each, ShapeType.valueOf(each.split(" ")[0])));
                     }
                 }
@@ -112,11 +112,14 @@ public class LoadText {
 
         // Get all the shapes with TabCount one to start the loop
         for (TextData loadedTextData: loadedTextLines) {
-            if (loadedTextData.getTabCount().equals(1)) {
-                loadedTextData.setLoaded(true);
+            if (loadedTextData.getTabCount().equals(1) && !loadedTextData.isLoaded()) {
+                System.out.println("Parsing: " + loadedTextData.getLine());
                 loadedData.add(turboParser(loadedTextData));
+                loadedTextData.setLoaded(true);
             }
         }
+
+        System.out.println(loadedData);
 
         //loadedData.add(new CompositeShape(tempShapeList, ShapeType.CompositeShape,new Position(0,0),0,0));
         return loadedData;
@@ -147,13 +150,16 @@ public class LoadText {
     private List<TextData> getOrnamentThing(TextData loadTextLine) {
         List<TextData> temp = new ArrayList<>();
         temp.add(loadTextLine);
+        boolean foundObjectToBindTo = false;
+
         for (TextData line: loadedTextLines) {
-            if (line.getType().equals(ShapeType.Ornament) && !line.equals(loadTextLine) && !line.isLoaded() && loadTextLine.getTabCount().equals(line.getTabCount())) {
+            if (line.getType().equals(ShapeType.Ornament) && !line.equals(loadTextLine) && !line.isLoaded() && loadTextLine.getTabCount().equals(line.getTabCount()) && !foundObjectToBindTo) {
                 temp.add(line);
                 line.setLoaded(true);
-            } else if (!line.getType().equals(ShapeType.Ornament) && !line.isLoaded() && loadTextLine.getTabCount().equals(line.getTabCount())) {
+            } else if (!line.getType().equals(ShapeType.Ornament) && !line.isLoaded() && loadTextLine.getTabCount().equals(line.getTabCount()) && !foundObjectToBindTo) {
                 temp.add(line);
                 line.setLoaded(true);
+                foundObjectToBindTo = true;
             }
         }
         return temp;
@@ -176,14 +182,18 @@ public class LoadText {
             ornamentData = (parseGroup(loadedShape));
         }
 
-        // set first decorator pattern to shape
-        IShape shape = new OrnamentDecorator( ornamentData, OrnamentPosition.valueOf(ornaments.get(0).getLine().split(" ")[1]), ornaments.get(0).getLine().split("\"")[1]);
+        // set first decorator pattern to shape, afterwards remove
+        TextData firstOrnament = ornaments.get(0);
+        IShape shape = new OrnamentDecorator( ornamentData, OrnamentPosition.valueOf(firstOrnament.getLine().split(" ")[1]), firstOrnament.getLine().split("\"")[1]);
+        ornaments.remove(firstOrnament);
 
-        // Now we can loop and add more ornaments to the already set ornament
-        for (TextData ornament: ornaments) {
-            if (!ornaments.get(0).equals(ornament) && ornament.getType().equals(ShapeType.Ornament)) {
-                System.out.println(ornament.getLine());
-                shape = new OrnamentDecorator( shape, OrnamentPosition.valueOf(ornament.getLine().split(" ")[1]), ornament.getLine().split("\"")[1]);
+        // Check if we have ornaments left to add
+        if (ornaments.size() != 0) {
+            // Now we can loop and add more ornaments to the already set ornament
+            for (TextData ornament: ornaments) {
+                if (ornament.getType().equals(ShapeType.Ornament)) {
+                    shape = new OrnamentDecorator( shape, OrnamentPosition.valueOf(ornament.getLine().split(" ")[1]), ornament.getLine().split("\"")[1]);
+                }
             }
         }
 
@@ -213,10 +223,11 @@ public class LoadText {
                 line.setLoaded(true);
             }
             if (line.getType().equals(ShapeType.CompositeShape) && !line.isLoaded()) {
-                line.setLoaded(true);
                 compositeShapeData.add(parseGroup(line));
+                line.setLoaded(true);
             }
         }
+
         return new CompositeShape(compositeShapeData, ShapeType.CompositeShape);
     }
 
