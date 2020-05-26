@@ -1,8 +1,16 @@
 package com.designpatterns.paint.base.Models.Actions;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
+<<<<<<< Updated upstream
 import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
+=======
+import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
+import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
+import com.designpatterns.paint.base.Models.Position;
+import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
+import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorMove;
+>>>>>>> Stashed changes
 
 public class MoveShape implements Command
 {
@@ -28,14 +36,18 @@ public class MoveShape implements Command
     @Override
     public void execute()
     {
-        shape.moveShape(newPos);
+        ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove(newPos);
+        if (shape.getType() == ShapeType.CompositeShape) shapeVisitorMove.visitCompositeShape((CompositeShape)shape);
+        else shapeVisitorMove.visitShape(shape);
         panel.repaint();
     }
 
     @Override
     public void undo()
     {
-        shape.moveShape(oldPos);
+        ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove(oldPos);
+        if (shape.getType() == ShapeType.CompositeShape) shapeVisitorMove.visitCompositeShape((CompositeShape)shape);
+        else shapeVisitorMove.visitShape(shape);
         panel.repaint();
     }
 

@@ -1,6 +1,7 @@
 package com.designpatterns.paint.base.Models;
 
 import com.designpatterns.paint.base.Models.Actions.Invoker;
+import com.designpatterns.paint.base.Models.Actions.Reshape;
 import com.designpatterns.paint.base.Models.File.LoadText;
 import com.designpatterns.paint.base.Models.File.SaveScreenshot;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
@@ -33,7 +34,7 @@ public class DrawPanel extends JPanel {
     // Store which shapes have been selected for merging, select these from the side-menu
     private List<Integer> selectedMergeShapes = new ArrayList<>();
 
-    double cursorSelectedX, cursorSelectedY;
+    int cursorSelectedX, cursorSelectedY;
 
     public final Invoker invoker = new Invoker(); // undo redo of all commands
 
@@ -53,8 +54,13 @@ public class DrawPanel extends JPanel {
     /**
      * Check what we need to draw and repaint the panel
      */
+<<<<<<< Updated upstream
     public IShape addShape(ShapeType type, Position position, double width, double height) {
         IShape shape = null;
+=======
+    public Shape addShape(ShapeType type, Position position, int width, int height) {
+        Shape shape = null;
+>>>>>>> Stashed changes
         switch (type) {
             case Ellipse:
                 shape = new BaseShape(ShapeType.Ellipse, position, width, height);
@@ -83,12 +89,12 @@ public class DrawPanel extends JPanel {
     /**
      * Update all shapes based on values in selected shapes array
      */
-    public void updateShapes(int newWidth, int newHeight) {
-        for (Integer selectedShapesIndex : selectedShapes) {
-            if (shapes.get(selectedShapesIndex) != null) {
-                shapes.get(selectedShapesIndex).setSize(newWidth, newHeight);
-                repaint();
-            }
+    public void updateShapes(int newWidth, int newHeight)
+    {
+        if(getSelectedShapes() == null) return;
+        for (Shape s : getSelectedShapes()) {
+            invoker.execute(new Reshape(s, newWidth, newHeight, getInstance()));
+            repaint();
         }
     }
 
@@ -282,6 +288,7 @@ public class DrawPanel extends JPanel {
      * Check which shape has been selected and move it
      * TODO: Fix dat je ook ornaments in compositeshape kan moven
      */
+    //TODO: remove this, because of the visitor pattern
     public void moveShape(Position mousePosition)
     {
         IShape s = getShapeByCoordinates(mousePosition);

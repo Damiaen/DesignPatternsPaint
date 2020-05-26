@@ -8,6 +8,7 @@ import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentPosition;
 import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
+import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorMove;
 
 import javax.swing.*;
 import java.awt.*;
@@ -169,8 +170,17 @@ public class UserInterface extends JFrame {
             @Override
             public void mouseDragged(MouseEvent e) {
                 if (SwingUtilities.isLeftMouseButton(e)) {
-                    if (editRadioButton.isSelected()) {
-                        drawPanel.moveShape(new Position(e.getX(), e.getY()));
+                    if (editRadioButton.isSelected())
+                    {
+                        Position pos = new Position(e.getX(),e.getY());
+                        ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove(pos);
+                        Shape shape = drawPanel.getShapeByCoordinates(pos);
+                        if(shape != null) {
+                            if(shape.getType() == ShapeType.CompositeShape) shapeVisitorMove.visitCompositeShape((CompositeShape) shape);
+                            else shapeVisitorMove.visitShape(shape);
+
+                        }
+                        //drawPanel.moveShape(new Position(e.getX(), e.getY()));
                     }
                 }
             }
@@ -239,7 +249,7 @@ public class UserInterface extends JFrame {
     /**
      * Get selected combobox values and check if xy has been filled, if true continue and add the shape to the JPanel
      */
-    private void addShapeToPanel(double mousePosX, double mousePosY) {
+    private void addShapeToPanel(int mousePosX, int mousePosY) {
         System.out.println("Adding new shape: selected shape: '" + new_shape_combobox.getSelectedItem() + "' with values: x:" + new_shape_width.getText() + " y:" + new_shape_height.getText());
 
         if (validateFields()) {

@@ -2,6 +2,7 @@ package com.designpatterns.paint.base.Models.Shapes.Visitors;
 
 import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
+<<<<<<< Updated upstream
 import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentDecorator;
 import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
@@ -48,5 +49,29 @@ public class ShapeVisitorMove implements ShapeVisitor {
                 (position.x + mousePositionX) - cursorSelectedX,
                 (position.y + mousePositionY) - cursorSelectedY)
         );
+=======
+import com.designpatterns.paint.base.Models.Shapes.Shape.Shape;
+
+public class ShapeVisitorMove implements ShapeVisitor {
+
+    Position mousePosition;
+
+    public ShapeVisitorMove(Position mousePosition)
+    {
+        this.mousePosition = mousePosition;
+    }
+
+    @Override
+    public String visitShape(Shape shape) {
+        shape.setPosition(mousePosition);
+        return shape.toString();
+    }
+
+    @Override
+    public String visitCompositeShape(CompositeShape compositeShape) {
+        compositeShape.setPosition(mousePosition);
+        compositeShape.updateBounds();
+        return compositeShape.toString();
+>>>>>>> Stashed changes
     }
 }

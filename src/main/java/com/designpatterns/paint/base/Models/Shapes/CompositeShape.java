@@ -1,5 +1,6 @@
 package com.designpatterns.paint.base.Models.Shapes;
 
+import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
@@ -39,7 +40,7 @@ public class CompositeShape extends BaseShape {
         super(type,new Position(0,0),0,0);
         this.count = shapes.size();
         this.shapes = shapes;
-        double[] bounds = getBounds();
+        int[] bounds = getBounds();
         setPosition(new Position(bounds[0],bounds[1]));
         setSize(bounds[2], bounds[3]);
         System.out.println("width: " + getWidth() + " height: " + getHeight());
@@ -55,12 +56,12 @@ public class CompositeShape extends BaseShape {
 
     // TODO: We moeten wel de bounds updaten ivm het kijken of een user iets select, weet niet of dit correct is, maar lijkt te werken
     public void updateBounds() {
-        double[] bounds = getBounds();
+        int[] bounds = getBounds();
         setPosition(new Position(bounds[0],bounds[1]));
     }
 
-    public double[] getBounds () {
-        double[] bounds = new double[4];
+    public int[] getBounds () {
+        int[] bounds = new int[4];
 
         /*
             top left == lowest x and highest y
@@ -72,37 +73,45 @@ public class CompositeShape extends BaseShape {
             y = miny + (maxy / 2)
         */
 
-        double minx = 9999;
-        double miny = 9999;
-        double maxx = 0;
-        double maxy = 0;
+        int minx = 9999;
+        int miny = 9999;
+        int maxx = 0;
+        int maxy = 0;
 
+<<<<<<< Updated upstream
         double newminx = 0;
         double newminxy = 0;
         double newmaxx = 0;
         double newmaxy = 0;
         for (IShape shape : shapes)
+=======
+        int newminx = 0;
+        int newminxy = 0;
+        int newmaxx = 0;
+        int newmaxy = 0;
+        for (Shape shape : shapes)
+>>>>>>> Stashed changes
         {
             Position position = shape.getPosition();
             double width = shape.getWidth();
             double height = shape.getHeight();
             if (position.x < minx) {
                 minx = position.x;
-                newminx = position.x - width / 2;
+                newminx = (int) (position.x - width / 2);
             }
             if (position.y < miny) {
                 miny = position.y;
-                newminxy = position.y - height / 2;
+                newminxy = (int) (position.y - height / 2);
             }
             if (position.x > maxx)
             {
                 maxx = position.x;
-                newmaxx = position.x + width / 2;
+                newmaxx = (int) (position.x + width / 2);
             }
             if (position.y > maxy)
             {
                 maxy = position.y;
-                newmaxy = position.y + height / 2;
+                newmaxy = (int) (position.y + height / 2);
             }
 
         }
@@ -157,10 +166,21 @@ public class CompositeShape extends BaseShape {
     }
 
     @Override
+<<<<<<< Updated upstream
     public void setMovingPosition(Double mousePositionX, Double mousePositionY, Double cursorSelectedX, Double cursorSelectedY) {
         for (IShape shape : getBaseShapes()) {
             shape.setMovingPosition(mousePositionX, mousePositionY,cursorSelectedX,cursorSelectedY);
         }
         updateBounds();
+=======
+    public void setSelected(boolean bool) {
+        isSelected = bool;
     }
+
+    @Override
+    public boolean isSelected() {
+        return isSelected;
+>>>>>>> Stashed changes
+    }
+
 }
