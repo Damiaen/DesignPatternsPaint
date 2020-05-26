@@ -1,11 +1,10 @@
 package com.designpatterns.paint.base.Models.Shapes.Shape;
 
 import com.designpatterns.paint.base.Models.Position;
-import com.designpatterns.paint.base.Models.Shapes.Visitors.SaveVisitor.ShapeVisitorSave;
+import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorSave;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitor;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public interface IShape
 {
@@ -23,7 +22,6 @@ public interface IShape
     void setMovingPosition(Double mousePositionX, Double mousePositionY, Double cursorSelectedX, Double cursorSelectedY);
     void setPosition(Position position);
     Position getPosition();
-    String acceptSave(ShapeVisitorSave v);
     void accept(ShapeVisitor v);
     void moveShape(Position oldPos);
     void setMoving(boolean b);
