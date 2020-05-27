@@ -1,0 +1,10 @@
+CompositeShape 1
+	CompositeShape 8
+		Ellipse 76 368 100 100
+		Ellipse 581 329 100 100
+		Ellipse 636 92 100 100
+		Ellipse 386 84 100 100
+		Ellipse 430 225 100 100
+		Ellipse 199 281 100 100
+		Ellipse 166 465 100 100
+		Ellipse 407 512 100 100

@@ -19,7 +19,7 @@ public interface IShape
     int getHeight();
     void setSize(int newWidth, int newHeight);
     ShapeType getType();
-    void setMovingPosition(Position position, int mousePositionX, int cursorSelectedX, int mousePositionY, int cursorSelectedY);
+    void setMovingPosition(Position position, int mousePositionX, int mousePositionY);
     void setPosition(Position position);
     Position getPosition();
     void accept(ShapeVisitor v);

@@ -119,8 +119,8 @@ public class OrnamentDecorator extends ShapeDecorator {
     }
 
     @Override
-    public void setMovingPosition(Position position, int mousePositionX, int cursorSelectedX, int mousePositionY, int cursorSelectedY) {
-        decoratedShape.setMovingPosition(position, mousePositionX, cursorSelectedX, mousePositionY, cursorSelectedY);
+    public void setMovingPosition(Position position, int mousePositionX, int mousePositionY) {
+        decoratedShape.setMovingPosition(position, mousePositionX, mousePositionY);
     }
 
     @Override

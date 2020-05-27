@@ -56,19 +56,11 @@ public class CompositeShape extends BaseShape {
     public void updateBounds() {
         double[] bounds = getBounds();
         setPosition(new Position((int)bounds[0], (int)bounds[1]));
+        setSize((int)bounds[2], (int)bounds[3]);
     }
 
     public double[] getBounds () {
         double[] bounds = new double[4];
-
-        /*
-            top left == lowest x and highest y
-            bottom right == highest x and lowest y
-            width == maxx - minx
-            height == maxy - miny
-            x = minx + (maxx / 2)
-            y = miny + (maxy / 2)
-        */
 
         double minx = 9999;
         double miny = 9999;
@@ -162,10 +154,10 @@ public class CompositeShape extends BaseShape {
     }
 
     @Override
-    public void setMovingPosition(Position position, int mousePositionX, int cursorSelectedX, int mousePositionY, int cursorSelectedY) {
+    public void setMovingPosition(Position position, int mousePositionX, int mousePositionY) {
         for (IShape shape : getBaseShapes()) {
             Position pos = shape.getPosition();
-            shape.setMovingPosition(pos, mousePositionX, cursorSelectedX, mousePositionY, cursorSelectedY);
+            shape.setMovingPosition(pos, mousePositionX, mousePositionY);
         }
         updateBounds();
     }

@@ -14,14 +14,13 @@ public class MoveShape implements Command
 
     private Position newPos;
 
-    private DrawPanel panel;
+    private DrawPanel panel = DrawPanel.getInstance();
 
     private IShape shape;
 
-    public MoveShape (Position pos, IShape shape, DrawPanel panel){
+    public MoveShape (Position pos, IShape shape){
         oldPos = pos;
         this.shape = shape;
-        this.panel = panel;
     }
 
     public void setNewPos(Position pos) {
@@ -32,7 +31,7 @@ public class MoveShape implements Command
     public void execute()
     {
         ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove();
-        shapeVisitorMove.visitShape(shape);
+        shapeVisitorMove.moveShape(shape,newPos.x,newPos.y);
         panel.repaint();
     }
 
@@ -40,7 +39,7 @@ public class MoveShape implements Command
     public void undo()
     {
         ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove();
-        shapeVisitorMove.visitShape(shape);
+        shapeVisitorMove.moveShape(shape,oldPos.x,oldPos.y);
         panel.repaint();
     }
 

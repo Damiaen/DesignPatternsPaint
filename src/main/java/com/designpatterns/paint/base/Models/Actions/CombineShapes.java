@@ -21,7 +21,7 @@ public class CombineShapes implements Command
         drawPanel.addShape(shape);
         for (IShape shape : this.shape.getBaseShapes())
         {
-            drawPanel.removeShape(drawPanel.getShapeByCoordinates(shape.getPosition()));
+            drawPanel.removeShape(shape);
         }
         drawPanel.getAllShapesForView();
         drawPanel.repaint();
@@ -30,10 +30,11 @@ public class CombineShapes implements Command
     @Override
     public void undo()
     {
-        for (IShape shape : this.shape.getBaseShapes()){
-            drawPanel.addShape(shape.getType(), shape.getPosition(), shape.getWidth(), shape.getHeight());
+        for (IShape shape : this.shape.getBaseShapes())
+        {
+            drawPanel.invoker.execute(new AddShape(shape,drawPanel));
         }
-        drawPanel.invoker.execute(new RemoveShape(shape.getPosition(),drawPanel));
+        drawPanel.removeShape(shape);
         drawPanel.getAllShapesForView();
         drawPanel.repaint();
     }

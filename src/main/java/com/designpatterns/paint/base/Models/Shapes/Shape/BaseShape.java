@@ -51,11 +51,14 @@ public class BaseShape implements IShape {
         this.height = height;
     }
 
-    public void setMovingPosition(Position position, int mousePositionX, int cursorSelectedX, int mousePositionY, int cursorSelectedY) {
+    public void setMovingPosition(Position position, int mousePositionX, int mousePositionY) {
         this.position = (new Position(
-                (position.x + mousePositionX) - cursorSelectedX,
-                (position.y + mousePositionY) - cursorSelectedY)
+                (position.x + mousePositionX) - position.x,
+                (position.y + mousePositionY) - position.y)
         );
+        System.out.println(position);
+        System.out.println(mousePositionX);
+        System.out.println(mousePositionY);
     }
   
     public void setPosition(Position position) {

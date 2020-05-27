@@ -92,8 +92,8 @@ public class DrawPanel extends JPanel {
         IShape s = getShapeByCoordinates(mousePosition);
         if (s == null) return;
         if (!s.isSelected()) return;
-        ShapeVisitorMove saveVisitor = new ShapeVisitorMove();
-        saveVisitor.moveShape(s, (int) mousePosition.y, (int) mousePosition.x, (int) cursorSelectedX, (int) cursorSelectedY);
+        ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove();
+        shapeVisitorMove.moveShape(s, mousePosition.x, mousePosition.y);
         cursorSelectedX = mousePosition.x;
         cursorSelectedY = mousePosition.y;
         repaint();
@@ -188,7 +188,8 @@ public class DrawPanel extends JPanel {
     public List<String> getAllShapesForView() {
         List<String> drawingObjectsNames = new ArrayList<>();
 
-        for (IShape s : shapes) {
+        for (IShape s : shapes)
+        {
             drawingObjectsNames.add(s.getType().name() + " on position x: " + s.getPosition().x + " and y: " + s.getPosition().y);
         }
         repaint();
@@ -293,7 +294,6 @@ public class DrawPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         for (IShape s : shapes)
         {
             if (selectedShapes.contains(shapes.indexOf(s))) {

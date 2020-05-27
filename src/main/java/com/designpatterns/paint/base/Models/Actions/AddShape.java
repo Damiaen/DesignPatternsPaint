@@ -17,11 +17,15 @@ public class AddShape implements Command {
     @Override
     public void execute() {
         shape = drawPanel.addShape(shape.getType(), shape.getPosition(), shape.getWidth(), shape.getHeight());
+        drawPanel.getAllShapesForView();
+        drawPanel.repaint();
     }
 
     @Override
     public void undo() {
         drawPanel.removeShape(shape);
+        drawPanel.getAllShapesForView();
+        drawPanel.repaint();
     }
 
     @Override

@@ -149,7 +149,7 @@ public class UserInterface extends JFrame {
                         if (shape != null && shape.isSelected()) {
                             System.out.println(shape);
                             drawPanel.checkIfSelectedShape(new Position(e.getX(), e.getY()));
-                            moveShape = new MoveShape(new Position(e.getX(), e.getY()), shape, drawPanel);
+                            moveShape = new MoveShape(new Position(e.getX(), e.getY()), shape);
                             shape.setMoving(true);
                         }
                     }
@@ -164,6 +164,7 @@ public class UserInterface extends JFrame {
                         moveShape.setNewPos(new Position(e.getX(), e.getY()));
                         drawPanel.invoker.execute(moveShape);
                         moveShape = null;
+                        updateShapesOverviewList();
                         repaint();
                     }
                 }
@@ -290,14 +291,16 @@ public class UserInterface extends JFrame {
         for (IShape s : selectedShapes){
             if (s.getType() == ShapeType.CompositeShape)
             {
-                System.out.println(s);
                 CompositeShape cs = (CompositeShape) s;
                 checkedShapes.addAll(cs.getBaseShapes());
             } else {
                 checkedShapes.add(s);
             }
-            System.out.println("dwadwaawd" + s);
         }
+        for (IShape s : selectedShapes){
+            drawPanel.removeShape(s);
+        }
+
 
         System.out.println(checkedShapes);
 

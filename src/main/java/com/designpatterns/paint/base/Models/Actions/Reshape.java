@@ -27,12 +27,14 @@ public class Reshape implements Command {
         oldHeight = shape.getHeight();
         ShapeVisitorResize shapeVisitorResize = new ShapeVisitorResize(width,height,drawPanel);
         shapeVisitorResize.visitShape(shape);
+        drawPanel.repaint();
     }
 
     @Override
     public void undo() {
         ShapeVisitorResize shapeVisitorResize = new ShapeVisitorResize(oldWidth,oldHeight,drawPanel);
         shapeVisitorResize.visitShape(shape);
+        drawPanel.repaint();
     }
 
     @Override
