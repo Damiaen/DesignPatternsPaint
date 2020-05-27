@@ -17,14 +17,12 @@ public class RemoveShape implements Command {
     @Override
     public void execute() {
         drawPanel.removeShape(shape);
-        drawPanel.getAllShapesForView();
         drawPanel.repaint();
     }
 
     @Override
     public void undo() {
         shape = drawPanel.addShape(shape.getType(), shape.getPosition(), shape.getWidth(), shape.getHeight());
-        drawPanel.getAllShapesForView();
         drawPanel.repaint();
     }
 

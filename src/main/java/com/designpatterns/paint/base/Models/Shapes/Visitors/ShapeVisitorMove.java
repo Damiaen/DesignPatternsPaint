@@ -26,7 +26,6 @@ public class ShapeVisitorMove implements ShapeVisitor {
          //   Position position = shape.getPosition();
         compositeShape.setMovingPosition(mousePositionX, mousePositionY);
       //  }
-        compositeShape.updateBounds();
     }
 
     @Override

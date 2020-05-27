@@ -115,12 +115,14 @@ public class UserInterface extends JFrame {
             @Override
             public void mousePressed(MouseEvent e) {
                 drawPanel.invoker.undo();
+                updateShapesOverviewList();
             }
         });
         redoButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 drawPanel.invoker.redo();
+                updateShapesOverviewList();
             }
         });
         // ui element listeners

@@ -1,5 +1,7 @@
 package com.designpatterns.paint.base.Models.Shapes;
 
+import com.designpatterns.paint.base.Models.Actions.Reshape;
+import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
@@ -140,8 +142,10 @@ public class CompositeShape extends BaseShape {
         this.setWidth(width);
         this.setHeight(height);
         for (IShape shape : getBaseShapes()) {
-            shape.setSize(width, height);
+            Reshape reshape = new Reshape(shape, width, height);
+            DrawPanel.getInstance().invoker.execute(reshape);
         }
+        updateBounds();
     }
 
     @Override
