@@ -134,7 +134,7 @@ public class CompositeShape extends BaseShape {
 
     @Override
     public void accept(ShapeVisitor v) {
-        v.visitCompositeShape( this );
+        v.visit( this );
     }
 
     @Override
@@ -169,10 +169,9 @@ public class CompositeShape extends BaseShape {
     }
 
     @Override
-    public void setMovingPosition(Position position, int mousePositionX, int mousePositionY) {
+    public void setMovingPosition(int mousePositionX, int mousePositionY) {
         for (IShape shape : getBaseShapes()) {
-            Position pos = shape.getPosition();
-            shape.setMovingPosition(pos, mousePositionX, mousePositionY);
+            shape.setMovingPosition(mousePositionX, mousePositionY);
         }
         updateBounds();
     }

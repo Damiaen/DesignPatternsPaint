@@ -10,7 +10,7 @@ public class RemoveShape implements Command {
     private IShape shape;
     private final DrawPanel drawPanel = DrawPanel.getInstance();
 
-    public RemoveShape(Position position, DrawPanel drawPanel) {
+    public RemoveShape(Position position) {
         this.shape = drawPanel.getShapeByCoordinates(position);
     }
 

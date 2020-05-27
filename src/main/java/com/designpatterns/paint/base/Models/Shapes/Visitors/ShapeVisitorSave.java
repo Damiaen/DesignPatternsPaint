@@ -15,15 +15,15 @@ public class ShapeVisitorSave implements ShapeVisitor {
         SaveText.getInstance().save(master.toString());
     }
 
-    public void visitShape(IShape shape) {
+    public void visit(IShape shape) {
         master.append(shape.toString());
     }
 
-    public void visitOrnamentDecorator(OrnamentDecorator ornamentDecorator) {
+    public void visit(OrnamentDecorator ornamentDecorator) {
         master.append(ornamentDecorator.toString());
     }
 
-    public void visitCompositeShape(CompositeShape compositeShape) {
+    public void visit(CompositeShape compositeShape) {
         StringBuilder sb = new StringBuilder();
         sb.append(compositeShape.getType()).append(" ").append(compositeShape.getCount()).append("\n");
         sb.append(_visitCompoundGraphic(compositeShape));

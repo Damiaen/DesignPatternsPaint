@@ -17,17 +17,17 @@ public class ShapeVisitorResize implements ShapeVisitor {
     }
 
     @Override
-    public void visitShape(IShape shape) {
+    public void visit(IShape shape) {
         shape.setSize(newWidth, newHeight);
     }
 
     @Override
-    public void visitOrnamentDecorator(OrnamentDecorator ornamentDecorator) {
+    public void visit(OrnamentDecorator ornamentDecorator) {
         ornamentDecorator.setSize(newWidth, newHeight);
     }
 
     @Override
-    public void visitCompositeShape(CompositeShape compositeShape) {
+    public void visit(CompositeShape compositeShape) {
         compositeShape.setSize(newWidth, newHeight);
         System.out.println("toeeee");
         System.out.println(newWidth);

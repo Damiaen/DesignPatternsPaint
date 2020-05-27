@@ -9,11 +9,10 @@ import java.util.List;
 public class ClearDrawing implements Command
 {
     private List<IShape> shapes;
-    private final DrawPanel drawPanel;
+    private final DrawPanel drawPanel = DrawPanel.getInstance();
 
-    public ClearDrawing( DrawPanel drawPanel)
+    public ClearDrawing()
     {
-        this.drawPanel = drawPanel;
         shapes = drawPanel.getShapes();
     }
 

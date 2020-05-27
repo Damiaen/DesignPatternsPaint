@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="7cc753d7-4a45-4a87-9269-95be660bc8da" name="Default Changelist" comment="Removed folder">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Actions/SplitCompositeShape.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Actions/AddShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Actions/AddShape.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Actions/ClearDrawing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Actions/ClearDrawing.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Actions/CombineShapes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Actions/CombineShapes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Actions/MoveShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Actions/MoveShape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/DrawPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/DrawPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Actions/RemoveShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Actions/RemoveShape.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Actions/Reshape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Actions/Reshape.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/CompositeShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/CompositeShape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Shape/BoundingBox.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Shape/Shape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Shape/Shape.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Decorator/OrnamentDecorator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Decorator/OrnamentDecorator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Shape/BaseShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Shape/BaseShape.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Shape/IShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Shape/IShape.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Visitors/ShapeVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Visitors/ShapeVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Visitors/ShapeVisitorMove.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Visitors/ShapeVisitorMove.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Visitors/ShapeVisitorResize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Visitors/ShapeVisitorResize.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Visitors/ShapeVisitorSave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/Models/Shapes/Visitors/ShapeVisitorSave.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/UserInterface/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/designpatterns/paint/base/UserInterface/UserInterface.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -203,6 +227,15 @@
     <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
@@ -236,6 +269,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="808" y="409" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588068742112" />
+    <state x="406" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1590601694987">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="406" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1590601694987" />
     <state x="548" y="114" key="CommitChangelistDialog2" timestamp="1589116538246">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -244,26 +281,50 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588430420234" />
-    <state width="1877" height="148" key="GridCell.Tab.0.bottom" timestamp="1590237532992">
+    <state width="1860" height="202" key="GridCell.Tab.0.bottom" timestamp="1590605604868">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="286" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1589116404695" />
+    <state width="1860" height="202" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1590605604868" />
+    <state width="1877" height="204" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1590591186043" />
     <state width="1877" height="148" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1590237532992" />
-    <state width="1877" height="148" key="GridCell.Tab.0.center" timestamp="1590237532992">
+    <state width="1860" height="202" key="GridCell.Tab.0.center" timestamp="1590605604868">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="286" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1589116404695" />
+    <state width="1860" height="202" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1590605604868" />
+    <state width="1877" height="204" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1590591186043" />
     <state width="1877" height="148" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1590237532992" />
-    <state width="1877" height="148" key="GridCell.Tab.0.left" timestamp="1590237532992">
+    <state width="1860" height="202" key="GridCell.Tab.0.left" timestamp="1590605604868">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="286" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1589116404695" />
+    <state width="1860" height="202" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1590605604867" />
+    <state width="1877" height="204" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1590591186043" />
     <state width="1877" height="148" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1590237532992" />
-    <state width="1877" height="148" key="GridCell.Tab.0.right" timestamp="1590237532992">
+    <state width="1860" height="202" key="GridCell.Tab.0.right" timestamp="1590605604868">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="286" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1589116404695" />
+    <state width="1860" height="202" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1590605604868" />
+    <state width="1877" height="204" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1590591186043" />
     <state width="1877" height="148" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1590237532992" />
+    <state width="1860" height="171" key="GridCell.Tab.1.bottom" timestamp="1590603576061">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1860" height="171" key="GridCell.Tab.1.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1590603576061" />
+    <state width="1860" height="171" key="GridCell.Tab.1.center" timestamp="1590603576061">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1860" height="171" key="GridCell.Tab.1.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1590603576061" />
+    <state width="1860" height="171" key="GridCell.Tab.1.left" timestamp="1590603576061">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1860" height="171" key="GridCell.Tab.1.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1590603576061" />
+    <state width="1860" height="171" key="GridCell.Tab.1.right" timestamp="1590603576061">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1860" height="171" key="GridCell.Tab.1.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1590603576061" />
     <state x="217" y="0" key="MergeDialog" timestamp="1588527447318">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -288,6 +349,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="655" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588527090867" />
+    <state x="625" y="246" key="run.anything.popup" timestamp="1590592698221">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="625" y="246" key="run.anything.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1590592698221" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1588525220482">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
