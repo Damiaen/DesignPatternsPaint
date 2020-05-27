@@ -32,7 +32,7 @@ public class CombineShapes implements Command
     {
         for (IShape shape : this.shape.getBaseShapes())
         {
-            drawPanel.invoker.execute(new AddShape(shape,drawPanel));
+            drawPanel.invoker.execute(new AddShape(shape));
         }
         drawPanel.removeShape(shape);
         drawPanel.getAllShapesForView();

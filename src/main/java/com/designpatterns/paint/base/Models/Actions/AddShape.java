@@ -7,11 +7,10 @@ public class AddShape implements Command {
 
     // which states do i need to store in order to execute and undo
     private IShape shape;
-    private DrawPanel drawPanel;
+    private DrawPanel drawPanel = DrawPanel.getInstance();
 
-    public AddShape(IShape shape, DrawPanel drawPanel) {
+    public AddShape(IShape shape) {
         this.shape = shape;
-        this.drawPanel = drawPanel;
     }
 
     @Override

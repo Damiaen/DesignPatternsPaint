@@ -76,7 +76,7 @@ public class UserInterface extends JFrame {
         clearDrawingButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (drawPanel.getShapes().size() != 0) drawPanel.invoker.execute(new ClearDrawing(drawPanel));
+                if (drawPanel.getShapes().size() != 0) drawPanel.invoker.execute(new ClearDrawing());
             }
         });
         createScreenshotButton.addActionListener(new ActionListener() {
@@ -214,7 +214,7 @@ public class UserInterface extends JFrame {
                 drawPanel.checkIfSelectedShape(new Position(e.getX(), e.getY()));
             }
         } else if (removeRadioButton.isSelected()) {
-            drawPanel.invoker.execute(new RemoveShape(new Position(e.getX(), e.getY()), drawPanel));
+            drawPanel.invoker.execute(new RemoveShape(new Position(e.getX(), e.getY())));
         }
         // Check if there have been any changes in the shapes list, update side menu list
         updateShapesOverviewList();
@@ -249,7 +249,7 @@ public class UserInterface extends JFrame {
 
         if (validateFields()) {
             BaseShape baseShape = new BaseShape(ShapeType.valueOf(Objects.requireNonNull(new_shape_combobox.getSelectedItem()).toString()),new Position(mousePosX,mousePosY), Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText()));
-            drawPanel.invoker.execute(new AddShape(baseShape,drawPanel));
+            drawPanel.invoker.execute(new AddShape(baseShape));
         }
     }
 

@@ -16,23 +16,21 @@ public class ShapeVisitorMove implements ShapeVisitor {
     }
 
     @Override
-    public void visitShape(IShape shape) {
-        Position position = shape.getPosition();
-        shape.setMovingPosition(position, mousePositionX, mousePositionY);
+    public void visit(IShape shape) {
+        shape.setMovingPosition(mousePositionX, mousePositionY);
     }
 
     @Override
-    public void visitCompositeShape(CompositeShape compositeShape) {
-        for (IShape shape : compositeShape.getBaseShapes()) {
-            Position position = shape.getPosition();
-            shape.setMovingPosition(position, mousePositionX, mousePositionY);
-        }
+    public void visit(CompositeShape compositeShape) {
+        //for (IShape shape : compositeShape.getBaseShapes()) {
+         //   Position position = shape.getPosition();
+        compositeShape.setMovingPosition(mousePositionX, mousePositionY);
+      //  }
         compositeShape.updateBounds();
     }
 
     @Override
-    public void visitOrnamentDecorator(OrnamentDecorator ornamentDecorator) {
-        Position position = ornamentDecorator.getPosition();
-        ornamentDecorator.setMovingPosition(position, mousePositionX, mousePositionY);
+    public void visit(OrnamentDecorator ornamentDecorator) {
+        ornamentDecorator.setMovingPosition(mousePositionX, mousePositionY);
     }
 }

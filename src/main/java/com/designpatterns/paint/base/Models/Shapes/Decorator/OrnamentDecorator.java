@@ -119,8 +119,8 @@ public class OrnamentDecorator extends ShapeDecorator {
     }
 
     @Override
-    public void setMovingPosition(Position position, int mousePositionX, int mousePositionY) {
-        decoratedShape.setMovingPosition(position, mousePositionX, mousePositionY);
+    public void setMovingPosition(int mousePositionX, int mousePositionY) {
+        decoratedShape.setMovingPosition(mousePositionX, mousePositionY);
     }
 
     @Override
@@ -136,7 +136,7 @@ public class OrnamentDecorator extends ShapeDecorator {
 
     @Override
     public void accept(ShapeVisitor v) {
-        v.visitOrnamentDecorator( this );
+        v.visit( this );
     }
 
     @Override
