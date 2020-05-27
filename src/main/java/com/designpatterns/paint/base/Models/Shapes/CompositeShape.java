@@ -2,11 +2,9 @@ package com.designpatterns.paint.base.Models.Shapes;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Position;
-import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentDecorator;
 import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
-import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorSave;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitor;
 
 import java.awt.*;
@@ -151,24 +149,27 @@ public class CompositeShape extends BaseShape {
         stringBuilder.append(getType()).append(" ").append(getCount()).append("\n");
 
         for (IShape shape : shapes) {
-            if (shape instanceof OrnamentDecorator) {
-                String[] splitLine = shape.toString().split("\n");
-                for (String split: splitLine) {
-                    System.out.println("split:" + split);
-                    stringBuilder.append("\t").append(split).append("\n");
-                }
-            } else {
-                stringBuilder.append("\t").append(shape.toString()).append("\n");
+            String[] splitLine = shape.toString().split("\n");
+            for (String split: splitLine) {
+                // System.out.println("split:" + split);
+                stringBuilder.append("\t").append(split).append("\n");
             }
         }
 
         if ((Character.compare(stringBuilder.charAt(stringBuilder.length() - 1), '\t')) == 1) {
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         }
+
         return stringBuilder.toString();
     }
 
     @Override
+    public void setMovingPosition(Position position, int mousePositionX, int cursorSelectedX, int mousePositionY, int cursorSelectedY) {
+        for (IShape shape : getBaseShapes()) {
+            Position pos = shape.getPosition();
+            shape.setMovingPosition(pos, mousePositionX, cursorSelectedX, mousePositionY, cursorSelectedY);
+    }
+          
     public void setSelected(boolean bool) {
         isSelected = bool;
     }
@@ -176,17 +177,5 @@ public class CompositeShape extends BaseShape {
     @Override
     public boolean isSelected() {
         return isSelected;
-    }
-
-    @Override
-    public void setPosition(Position position) {
-        super.setPosition(position);
-        for (IShape shape : shapes){
-            shape.setPosition(new Position(
-                    (shape.getPosition().x + position.x) - position.x,
-                    (shape.getPosition().y + position.y) - position.y)
-            );
-        }
-        DrawPanel.getInstance().repaint();
     }
 }

@@ -265,7 +265,7 @@ public class DrawPanel extends JPanel {
         }
         return false;
     }
-
+  
     public List<IShape> getShapes(){
         return new ArrayList<>(shapes);
     }

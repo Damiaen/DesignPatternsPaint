@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,7 +45,7 @@ public class UserInterface extends JFrame {
     private JTextField ornamentText;
     private JButton ornamentButton;
 
-    private final DrawPanel drawPanel = new DrawPanel();
+    private final DrawPanel drawPanel = DrawPanel.getInstance();
     private final DefaultListModel<String> listModel = new DefaultListModel<>();
 
     /**
@@ -292,17 +293,26 @@ public class UserInterface extends JFrame {
     private void combineShapes()
     {
         List<IShape> selectedShapes = drawPanel.getSelectedShapes();
-        List<IShape> checkedShapes = drawPanel.getSelectedShapes();
+        List<IShape> checkedShapes = new ArrayList<>();
         for (IShape s : selectedShapes){
             if (s.getType() == ShapeType.CompositeShape)
             {
+                System.out.println(s);
                 CompositeShape cs = (CompositeShape) s;
                 checkedShapes.addAll(cs.getBaseShapes());
-                selectedShapes.remove(cs);
+            } else {
+                checkedShapes.add(s);
             }
+            System.out.println("dwadwaawd" + s);
         }
 
+        for (IShape s : selectedShapes){
+            drawPanel.removeShape(s);
+        }
+
+
         drawPanel.invoker.execute(new CombineShapes(checkedShapes,drawPanel));
+        drawPanel.clearSelectedShapes();
         updateShapesOverviewList();
     }
 }
