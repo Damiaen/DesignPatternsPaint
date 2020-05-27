@@ -1,5 +1,6 @@
 package com.designpatterns.paint.base.Models.Shapes.Shape;
 
+import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorSave;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitor;
@@ -26,6 +27,8 @@ public class BaseShape implements IShape {
     private ShapeDrawContext shapeDrawContext;
     private ShapeContourContext shapeContourContext;
     private ShapeContainsContext shapeContainsContext;
+
+    private DrawPanel drawPanel = DrawPanel.getInstance();
 
     public BaseShape(ShapeType type, Position position, int width, int height) {
         this.type = type;
@@ -60,8 +63,12 @@ public class BaseShape implements IShape {
     }
 
     public void setMovingPosition(int mousePositionX, int mousePositionY) {
-        this.position = new Position(
-                mousePositionX + (mousePositionX - position.x),mousePositionY + (mousePositionY - position.y));
+        //this.position = new Position(
+        //        mousePositionX + (mousePositionX - position.x),mousePositionY + (mousePositionY - position.y));
+        this.position = (new Position(
+                (position.x + mousePositionX) - drawPanel.getCursorSelectedPosition().x,
+                (position.y + mousePositionY) - drawPanel.getCursorSelectedPosition().y)
+        );
     }
   
     public void setPosition(Position position) {

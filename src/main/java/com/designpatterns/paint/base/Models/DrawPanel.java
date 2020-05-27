@@ -36,7 +36,7 @@ public class DrawPanel extends JPanel {
     // Store which shapes have been selected for merging, select these from the side-menu
     private List<Integer> selectedMergeShapes = new ArrayList<>();
 
-    int cursorSelectedX, cursorSelectedY;
+    private Position cursorSelectedPosition = new Position(0,0);
 
     public final Invoker invoker = new Invoker(); // undo redo of all commands
 
@@ -86,7 +86,6 @@ public class DrawPanel extends JPanel {
 
     /**
      * Check which shape has been selected and move it
-     * TODO: Fix dat je ook ornaments in compositeshape kan moven
      */
     public void moveShape(Position mousePosition)
     {
@@ -95,8 +94,8 @@ public class DrawPanel extends JPanel {
         if (!s.isSelected()) return;
         ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove();
         shapeVisitorMove.moveShape(s, mousePosition.x, mousePosition.y);
-        cursorSelectedX = mousePosition.x;
-        cursorSelectedY = mousePosition.y;
+        cursorSelectedPosition.x = mousePosition.x;
+        cursorSelectedPosition.y = mousePosition.y;
         repaint();
     }
 
@@ -125,7 +124,6 @@ public class DrawPanel extends JPanel {
     /**
      * Loop through selected shapes from paint UI and side menu
      */
-    //TODO: still sees images as individuals after merging, so it trows a out of bounds exception
     public List<IShape> getSelectedShapes() {
         List<Integer> selectedShapesIndices = new ArrayList<>(this.selectedShapes);
         selectedShapesIndices.addAll(selectedMergeShapes);
@@ -207,7 +205,6 @@ public class DrawPanel extends JPanel {
 
     /**
      * Get which shape is on which coordinate
-     * TODO: hier gaat shit fout, denk dat ie niet goed om kan gaan met de boundaries van de groups
      */
     public IShape getShapeByCoordinates(Position position) {
         for (IShape s : shapes)
@@ -218,6 +215,10 @@ public class DrawPanel extends JPanel {
             }
         }
         return null;
+    }
+
+    public Position getCursorSelectedPosition() {
+        return cursorSelectedPosition;
     }
 
     /**
@@ -284,8 +285,8 @@ public class DrawPanel extends JPanel {
             if (s.checkPosition(position)) {
                 setSelectedShapes(shapes.indexOf(s));
                 s.setSelected(true);
-                cursorSelectedX = position.x;
-                cursorSelectedY = position.y;
+                cursorSelectedPosition.x = position.x;
+                cursorSelectedPosition.y = position.y;
                 repaint();
                 return true;
             }
