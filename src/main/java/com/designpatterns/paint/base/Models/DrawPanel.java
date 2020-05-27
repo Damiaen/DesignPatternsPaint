@@ -72,6 +72,7 @@ public class DrawPanel extends JPanel {
 
     public void addShape(IShape shape){
         shapes.add(shape);
+        repaint();
     }
 
     /**
@@ -79,6 +80,22 @@ public class DrawPanel extends JPanel {
      */
     public void removeShape(IShape shape) {
         shapes.remove(shape);
+        repaint();
+    }
+
+    /**
+     * Check which shape has been selected and move it
+     * TODO: Fix dat je ook ornaments in compositeshape kan moven
+     */
+    public void moveShape(Position mousePosition)
+    {
+        IShape s = getShapeByCoordinates(mousePosition);
+        if (s == null) return;
+        if (!s.isSelected()) return;
+        ShapeVisitorMove saveVisitor = new ShapeVisitorMove();
+        saveVisitor.moveShape(s, (int) mousePosition.y, (int) mousePosition.x, (int) cursorSelectedX, (int) cursorSelectedY);
+        cursorSelectedX = mousePosition.x;
+        cursorSelectedY = mousePosition.y;
         repaint();
     }
 
@@ -265,7 +282,7 @@ public class DrawPanel extends JPanel {
         }
         return false;
     }
-  
+
     public List<IShape> getShapes(){
         return new ArrayList<>(shapes);
     }

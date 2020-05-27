@@ -31,7 +31,7 @@ public class MoveShape implements Command
     @Override
     public void execute()
     {
-        ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove(newPos);
+        ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove();
         shapeVisitorMove.visitShape(shape);
         panel.repaint();
     }
@@ -39,7 +39,7 @@ public class MoveShape implements Command
     @Override
     public void undo()
     {
-        ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove(oldPos);
+        ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove();
         shapeVisitorMove.visitShape(shape);
         panel.repaint();
     }

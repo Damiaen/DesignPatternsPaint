@@ -10,13 +10,11 @@ import java.util.List;
 public class CombineShapes implements Command
 {
     private final CompositeShape shape;
-    private final DrawPanel drawPanel;
+    private final DrawPanel drawPanel = DrawPanel.getInstance();
 
-    public CombineShapes(List<IShape> shapes, DrawPanel drawPanel) {
+    public CombineShapes(List<IShape> shapes) {
         shape = new CompositeShape(shapes, ShapeType.CompositeShape);
-        this.drawPanel = drawPanel;
     }
-
 
     @Override
     public void execute() {

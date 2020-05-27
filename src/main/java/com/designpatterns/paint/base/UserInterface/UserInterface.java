@@ -150,7 +150,7 @@ public class UserInterface extends JFrame {
                             System.out.println(shape);
                             drawPanel.checkIfSelectedShape(new Position(e.getX(), e.getY()));
                             moveShape = new MoveShape(new Position(e.getX(), e.getY()), shape, drawPanel);
-                            shape.setSelected(true);
+                            shape.setMoving(true);
                         }
                     }
                 }
@@ -160,8 +160,7 @@ public class UserInterface extends JFrame {
             public void mouseReleased(MouseEvent e)
             {
                 if (SwingUtilities.isLeftMouseButton(e)) {
-                    if (editRadioButton.isSelected() && moveShape != null)
-                    {
+                    if (editRadioButton.isSelected() && moveShape != null) {
                         moveShape.setNewPos(new Position(e.getX(), e.getY()));
                         drawPanel.invoker.execute(moveShape);
                         moveShape = null;
@@ -174,14 +173,8 @@ public class UserInterface extends JFrame {
             @Override
             public void mouseDragged(MouseEvent e) {
                 if (SwingUtilities.isLeftMouseButton(e)) {
-                    if (editRadioButton.isSelected())
-                    {
-                        IShape shape = drawPanel.getShapeByCoordinates(new Position(e.getX(),e.getY()));
-                        if (shape != null && shape.isSelected()) {
-                            ShapeVisitorMove move = new ShapeVisitorMove(new Position(e.getX(),e.getY()));
-                            move.visitShape(shape);
-                            drawPanel.repaint();
-                        }
+                    if (editRadioButton.isSelected()) {
+                        drawPanel.moveShape(new Position(e.getX(), e.getY()));
                     }
                 }
             }
@@ -306,12 +299,9 @@ public class UserInterface extends JFrame {
             System.out.println("dwadwaawd" + s);
         }
 
-        for (IShape s : selectedShapes){
-            drawPanel.removeShape(s);
-        }
+        System.out.println(checkedShapes);
 
-
-        drawPanel.invoker.execute(new CombineShapes(checkedShapes,drawPanel));
+        drawPanel.invoker.execute(new CombineShapes(checkedShapes));
         drawPanel.clearSelectedShapes();
         updateShapesOverviewList();
     }

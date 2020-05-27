@@ -81,11 +81,6 @@ public class BaseShape implements IShape {
 
     public final ShapeType getType() { return type; }
 
-    @Override
-    public void setMovingPosition(Double mousePositionX, Double mousePositionY, Double cursorSelectedX, Double cursorSelectedY) {
-
-    }
-
     public boolean checkPosition(Position position) {
         return shapeContainsContext.executeShapeDrawStrategy(this, position.x, position.y);
     }
@@ -120,7 +115,7 @@ public class BaseShape implements IShape {
 
     @Override
     public void moveShape(Position oldPos) {
-
+        this.position = oldPos;
     }
 
     @Override
