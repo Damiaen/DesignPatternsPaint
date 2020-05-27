@@ -21,10 +21,12 @@ public class CombineShapes implements Command
     @Override
     public void execute() {
         drawPanel.addShape(shape);
-        for (IShape shape : this.shape.getBaseShapes()){
-            drawPanel.removeShape(shape);
+        for (IShape shape : this.shape.getBaseShapes())
+        {
+            drawPanel.removeShape(drawPanel.getShapeByCoordinates(shape.getPosition()));
         }
-        System.out.println("added");
+        drawPanel.getAllShapesForView();
+        drawPanel.repaint();
     }
 
     @Override
@@ -33,7 +35,9 @@ public class CombineShapes implements Command
         for (IShape shape : this.shape.getBaseShapes()){
             drawPanel.addShape(shape.getType(), shape.getPosition(), shape.getWidth(), shape.getHeight());
         }
-        System.out.println("deleted");
+        drawPanel.invoker.execute(new RemoveShape(shape.getPosition(),drawPanel));
+        drawPanel.getAllShapesForView();
+        drawPanel.repaint();
     }
 
     @Override

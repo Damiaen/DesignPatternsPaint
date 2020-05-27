@@ -2,10 +2,11 @@ package com.designpatterns.paint.base.Models.Shapes;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Position;
+import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentDecorator;
 import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
-import com.designpatterns.paint.base.Models.Shapes.Visitors.SaveVisitor.ShapeVisitorSave;
+import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorSave;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitor;
 
 import java.awt.*;
@@ -79,7 +80,7 @@ public class CompositeShape extends BaseShape {
         int maxy = 0;
 
         int newminx = 0;
-        int newminxy = 0;
+        int newminy = 0;
         int newmaxx = 0;
         int newmaxy = 0;
         for (IShape shape : shapes)
@@ -93,7 +94,7 @@ public class CompositeShape extends BaseShape {
             }
             if (position.y < miny) {
                 miny = position.y;
-                newminxy = (int) (position.y - height / 2);
+                newminy = (int) (position.y - height / 2);
             }
             if (position.x > maxx)
             {
@@ -108,9 +109,9 @@ public class CompositeShape extends BaseShape {
 
         }
         bounds[0] = newminx;
-        bounds[1] = newminxy;
+        bounds[1] = newminy;
         bounds[2] = newmaxx - newminx;
-        bounds[3] = newmaxy - newminxy;
+        bounds[3] = newmaxy - newminy;
 
         return bounds;
     }
@@ -140,20 +141,30 @@ public class CompositeShape extends BaseShape {
     }
 
     @Override
-    public String acceptSave(ShapeVisitorSave v) {
-        return v.visitCompositeShape( this );
-    }
-
-    @Override
     public void accept(ShapeVisitor v) {
-        v.visitCompositeShape( this );
+        v.visitShape( this );
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (IShape shape : shapes)
-            stringBuilder.append(shape.toString()).append("\n");
+        stringBuilder.append(getType()).append(" ").append(getCount()).append("\n");
+
+        for (IShape shape : shapes) {
+            if (shape instanceof OrnamentDecorator) {
+                String[] splitLine = shape.toString().split("\n");
+                for (String split: splitLine) {
+                    System.out.println("split:" + split);
+                    stringBuilder.append("\t").append(split).append("\n");
+                }
+            } else {
+                stringBuilder.append("\t").append(shape.toString()).append("\n");
+            }
+        }
+
+        if ((Character.compare(stringBuilder.charAt(stringBuilder.length() - 1), '\t')) == 1) {
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        }
         return stringBuilder.toString();
     }
 
@@ -167,4 +178,15 @@ public class CompositeShape extends BaseShape {
         return isSelected;
     }
 
+    @Override
+    public void setPosition(Position position) {
+        super.setPosition(position);
+        for (IShape shape : shapes){
+            shape.setPosition(new Position(
+                    (shape.getPosition().x + position.x) - position.x,
+                    (shape.getPosition().y + position.y) - position.y)
+            );
+        }
+        DrawPanel.getInstance().repaint();
+    }
 }

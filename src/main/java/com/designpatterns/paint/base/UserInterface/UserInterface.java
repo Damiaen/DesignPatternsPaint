@@ -93,7 +93,9 @@ public class UserInterface extends JFrame {
             // Check if there have been any changes in the shapes list, update side menu list
             updateShapesOverviewList();
         });
-        updateShapeButton.addActionListener(actionEvent -> drawPanel.updateShapes(Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText())));
+        updateShapeButton.addActionListener(actionEvent -> {
+            drawPanel.updateShapes(Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText()));
+        });
         mergeLayersButton.addActionListener(actionEvent -> combineShapes());
         saveDrawingButton.addActionListener(new ActionListener() {
             @Override
@@ -147,7 +149,7 @@ public class UserInterface extends JFrame {
                             System.out.println(shape);
                             drawPanel.checkIfSelectedShape(new Position(e.getX(), e.getY()));
                             moveShape = new MoveShape(new Position(e.getX(), e.getY()), shape, drawPanel);
-                            shape.setMoving(true);
+                            shape.setSelected(true);
                         }
                     }
                 }
@@ -157,7 +159,8 @@ public class UserInterface extends JFrame {
             public void mouseReleased(MouseEvent e)
             {
                 if (SwingUtilities.isLeftMouseButton(e)) {
-                    if (editRadioButton.isSelected() && moveShape != null) {
+                    if (editRadioButton.isSelected() && moveShape != null)
+                    {
                         moveShape.setNewPos(new Position(e.getX(), e.getY()));
                         drawPanel.invoker.execute(moveShape);
                         moveShape = null;
@@ -172,15 +175,12 @@ public class UserInterface extends JFrame {
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     if (editRadioButton.isSelected())
                     {
-                        Position pos = new Position(e.getX(),e.getY());
-                        ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove(pos);
-                        IShape shape = drawPanel.getShapeByCoordinates(pos);
-                        if(shape != null) {
-                            if(shape.getType() == ShapeType.CompositeShape) shapeVisitorMove.visitCompositeShape((CompositeShape) shape);
-                            else shapeVisitorMove.visitShape(shape);
-
+                        IShape shape = drawPanel.getShapeByCoordinates(new Position(e.getX(),e.getY()));
+                        if (shape != null && shape.isSelected()) {
+                            ShapeVisitorMove move = new ShapeVisitorMove(new Position(e.getX(),e.getY()));
+                            move.visitShape(shape);
+                            drawPanel.repaint();
                         }
-                        //drawPanel.moveShape(new Position(e.getX(), e.getY()));
                     }
                 }
             }
@@ -292,17 +292,17 @@ public class UserInterface extends JFrame {
     private void combineShapes()
     {
         List<IShape> selectedShapes = drawPanel.getSelectedShapes();
-        List<IShape> checkedshapes = drawPanel.getSelectedShapes();
+        List<IShape> checkedShapes = drawPanel.getSelectedShapes();
         for (IShape s : selectedShapes){
             if (s.getType() == ShapeType.CompositeShape)
             {
                 CompositeShape cs = (CompositeShape) s;
-                checkedshapes.addAll(cs.getBaseShapes());
+                checkedShapes.addAll(cs.getBaseShapes());
                 selectedShapes.remove(cs);
             }
         }
 
-        drawPanel.invoker.execute(new CombineShapes(checkedshapes,drawPanel));
+        drawPanel.invoker.execute(new CombineShapes(checkedShapes,drawPanel));
         updateShapesOverviewList();
     }
 }

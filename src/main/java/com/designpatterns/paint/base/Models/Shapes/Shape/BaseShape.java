@@ -1,7 +1,7 @@
 package com.designpatterns.paint.base.Models.Shapes.Shape;
 
 import com.designpatterns.paint.base.Models.Position;
-import com.designpatterns.paint.base.Models.Shapes.Visitors.SaveVisitor.ShapeVisitorSave;
+import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorSave;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitor;
 import com.designpatterns.paint.base.Models.Shapes.Strategies.DrawContourStrategy.EllipseContour;
 import com.designpatterns.paint.base.Models.Shapes.Strategies.DrawContourStrategy.RectangleContour;
@@ -104,11 +104,6 @@ public class BaseShape implements IShape {
     @Override
     public int getX() {
         return position.x;
-    }
-
-    @Override
-    public String acceptSave(ShapeVisitorSave v) {
-        return v.visitShape( this );
     }
 
     @Override
