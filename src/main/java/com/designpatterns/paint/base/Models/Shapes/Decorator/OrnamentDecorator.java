@@ -89,22 +89,22 @@ public class OrnamentDecorator extends ShapeDecorator {
     }
 
     @Override
-    public double getX() {
+    public int getX() {
         return decoratedShape.getX();
     }
 
     @Override
-    public double getWidth() {
+    public int getWidth() {
         return decoratedShape.getWidth();
     }
 
     @Override
-    public double getY() {
+    public int getY() {
         return decoratedShape.getY();
     }
 
     @Override
-    public double getHeight() {
+    public int getHeight() {
         return decoratedShape.getHeight();
     }
 

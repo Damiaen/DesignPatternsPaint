@@ -6,6 +6,5 @@ import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 
 public interface ShapeVisitor {
     void visitShape(IShape shape);
-    void visitCompositeShape(CompositeShape compositeShape);
     void visitOrnamentDecorator(OrnamentDecorator ornamentDecorator);
 }

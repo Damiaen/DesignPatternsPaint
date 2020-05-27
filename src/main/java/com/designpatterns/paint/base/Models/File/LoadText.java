@@ -256,6 +256,6 @@ public class LoadText {
      * Parse shape
      */
     private BaseShape parseShape(ShapeType type, String[] ellipse) {
-        return new BaseShape(type, new Position(Double.parseDouble(ellipse[1]), Double.parseDouble(ellipse[2])), Double.parseDouble(ellipse[3]), Double.parseDouble(ellipse[4]));
+        return new BaseShape(type, new Position(Integer.parseInt(ellipse[1]), Integer.parseInt(ellipse[2])), Integer.parseInt(ellipse[3]), Integer.parseInt(ellipse[4]));
     }
 }

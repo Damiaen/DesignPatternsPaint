@@ -8,7 +8,7 @@ public class RemoveShape implements Command {
 
     // which states do i need to store in order to execute and undo
     private IShape shape;
-    private DrawPanel drawPanel;
+    private final DrawPanel drawPanel;
 
     public RemoveShape(Position position, DrawPanel drawPanel) {
         this.shape = drawPanel.getShapeByCoordinates(position);

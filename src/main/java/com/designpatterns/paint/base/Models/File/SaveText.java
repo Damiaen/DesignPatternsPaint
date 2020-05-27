@@ -36,7 +36,7 @@ public class SaveText {
         try (FileWriter file = new FileWriter("./saves/save_"+ timeStamp + ".txt")) {
             file.write(shapes);
             file.flush();
-            System.out.println("Saved drawing to: './saves/text/save_"+ timeStamp + ".txt'");
+            System.out.println("Saved drawing to: './saves/save_"+ timeStamp + ".txt'");
         } catch (IOException e) {
             e.printStackTrace();
         }

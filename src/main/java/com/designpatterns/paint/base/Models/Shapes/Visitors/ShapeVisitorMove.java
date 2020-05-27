@@ -32,7 +32,6 @@ public class ShapeVisitorMove implements ShapeVisitor {
             shape.setMovingPosition(position, mousePositionX, cursorSelectedX, mousePositionY, cursorSelectedY);
         }
         compositeShape.updateBounds();
-    }
 
     @Override
     public void visitOrnamentDecorator(OrnamentDecorator ornamentDecorator) {

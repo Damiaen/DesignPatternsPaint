@@ -13,10 +13,10 @@ public interface IShape
     void drawContour(Graphics g, Color color);
     void setSelected(boolean bool);
     boolean isSelected();
-    double getX();
-    double getWidth();
-    double getY();
-    double getHeight();
+    int getX();
+    int getWidth();
+    int getY();
+    int getHeight();
     void setSize(int newWidth, int newHeight);
     ShapeType getType();
     void setMovingPosition(Position position, int mousePositionX, int cursorSelectedX, int mousePositionY, int cursorSelectedY);
