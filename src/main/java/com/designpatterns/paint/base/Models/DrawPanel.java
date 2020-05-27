@@ -1,5 +1,6 @@
 package com.designpatterns.paint.base.Models;
 
+import com.designpatterns.paint.base.Models.Actions.AddOrnament;
 import com.designpatterns.paint.base.Models.Actions.Invoker;
 import com.designpatterns.paint.base.Models.Actions.Reshape;
 import com.designpatterns.paint.base.Models.File.LoadText;
@@ -106,10 +107,18 @@ public class DrawPanel extends JPanel {
     {
         if(getSelectedShapes() == null) return;
         for (IShape s : getSelectedShapes()) {
-            ShapeVisitorResize shapeVisitorResize = new ShapeVisitorResize(newWidth,newHeight,getInstance());
-            shapeVisitorResize.visitShape(s);
-            repaint();
+            Reshape reshape = new Reshape(s, newWidth, newHeight);
+            invoker.execute(reshape);
         }
+    }
+
+    /**
+     * Update all shapes based on values in selected shapes array
+     */
+    public void updateShape(IShape oldShape, IShape newShape)
+    {
+        if(oldShape == null || newShape == null) return;
+        shapes.set(shapes.indexOf(oldShape), newShape);
     }
 
 
@@ -175,8 +184,8 @@ public class DrawPanel extends JPanel {
         // Check if we have at least one shape, otherwise we cant base the position on this shape
         if (shapeList.size() != 0) {
             for (IShape iShape: shapeList) {
-                IShape shape = new OrnamentDecorator( iShape, ornamentPosition, ornamentContent);
-                shapes.set(shapes.indexOf(iShape), shape);
+                AddOrnament addOrnament = new AddOrnament(iShape, ornamentPosition, ornamentContent);
+                invoker.execute(addOrnament);
             }
             repaint();
         }

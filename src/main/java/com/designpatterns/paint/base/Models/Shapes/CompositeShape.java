@@ -40,7 +40,8 @@ public class CompositeShape extends BaseShape {
         this.shapes = shapes;
         double[] bounds = getBounds();
         setPosition(new Position((int)bounds[0],(int)bounds[1]));
-        setSize((int)bounds[2], (int)bounds[3]);
+        setWidth((int)bounds[2]);
+        setHeight((int)bounds[3]);
         System.out.println("width: " + getWidth() + " height: " + getHeight());
     }
 
@@ -56,7 +57,8 @@ public class CompositeShape extends BaseShape {
     public void updateBounds() {
         double[] bounds = getBounds();
         setPosition(new Position((int)bounds[0], (int)bounds[1]));
-        setSize((int)bounds[2], (int)bounds[3]);
+        setWidth((int)bounds[2]);
+        setHeight((int)bounds[3]);
     }
 
     public double[] getBounds () {
@@ -131,6 +133,15 @@ public class CompositeShape extends BaseShape {
     @Override
     public void accept(ShapeVisitor v) {
         v.visitCompositeShape( this );
+    }
+
+    @Override
+    public void setSize(int width, int height) {
+        this.setWidth(width);
+        this.setHeight(height);
+        for (IShape shape : getBaseShapes()) {
+            shape.setSize(width, height);
+        }
     }
 
     @Override
