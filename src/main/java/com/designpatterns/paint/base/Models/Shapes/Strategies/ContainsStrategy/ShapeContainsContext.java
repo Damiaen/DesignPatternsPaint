@@ -3,7 +3,7 @@ package com.designpatterns.paint.base.Models.Shapes.Strategies.ContainsStrategy;
 import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
 
 public class ShapeContainsContext {
-    private ShapeContainsStrategy shapeContourStrategy;
+    private final ShapeContainsStrategy shapeContourStrategy;
 
     public ShapeContainsContext(ShapeContainsStrategy shapeContourStrategy) {
         this.shapeContourStrategy = shapeContourStrategy;

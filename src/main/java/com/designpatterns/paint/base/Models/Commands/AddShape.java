@@ -1,18 +1,24 @@
-package com.designpatterns.paint.base.Models.Actions;
+package com.designpatterns.paint.base.Models.Commands;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 
 public class AddShape implements Command {
 
-    // which states do i need to store in order to execute and undo
     private IShape shape;
-    private DrawPanel drawPanel = DrawPanel.getInstance();
+    private final DrawPanel drawPanel = DrawPanel.getInstance();
 
+    /**
+     * Constructor for adding shape command
+     * @param shape shape
+     */
     public AddShape(IShape shape) {
         this.shape = shape;
     }
 
+    /**
+     * execute the command
+     */
     @Override
     public void execute() {
         shape = drawPanel.addShape(shape.getType(), shape.getPosition(), shape.getWidth(), shape.getHeight());
@@ -20,6 +26,9 @@ public class AddShape implements Command {
         drawPanel.repaint();
     }
 
+    /**
+     * Undo the command
+     */
     @Override
     public void undo() {
         drawPanel.removeShape(shape);
@@ -27,6 +36,9 @@ public class AddShape implements Command {
         drawPanel.repaint();
     }
 
+    /**
+     * Redo the command
+     */
     @Override
     public void redo() {
         execute();

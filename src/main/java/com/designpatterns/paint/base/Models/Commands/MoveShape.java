@@ -1,48 +1,62 @@
-package com.designpatterns.paint.base.Models.Actions;
+package com.designpatterns.paint.base.Models.Commands;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
-import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
-import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorMove;
 
 public class MoveShape implements Command
 {
-
-    private Position oldPos;
+    private final Position oldPos;
 
     private Position newPos;
 
-    private DrawPanel panel = DrawPanel.getInstance();
+    private final DrawPanel panel = DrawPanel.getInstance();
 
-    private IShape shape;
+    private final IShape shape;
 
-    public MoveShape (Position pos, IShape shape){
+    /**
+     * Command for moving a shape
+     * @param pos new position
+     * @param shape shape that has to be moved
+     */
+    public MoveShape (Position pos, IShape shape) {
         oldPos = pos;
         this.shape = shape;
     }
 
+    /**
+     * sets the new position
+     * @param pos position
+     */
     public void setNewPos(Position pos) {
         newPos = pos;
     }
 
+    /**
+     * execute the command
+     */
     @Override
     public void execute()
     {
         ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove();
-        shapeVisitorMove.moveShape(shape,newPos.x,newPos.y);
+        shapeVisitorMove.moveShape(shape,new Position(newPos.x,newPos.y));
         panel.repaint();
     }
 
+    /**
+     * undo the command
+     */
     @Override
     public void undo()
     {
         ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove();
-        shapeVisitorMove.moveShape(shape,oldPos.x,oldPos.y);
+        shapeVisitorMove.moveShape(shape,new Position(oldPos.x,oldPos.y));
         panel.repaint();
     }
-
+    /**
+     * Redo the command
+     */
     @Override
     public void redo() { execute(); }
 }

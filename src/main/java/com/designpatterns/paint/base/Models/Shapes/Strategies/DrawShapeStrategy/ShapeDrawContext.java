@@ -5,7 +5,7 @@ import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
 import java.awt.*;
 
 public class ShapeDrawContext {
-    private ShapeDrawStrategy shapeDrawStrategy;
+    private final ShapeDrawStrategy shapeDrawStrategy;
 
     public ShapeDrawContext(ShapeDrawStrategy shapeDrawStrategy) {
         this.shapeDrawStrategy = shapeDrawStrategy;

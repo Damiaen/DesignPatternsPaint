@@ -5,7 +5,7 @@ import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
 import java.awt.*;
 
 public class ShapeContourContext {
-    private ShapeContourStrategy shapeContourStrategy;
+    private final ShapeContourStrategy shapeContourStrategy;
 
     public ShapeContourContext(ShapeContourStrategy shapeContourStrategy) {
         this.shapeContourStrategy = shapeContourStrategy;

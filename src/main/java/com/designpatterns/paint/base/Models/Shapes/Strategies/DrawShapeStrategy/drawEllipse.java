@@ -6,6 +6,12 @@ import java.awt.geom.Ellipse2D;
 
 public class drawEllipse implements ShapeDrawStrategy{
 
+    /**
+     * Draw ellipse
+     * @param g Graphics
+     * @param baseShape BaseShape
+     * @param color color
+     */
     @Override
     public void draw(Graphics g, BaseShape baseShape, Color color) {
         Graphics2D g2d = (Graphics2D) g;

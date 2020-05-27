@@ -86,7 +86,7 @@ public class LoadText {
     public List<IShape> loadTextFile(BufferedReader bufferedReader) throws IOException {
         List<IShape> loadedData = new ArrayList<>();
 
-        String lineJustFetched = null;
+        String lineJustFetched;
         String[] wordsArray;
 
         loadedTextLines = new ArrayList<>();
@@ -147,7 +147,12 @@ public class LoadText {
         return null;
     }
 
-    private List<TextData> getOrnamentThing(TextData loadTextLine) {
+    /**
+     * Get ornament
+     * @param loadTextLine TextData
+     * @return List of TextData
+     */
+    private List<TextData> getOrnament(TextData loadTextLine) {
         List<TextData> temp = new ArrayList<>();
         temp.add(loadTextLine);
         boolean foundObjectToBindTo = false;
@@ -165,12 +170,17 @@ public class LoadText {
         return temp;
     }
 
+    /**
+     * Parse the ornament
+     * @param loadTextLine TextData
+     * @return shape
+     */
     private IShape parseOrnament(TextData loadTextLine) {
         // Temporarily store data of loaded group
         IShape ornamentData = null;
 
         // Get which ornaments we have, clean and get the shape we need to add them to
-        List<TextData> ornaments = getOrnamentThing(loadTextLine);
+        List<TextData> ornaments = getOrnament(loadTextLine);
         TextData loadedShape = ornaments.get(ornaments.size() - 1);
         ornaments.remove(ornaments.size() - 1);
 

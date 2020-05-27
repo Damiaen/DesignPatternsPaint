@@ -7,6 +7,12 @@ import java.awt.geom.Rectangle2D;
 
 public class drawRectangle implements ShapeDrawStrategy{
 
+    /**
+     * Draw rectangle
+     * @param g Graphics
+     * @param baseShape BaseShape
+     * @param color color
+     */
     @Override
     public void draw(Graphics g, BaseShape baseShape, Color color) {
         Graphics2D g2d = (Graphics2D) g;

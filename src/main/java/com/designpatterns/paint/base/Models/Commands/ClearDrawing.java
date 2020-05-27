@@ -1,4 +1,4 @@
-package com.designpatterns.paint.base.Models.Actions;
+package com.designpatterns.paint.base.Models.Commands;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
@@ -11,11 +11,17 @@ public class ClearDrawing implements Command
     private List<IShape> shapes;
     private final DrawPanel drawPanel = DrawPanel.getInstance();
 
+    /**
+     * Constructor for clear drawing command
+     */
     public ClearDrawing()
     {
         shapes = drawPanel.getShapes();
     }
 
+    /**
+     * execute the command
+     */
     @Override
     public void execute()
     {
@@ -23,6 +29,9 @@ public class ClearDrawing implements Command
         drawPanel.removeShape(shape);
     }
 
+    /**
+     * Undo the command
+     */
     @Override
     public void undo()
     {
@@ -34,6 +43,9 @@ public class ClearDrawing implements Command
         shapes = newShapes;
     }
 
+    /**
+     * Redo the command
+     */
     @Override
     public void redo() {
         execute();

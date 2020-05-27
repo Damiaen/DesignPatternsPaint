@@ -6,30 +6,42 @@ import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentDecorator;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 
 public class ShapeVisitorMove implements ShapeVisitor {
-    private int mousePositionX;
-    private int mousePositionY;
+    private Position mousePosition;
 
-    public void moveShape(IShape shape, int mousePositionX, int mousePositionY) {
-        this.mousePositionX = mousePositionX;
-        this.mousePositionY = mousePositionY;
+    /**
+     * constructor of move shape visitor
+     * @param shape IShape
+     * @param mousePosition Position
+     */
+    public void moveShape(IShape shape, Position mousePosition) {
+        this.mousePosition = mousePosition;
         shape.accept(this);
     }
 
+    /**
+     * visit
+     * @param shape IShape
+     */
     @Override
     public void visit(IShape shape) {
-        shape.setMovingPosition(mousePositionX, mousePositionY);
+        shape.setMovingPosition(mousePosition);
     }
 
+    /**
+     * visit
+     * @param compositeShape CompositeShape
+     */
     @Override
     public void visit(CompositeShape compositeShape) {
-        //for (IShape shape : compositeShape.getBaseShapes()) {
-         //   Position position = shape.getPosition();
-        compositeShape.setMovingPosition(mousePositionX, mousePositionY);
-      //  }
+        compositeShape.setMovingPosition(mousePosition);
     }
 
+    /**
+     * visit
+     * @param ornamentDecorator OrnamentDecorator
+     */
     @Override
     public void visit(OrnamentDecorator ornamentDecorator) {
-        ornamentDecorator.setMovingPosition(mousePositionX, mousePositionY);
+        ornamentDecorator.setMovingPosition(mousePosition);
     }
 }

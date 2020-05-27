@@ -1,6 +1,6 @@
 package com.designpatterns.paint.base.Models.Shapes;
 
-import com.designpatterns.paint.base.Models.Actions.Reshape;
+import com.designpatterns.paint.base.Models.Commands.Reshape;
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
@@ -10,28 +10,28 @@ import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitor;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * CompositeShape class
+ * CompositeShape class is used to store multiple shapes and control them as a group object
+ * The composite shape is used to implement the composite pattern
  */
 public class CompositeShape extends BaseShape {
 
     /**
      * Shapes
      */
-    private List<IShape> shapes = new ArrayList<>();
+    private final List<IShape> shapes;
 
     /**
      * Count of all figures that are present in the group
      */
     private final Integer count;
 
-
+    /**
+     * Used to check if a position is inside of the rectangle
+     */
     private Rectangle2D rectangle2D;
-
-    boolean isSelected;
 
     /**
      * CompositeShape constructor
@@ -40,46 +40,60 @@ public class CompositeShape extends BaseShape {
         super(type,new Position(0,0),0,0);
         this.count = shapes.size();
         this.shapes = shapes;
-        double[] bounds = getBounds();
+        int[] bounds = getBounds();
         setPosition(new Position((int)bounds[0],(int)bounds[1]));
-        setWidth((int)bounds[2]);
-        setHeight((int)bounds[3]);
+        setWidth(bounds[2]);
+        setHeight(bounds[3]);
         System.out.println("width: " + getWidth() + " height: " + getHeight());
     }
 
+    /**
+     * Get all the shapes which are inside the group
+     * @return shapes from within this group
+     */
     public List<IShape> getBaseShapes() {
         return shapes;
     }
 
+    /**
+     * get count
+     * @return count
+     */
     public Integer getCount() {
         return count;
     }
 
-    // TODO: We moeten wel de bounds updaten ivm het kijken of een user iets select, weet niet of dit correct is, maar lijkt te werken
+    /**
+     * update the bounds of the group
+     */
     public void updateBounds() {
-        double[] bounds = getBounds();
-        setPosition(new Position((int)bounds[0], (int)bounds[1]));
-        setWidth((int)bounds[2]);
-        setHeight((int)bounds[3]);
+        int[] bounds = getBounds();
+        setPosition(new Position(bounds[0], bounds[1]));
+        setWidth(bounds[2]);
+        setHeight(bounds[3]);
     }
 
-    public double[] getBounds () {
-        double[] bounds = new double[4];
+    /**
+     * calculates the bounds of the group
+     * @return int[]
+     */
+    public int[] getBounds () {
+        int[] bounds = new int[4];
 
-        double minx = 9999;
-        double miny = 9999;
-        double maxx = 0;
-        double maxy = 0;
+        int minx = 9999;
+        int miny = 9999;
+        int maxx = 0;
+        int maxy = 0;
 
-        double newminx = 0;
-        double newminxy = 0;
-        double newmaxx = 0;
-        double newmaxy = 0;
+        int newminx = 0;
+        int newminxy = 0;
+        int newmaxx = 0;
+        int newmaxy = 0;
         for (IShape shape : shapes)
         {
             Position position = shape.getPosition();
-            double width = shape.getWidth();
-            double height = shape.getHeight();
+            int width = shape.getWidth();
+            int height = shape.getHeight();
             if (position.x < minx) {
                 minx = position.x;
                 newminx = position.x - width / 2;
@@ -108,6 +122,11 @@ public class CompositeShape extends BaseShape {
         return bounds;
     }
 
+    /**
+     * check if position is inside
+     * @param position Position
+     * @return
+     */
     @Override
     public boolean checkPosition(Position position)
     {
@@ -116,6 +135,10 @@ public class CompositeShape extends BaseShape {
         return rectangle2D.contains(position.x,position.y);
     }
 
+    /**
+     * draw graphics
+     * @param g Graphics
+     */
     @Override
     public void draw(Graphics g) {
         for (IShape shape : shapes) {
@@ -123,20 +146,34 @@ public class CompositeShape extends BaseShape {
         }
     }
 
+    /**
+     * draw contour
+     * @param g Graphics
+     * @param color color
+     */
     @Override
     public void drawContour(Graphics g, Color color) {
         updateBounds();
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(color);
 
-        g2d.drawRect((int) (this.getPosition().x - 3), (int) (this.getPosition().y - 3), (int)this.getWidth() + 6, (int)this.getHeight() + 6);
+        g2d.drawRect(this.getPosition().x - 3, this.getPosition().y - 3, this.getWidth() + 6, this.getHeight() + 6);
     }
 
+    /**
+     * accept visitor
+     * @param v ShapeVisitor
+     */
     @Override
     public void accept(ShapeVisitor v) {
         v.visit( this );
     }
 
+    /**
+     * set size
+     * @param width int
+     * @param height int
+     */
     @Override
     public void setSize(int width, int height) {
         this.setWidth(width);
@@ -148,6 +185,10 @@ public class CompositeShape extends BaseShape {
         updateBounds();
     }
 
+    /**
+     * to string
+     * @return string
+     */
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -169,9 +210,9 @@ public class CompositeShape extends BaseShape {
     }
 
     @Override
-    public void setMovingPosition(int mousePositionX, int mousePositionY) {
+    public void setMovingPosition(Position mousePosition) {
         for (IShape shape : getBaseShapes()) {
-            shape.setMovingPosition(mousePositionX, mousePositionY);
+            shape.setMovingPosition(mousePosition);
         }
         updateBounds();
     }

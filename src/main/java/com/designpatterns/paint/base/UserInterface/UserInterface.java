@@ -1,6 +1,6 @@
 package com.designpatterns.paint.base.UserInterface;
 
-import com.designpatterns.paint.base.Models.Actions.*;
+import com.designpatterns.paint.base.Models.Commands.*;
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
@@ -8,11 +8,9 @@ import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentPosition;
 import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
-import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorMove;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -23,7 +21,6 @@ import java.util.Objects;
 
 public class UserInterface extends JFrame {
     private JPanel rootPanel;
-    private JButton selectShapes;
     private JPanel content_panel;
     private JTextField new_shape_height;
     private JTextField new_shape_width;
@@ -53,6 +50,9 @@ public class UserInterface extends JFrame {
      */
     private final JFrame userInterfaceFrame = new JFrame("Design Patterns Paint");
 
+    /**
+     * Constructor of User Interface
+     */
     public UserInterface() {
         // Create required elements for the JFrame
         createInterfaceElements();
@@ -62,31 +62,21 @@ public class UserInterface extends JFrame {
     }
 
     /**
-     * All of the listeners that we require
+     * All of the listeners that we require for button and mouse click events
      */
     private void setupListeners() {
-        // Button listeners:
-        // Button listeners:
-        ornamentButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                drawPanel.addOrnament(OrnamentPosition.valueOf(Objects.requireNonNull(ornamentPos.getSelectedItem()).toString()), Objects.requireNonNull(ornamentText.getText()));
-            }
-        });
+        ornamentButton.addActionListener(actionEvent -> drawPanel.addOrnament(OrnamentPosition.valueOf(Objects.requireNonNull(ornamentPos.getSelectedItem()).toString()), Objects.requireNonNull(ornamentText.getText())));
         clearDrawingButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (drawPanel.getShapes().size() != 0) drawPanel.invoker.execute(new ClearDrawing());
             }
         });
-        createScreenshotButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                try {
-                    drawPanel.createScreenshot();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        createScreenshotButton.addActionListener(actionEvent -> {
+            try {
+                drawPanel.createScreenshot();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
         clearDrawingButton.addActionListener(actionEvent -> {
@@ -94,22 +84,12 @@ public class UserInterface extends JFrame {
             // Check if there have been any changes in the shapes list, update side menu list
             updateShapesOverviewList();
         });
-        updateShapeButton.addActionListener(actionEvent -> {
-            drawPanel.updateShapes(Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText()));
-        });
+        updateShapeButton.addActionListener(actionEvent -> drawPanel.updateShapes(Integer.parseInt(new_shape_width.getText()), Integer.parseInt(new_shape_height.getText())));
         mergeLayersButton.addActionListener(actionEvent -> combineShapes());
-        saveDrawingButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                drawPanel.saveDrawing();
-            }
-        });
-        loadDrawingButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                drawPanel.loadDrawing();
-                updateShapesOverviewList();
-            }
+        saveDrawingButton.addActionListener(actionEvent -> drawPanel.saveDrawing());
+        loadDrawingButton.addActionListener(actionEvent -> {
+            drawPanel.loadDrawing();
+            updateShapesOverviewList();
         });
         undoButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -285,7 +265,6 @@ public class UserInterface extends JFrame {
     /**
      * Get the selected shapes and combine these into 1 layer
      */
-    //TODO: fix merging of new shape/composite shape and composite shape
     private void combineShapes()
     {
         List<IShape> selectedShapes = drawPanel.getSelectedShapes();
@@ -302,10 +281,6 @@ public class UserInterface extends JFrame {
         for (IShape s : selectedShapes){
             drawPanel.removeShape(s);
         }
-
-
-        System.out.println(checkedShapes);
-
         drawPanel.invoker.execute(new CombineShapes(checkedShapes));
         drawPanel.clearSelectedShapes();
         updateShapesOverviewList();

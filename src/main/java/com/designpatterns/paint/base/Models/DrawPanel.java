@@ -1,8 +1,8 @@
 package com.designpatterns.paint.base.Models;
 
-import com.designpatterns.paint.base.Models.Actions.AddOrnament;
-import com.designpatterns.paint.base.Models.Actions.Invoker;
-import com.designpatterns.paint.base.Models.Actions.Reshape;
+import com.designpatterns.paint.base.Models.Commands.AddOrnament;
+import com.designpatterns.paint.base.Models.Commands.Invoker;
+import com.designpatterns.paint.base.Models.Commands.Reshape;
 import com.designpatterns.paint.base.Models.File.LoadText;
 import com.designpatterns.paint.base.Models.File.SaveScreenshot;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
@@ -33,11 +33,12 @@ public class DrawPanel extends JPanel {
     // Store which shapes have been selected for merging, select these from the side-menu
     private List<Integer> selectedMergeShapes = new ArrayList<>();
 
-    private Position cursorSelectedPosition = new Position(0,0);
+    private final Position cursorSelectedPosition = new Position(0,0);
 
-    public final Invoker invoker = new Invoker(); // undo redo of all commands
+    public final Invoker invoker = Invoker.getInstance(); // undo redo of all commands
 
     /**
+     * Constructor
      * Initiate and set up panel
      */
     public DrawPanel() {
@@ -45,6 +46,10 @@ public class DrawPanel extends JPanel {
         setBackground(new Color(255, 255, 255));
     }
 
+    /**
+     * Get the Singleton instance of Drawpanel
+     * @return instance
+     */
     public static DrawPanel getInstance() {
         if (drawPanel == null) drawPanel = new DrawPanel();
         return drawPanel;
@@ -68,6 +73,10 @@ public class DrawPanel extends JPanel {
         return shape;
     }
 
+    /**
+     * Used to add a composite shape
+     * @param shape
+     */
     public void addShape(IShape shape){
         shapes.add(shape);
         repaint();
@@ -90,7 +99,7 @@ public class DrawPanel extends JPanel {
         if (s == null) return;
         if (!s.isSelected()) return;
         ShapeVisitorMove shapeVisitorMove = new ShapeVisitorMove();
-        shapeVisitorMove.moveShape(s, mousePosition.x, mousePosition.y);
+        shapeVisitorMove.moveShape(s, new Position(mousePosition.x, mousePosition.y));
         cursorSelectedPosition.x = mousePosition.x;
         cursorSelectedPosition.y = mousePosition.y;
         repaint();
@@ -138,6 +147,10 @@ public class DrawPanel extends JPanel {
         return selectedShapes;
     }
 
+    /**
+     * Creates a screenshot
+     * @throws IOException
+     */
     public void createScreenshot() throws IOException {
         BufferedImage bufImage = new BufferedImage(this.getSize().width, this.getSize().height, BufferedImage.TYPE_INT_RGB);
         this.paint(bufImage.createGraphics());
@@ -218,6 +231,10 @@ public class DrawPanel extends JPanel {
         return null;
     }
 
+    /**
+     * gets the position where the mouse has clicked
+     * @return position
+     */
     public Position getCursorSelectedPosition() {
         return cursorSelectedPosition;
     }
@@ -295,6 +312,10 @@ public class DrawPanel extends JPanel {
         return false;
     }
 
+    /**
+     * Get a copy of the shapes list
+     * @return copy of shapes
+     */
     public List<IShape> getShapes(){
         return new ArrayList<>(shapes);
     }

@@ -1,4 +1,4 @@
-package com.designpatterns.paint.base.Models.Actions;
+package com.designpatterns.paint.base.Models.Commands;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
@@ -12,10 +12,16 @@ public class CombineShapes implements Command
     private final CompositeShape shape;
     private final DrawPanel drawPanel = DrawPanel.getInstance();
 
+    /**
+     * Constructor of the combine shapes command
+     */
     public CombineShapes(List<IShape> shapes) {
         shape = new CompositeShape(shapes, ShapeType.CompositeShape);
     }
 
+    /**
+     * Execute the command
+     */
     @Override
     public void execute() {
         drawPanel.addShape(shape);
@@ -27,6 +33,9 @@ public class CombineShapes implements Command
         drawPanel.repaint();
     }
 
+    /**
+     * Undo the command
+     */
     @Override
     public void undo()
     {
@@ -39,6 +48,9 @@ public class CombineShapes implements Command
         drawPanel.repaint();
     }
 
+    /**
+     * Undo the command
+     */
     @Override
     public void redo() {
         execute();

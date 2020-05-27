@@ -1,10 +1,9 @@
-package com.designpatterns.paint.base.Models.Actions;
+package com.designpatterns.paint.base.Models.Commands;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentDecorator;
 import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentPosition;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
-import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorResize;
 
 public class AddOrnament implements Command {
 
@@ -14,12 +13,21 @@ public class AddOrnament implements Command {
     String content;
     DrawPanel drawPanel = DrawPanel.getInstance();
 
+    /**
+     * Constructor for the add ornament command
+     * @param oldShape oldShape
+     * @param ornamentPosition ornamentPosition
+     * @param content content
+     */
     public AddOrnament(IShape oldShape, OrnamentPosition ornamentPosition, String content) {
         this.oldShape = oldShape;
         this.content = content;
         this.ornamentPosition = ornamentPosition;
     }
 
+    /**
+     * execute the command
+     */
     @Override
     public void execute()
     {
@@ -28,12 +36,18 @@ public class AddOrnament implements Command {
         drawPanel.repaint();
     }
 
+    /**
+     * Undo the command
+     */
     @Override
     public void undo() {
         drawPanel.updateShape(newShape, oldShape);
         drawPanel.repaint();
     }
 
+    /**
+     * Redo the command
+     */
     @Override
     public void redo() {
         execute();

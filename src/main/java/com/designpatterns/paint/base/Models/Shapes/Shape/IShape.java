@@ -1,7 +1,6 @@
 package com.designpatterns.paint.base.Models.Shapes.Shape;
 
 import com.designpatterns.paint.base.Models.Position;
-import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorSave;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitor;
 
 import java.awt.*;
@@ -13,13 +12,11 @@ public interface IShape
     void drawContour(Graphics g, Color color);
     void setSelected(boolean bool);
     boolean isSelected();
-    int getX();
     int getWidth();
-    int getY();
     int getHeight();
     void setSize(int newWidth, int newHeight);
     ShapeType getType();
-    void setMovingPosition(int mousePositionX, int mousePositionY);
+    void setMovingPosition(Position mousePosition);
     void setPosition(Position position);
     Position getPosition();
     void accept(ShapeVisitor v);

@@ -1,4 +1,4 @@
-package com.designpatterns.paint.base.Models.Actions;
+package com.designpatterns.paint.base.Models.Commands;
 
 import com.designpatterns.paint.base.Models.DrawPanel;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
@@ -13,12 +13,18 @@ public class Reshape implements Command {
     int oldHeight;
     DrawPanel drawPanel = DrawPanel.getInstance();
 
+    /**
+     * Constructor of the reshape the command
+     */
     public Reshape(IShape shape, int width, int height) {
         this.shape = shape;
         this.width = width;
         this.height = height;
     }
 
+    /**
+     * Execute the command
+     */
     @Override
     public void execute()
     {
@@ -29,6 +35,9 @@ public class Reshape implements Command {
         drawPanel.repaint();
     }
 
+    /**
+     * Undo the command
+     */
     @Override
     public void undo() {
         ShapeVisitorResize shapeVisitorResize = new ShapeVisitorResize(oldWidth,oldHeight);
@@ -36,6 +45,9 @@ public class Reshape implements Command {
         drawPanel.repaint();
     }
 
+    /**
+     * Redo the command
+     */
     @Override
     public void redo() {
         execute();
