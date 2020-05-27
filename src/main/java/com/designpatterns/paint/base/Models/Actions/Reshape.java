@@ -32,7 +32,7 @@ public class Reshape implements Command {
     @Override
     public void undo() {
         ShapeVisitorResize shapeVisitorResize = new ShapeVisitorResize(oldWidth,oldHeight);
-        shapeVisitorResize.visitShape(shape);
+        shape.accept(shapeVisitorResize);
         drawPanel.repaint();
     }
 

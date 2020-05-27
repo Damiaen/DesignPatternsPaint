@@ -23,8 +23,13 @@ public class ShapeVisitorMove implements ShapeVisitor {
 
     @Override
     public void visitCompositeShape(CompositeShape compositeShape) {
+        System.out.println(mousePositionX);
+        System.out.println(mousePositionY);
+
         for (IShape shape : compositeShape.getBaseShapes()) {
             Position position = shape.getPosition();
+            System.out.println(position.x);
+            System.out.println(position.y);
             shape.setMovingPosition(position, mousePositionX, mousePositionY);
         }
         compositeShape.updateBounds();

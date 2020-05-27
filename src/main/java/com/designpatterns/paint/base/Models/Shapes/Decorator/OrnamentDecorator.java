@@ -3,7 +3,6 @@ package com.designpatterns.paint.base.Models.Shapes.Decorator;
 import com.designpatterns.paint.base.Models.Position;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
-import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorSave;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitor;
 
 import java.awt.*;
@@ -39,29 +38,27 @@ public class OrnamentDecorator extends ShapeDecorator {
         // Setup base and color
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.BLACK);
-
+        Position position = decoratedShape.getPosition();
 
         // Get center X and center Y, so we can place the shape based on the middle of the shape
-        double positionX = decoratedShape.getX() + decoratedShape.getWidth() / 2.0D;
-        double positionY = decoratedShape.getY() + decoratedShape.getHeight() / 2.0D;
+        int positionX = decoratedShape.getX();
+        int positionY = decoratedShape.getY();
 
         // Check what the position of the ornament is, and change values accordingly
         switch (this.ornamentPosition) {
             case TOP:
-                positionY -= ((decoratedShape.getHeight() / 2) + 20);
+                positionY = (position.y - (decoratedShape.getHeight() / 2)) - 20;
                 break;
             case BOTTOM:
-                positionY += ((decoratedShape.getHeight() / 2) - 20);
+                positionY = (position.y + (decoratedShape.getHeight() / 2)) + 20;
                 break;
             case LEFT:
-                positionX -= ((decoratedShape.getWidth() / 2) + 20);
+                positionX = (position.x - (decoratedShape.getWidth() / 2)) - 20;
                 break;
             case RIGHT:
-                positionX += ((decoratedShape.getHeight() / 2) - 20);
+                positionX = (position.x + (decoratedShape.getWidth() / 2)) + 20;
                 break;
         }
-
-        // After getting all the values, we can finally draw the string
         g2d.drawString(this.content, (float) positionX, (float) positionY);
     }
 

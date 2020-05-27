@@ -29,9 +29,12 @@ public class ShapeVisitorResize implements ShapeVisitor {
     @Override
     public void visitCompositeShape(CompositeShape compositeShape) {
         compositeShape.setSize(newWidth, newHeight);
-        for (IShape shape : compositeShape.getBaseShapes()) {
-            shape.setSize(newWidth, newHeight);
-        }
+        System.out.println("toeeee");
+        System.out.println(newWidth);
+        System.out.println(newHeight);
+//        for (IShape shape : compositeShape.getBaseShapes()) {
+//            shape.setSize(newWidth, newHeight);
+//        }
         compositeShape.updateBounds();
     }
 }

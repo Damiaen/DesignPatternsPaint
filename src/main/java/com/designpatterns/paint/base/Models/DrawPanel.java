@@ -6,15 +6,12 @@ import com.designpatterns.paint.base.Models.Actions.Reshape;
 import com.designpatterns.paint.base.Models.File.LoadText;
 import com.designpatterns.paint.base.Models.File.SaveScreenshot;
 import com.designpatterns.paint.base.Models.Shapes.CompositeShape;
-import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentDecorator;
 import com.designpatterns.paint.base.Models.Shapes.Decorator.OrnamentPosition;
 import com.designpatterns.paint.base.Models.Shapes.Shape.BaseShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.IShape;
 import com.designpatterns.paint.base.Models.Shapes.Shape.ShapeType;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorSave;
-import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitor;
 import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorMove;
-import com.designpatterns.paint.base.Models.Shapes.Visitors.ShapeVisitorResize;
 
 import javax.swing.*;
 import java.awt.*;
@@ -118,6 +115,10 @@ public class DrawPanel extends JPanel {
     public void updateShape(IShape oldShape, IShape newShape)
     {
         if(oldShape == null || newShape == null) return;
+        System.out.println(oldShape.toString());
+        System.out.println(newShape.toString());
+        System.out.println(shapes.indexOf(oldShape));
+        System.out.println(shapes.indexOf(oldShape));
         shapes.set(shapes.indexOf(oldShape), newShape);
     }
 
