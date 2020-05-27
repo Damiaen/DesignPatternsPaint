@@ -163,9 +163,10 @@ public class CompositeShape extends BaseShape {
     }
 
     @Override
-    public void setMovingPosition(Double mousePositionX, Double mousePositionY, Double cursorSelectedX, Double cursorSelectedY) {
+    public void setMovingPosition(Position position, int mousePositionX, int cursorSelectedX, int mousePositionY, int cursorSelectedY) {
         for (IShape shape : getBaseShapes()) {
-            shape.setMovingPosition(mousePositionX, mousePositionY,cursorSelectedX,cursorSelectedY);
+            Position pos = shape.getPosition();
+            shape.setMovingPosition(pos, mousePositionX, cursorSelectedX, mousePositionY, cursorSelectedY);
         }
         updateBounds();
     }

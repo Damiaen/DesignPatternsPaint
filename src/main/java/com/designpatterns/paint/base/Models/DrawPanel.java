@@ -288,7 +288,7 @@ public class DrawPanel extends JPanel {
         if (s == null) return;
         if (!s.isSelected()) return;
         ShapeVisitorMove saveVisitor = new ShapeVisitorMove();
-        saveVisitor.moveShape(s, mousePosition.y, mousePosition.x, cursorSelectedX, cursorSelectedY);
+        saveVisitor.moveShape(s, (int) mousePosition.y, (int) mousePosition.x, (int) cursorSelectedX, (int) cursorSelectedY);
         cursorSelectedX = mousePosition.x;
         cursorSelectedY = mousePosition.y;
         repaint();
