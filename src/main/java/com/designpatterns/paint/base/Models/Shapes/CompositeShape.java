@@ -125,7 +125,7 @@ public class CompositeShape extends BaseShape {
     /**
      * check if position is inside
      * @param position Position
-     * @return
+     * @return boolean
      */
     @Override
     public boolean checkPosition(Position position)

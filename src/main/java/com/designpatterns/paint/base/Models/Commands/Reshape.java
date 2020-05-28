@@ -11,7 +11,7 @@ public class Reshape implements Command {
     int height;
     int oldWidth;
     int oldHeight;
-    DrawPanel drawPanel = DrawPanel.getInstance();
+    final DrawPanel drawPanel = DrawPanel.getInstance();
 
     /**
      * Constructor of the reshape the command

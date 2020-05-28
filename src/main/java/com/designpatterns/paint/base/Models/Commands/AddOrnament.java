@@ -11,7 +11,7 @@ public class AddOrnament implements Command {
     IShape newShape;
     OrnamentPosition ornamentPosition;
     String content;
-    DrawPanel drawPanel = DrawPanel.getInstance();
+    final DrawPanel drawPanel = DrawPanel.getInstance();
 
     /**
      * Constructor for the add ornament command

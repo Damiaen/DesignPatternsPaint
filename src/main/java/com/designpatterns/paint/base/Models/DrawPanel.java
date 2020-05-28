@@ -75,7 +75,7 @@ public class DrawPanel extends JPanel {
 
     /**
      * Used to add a composite shape
-     * @param shape
+     * @param shape IShape
      */
     public void addShape(IShape shape){
         shapes.add(shape);
@@ -149,7 +149,7 @@ public class DrawPanel extends JPanel {
 
     /**
      * Creates a screenshot
-     * @throws IOException
+     * @throws IOException IOException
      */
     public void createScreenshot() throws IOException {
         BufferedImage bufImage = new BufferedImage(this.getSize().width, this.getSize().height, BufferedImage.TYPE_INT_RGB);
